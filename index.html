@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éter Store - Calzados Premium</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>Éter Store</h2>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#products" class="nav-link">Calzados</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                <div class="nav-cart">
+                    <button class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount" style="display: none;">0</span>
+                    </button>
+                </div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Hero Background with Dynamic Elements -->
+        <div class="hero-background">
+            <div class="hero-bg-pattern"></div>
+            <div class="hero-bg-gradient"></div>
+            <div class="hero-floating-elements">
+                <div class="floating-element fe-1"></div>
+                <div class="floating-element fe-2"></div>
+                <div class="floating-element fe-3"></div>
+                <div class="floating-element fe-4"></div>
+                <div class="floating-element fe-5"></div>
+            </div>
+        </div>
+
+        <!-- Hero Content Container -->
+        <div class="hero-main-container">
+            <!-- Producto Estrella Section -->
+            <div class="hero-featured-product" id="heroFeaturedProduct">
+                <div class="featured-product-content">
+                    <div class="featured-product-info">
+                        <div class="featured-badge">
+                            <i class="fas fa-star"></i>
+                            <span>PRODUCTO ESTRELLA</span>
+                        </div>
+                        <h1 class="featured-product-title" id="featuredProductTitle">Zapatillas Running Pro</h1>
+                        <p class="featured-product-description" id="featuredProductDescription">
+                            El calzado más vendido de la temporada. Tecnología de amortiguación avanzada para máximo rendimiento y comodidad.
+                        </p>
+                        <div class="featured-product-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="featuredProductSales">1,247</span>
+                                <span class="stat-label">Ventas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="featuredProductRating">4.9</span>
+                                <span class="stat-label">Rating</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="featuredProductReviews">156</span>
+                                <span class="stat-label">Reseñas</span>
+                            </div>
+                        </div>
+                        <div class="featured-product-price">
+                            <span class="price-amount" id="featuredProductPrice">$125.000</span>
+                            <span class="price-label">Precio Mayorista</span>
+                        </div>
+                        <div class="featured-product-actions">
+                            <button class="btn btn-primary btn-large" id="featuredProductCTA">
+                                <i class="fas fa-shopping-cart"></i>
+                                Agregar al Carrito
+                            </button>
+                            <button class="btn btn-secondary btn-large" id="featuredProductDetails">
+                                <i class="fas fa-eye"></i>
+                                Ver Detalles
+                            </button>
+                        </div>
+                    </div>
+                    <div class="featured-product-visual">
+                        <div class="product-image-container">
+                            <img src="images/products/running-shoes.svg" alt="Producto Estrella" id="featuredProductImage" loading="eager">
+                            <div class="product-glow"></div>
+                        </div>
+                        <div class="product-badges">
+                            <div class="badge badge-premium">Premium</div>
+                            <div class="badge badge-bestseller">Más Vendido</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cartelera de Anuncios Premium -->
+            <div class="hero-premium-billboard" id="heroPremiumBillboard">
+                <div class="billboard-header">
+                    <h2 class="billboard-title">
+                        <i class="fas fa-crown"></i>
+                        ANUNCIOS PREMIUM
+                    </h2>
+                    <p class="billboard-subtitle">Oportunidades exclusivas para revendedores</p>
+                </div>
+                
+                <div class="billboard-slider" id="billboardSlider">
+                    <!-- Anuncio 1: Oferta Especial -->
+                    <div class="billboard-slide active" data-slide="1">
+                        <div class="slide-content">
+                            <div class="slide-icon">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="slide-text">
+                                <h3>OFERTA ESPECIAL</h3>
+                                <p>Descuento del 25% en pedidos mayoristas superiores a $500.000</p>
+                                <div class="slide-timer">
+                                    <span class="timer-label">Termina en:</span>
+                                    <div class="countdown" id="countdown1">
+                                        <span class="time-unit">02</span>d
+                                        <span class="time-unit">18</span>h
+                                        <span class="time-unit">45</span>m
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="slide-cta">Ver Oferta</button>
+                        </div>
+                    </div>
+
+                    <!-- Anuncio 2: Nuevo Producto -->
+                    <div class="billboard-slide" data-slide="2">
+                        <div class="slide-content">
+                            <div class="slide-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="slide-text">
+                                <h3>NUEVO LANZAMIENTO</h3>
+                                <p>Colección Invierno 2024 - Exclusiva para revendedores premium</p>
+                                <div class="slide-features">
+                                    <span class="feature-tag">Exclusivo</span>
+                                    <span class="feature-tag">Limitado</span>
+                                </div>
+                            </div>
+                            <button class="slide-cta">Explorar</button>
+                        </div>
+                    </div>
+
+                    <!-- Anuncio 3: Programa de Fidelidad -->
+                    <div class="billboard-slide" data-slide="3">
+                        <div class="slide-content">
+                            <div class="slide-icon">
+                                <i class="fas fa-gem"></i>
+                            </div>
+                            <div class="slide-text">
+                                <h3>PROGRAMA VIP</h3>
+                                <p>Acceso prioritario a nuevos productos y descuentos exclusivos</p>
+                                <div class="slide-benefits">
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check"></i>
+                                        <span>Envío Gratis</span>
+                                    </div>
+                                    <div class="benefit-item">
+                                        <i class="fas fa-check"></i>
+                                        <span>Descuentos Especiales</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="slide-cta">Unirse</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controles del Slider -->
+                <div class="billboard-controls">
+                    <button class="control-btn prev" id="billboardPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="control-dots" id="billboardDots">
+                        <span class="dot active" data-slide="1"></span>
+                        <span class="dot" data-slide="2"></span>
+                        <span class="dot" data-slide="3"></span>
+                    </div>
+                    <button class="control-btn next" id="billboardNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Sidebar -->
+        <div class="hero-sidebar">
+            <div class="hero-sidebar-content">
+                <div class="sidebar-brand">
+                    <div class="brand-logo">
+                    <i class="fas fa-shoe-prints"></i>
+                    </div>
+                    <div class="brand-text">
+                        <span class="brand-tagline">STYLE TAKES OVER</span>
+                        <span class="brand-year">2024</span>
+                    </div>
+                </div>
+                <div class="sidebar-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">2,847</span>
+                            <span class="stat-label">Clientes Satisfechos</span>
+            </div>
+        </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number">24h</span>
+                            <span class="stat-label">Envío Rápido</span>
+            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showroom Banner -->
+    <section class="showroom-banner">
+        <div class="container">
+            <div class="showroom-content">
+                <div class="showroom-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="showroom-info">
+                    <h3>Showroom en Mar del Plata</h3>
+                    <p><strong>Ubicación:</strong> Zona Jara y Berutti</p>
+                    <p class="showroom-note">Pueden visitar nuestro showroom siempre que hayan realizado un pedido previamente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Colección Premium</h2>
+                <p>Calzados de alta calidad para cada ocasión</p>
+            </div>
+            
+            <!-- Filtros de productos -->
+            <div class="products-filters">
+                <div class="filter-group">
+                    <label for="categoryFilter">Categoría:</label>
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">Todas las categorías</option>
+                        <option value="deportivo">Deportivo</option>
+                        <option value="casual">Casual</option>
+                        <option value="formal">Formal</option>
+                        <option value="verano">Verano</option>
+                        <option value="invierno">Invierno</option>
+                        <option value="urbano">Urbano</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="priceFilter">Precio:</label>
+                    <select id="priceFilter" class="filter-select">
+                        <option value="">Todos los precios</option>
+                        <option value="premium">Premium (+$35.000)</option>
+                        <option value="standard">Estándar (-$35.000)</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="sortFilter">Ordenar por:</label>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="">Ordenar por</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="rating">Mejor Valorados</option>
+                        <option value="name">Nombre A-Z</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="clearFilters" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                        Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <!-- Historia de la Empresa -->
+            <div class="about-section company-history">
+                <div class="section-header">
+                    <h2>Nuestra Historia</h2>
+                    <p class="section-subtitle">Más de una década de pasión por el calzado</p>
+                </div>
+                <div class="history-content">
+                    <div class="history-text">
+                        <p class="history-intro">Fundada en 2012 en el corazón de Mar del Plata, Éter Store nació de la visión de crear un espacio donde la calidad, el estilo y la comodidad se encontraran en perfecta armonía.</p>
+                        <p>Lo que comenzó como una pequeña tienda familiar se ha convertido en un referente en el mercado del calzado premium, gracias a nuestro compromiso inquebrantable con la excelencia y la atención personalizada.</p>
+                        <p>Hoy, con más de 10 años de experiencia, seguimos siendo fieles a nuestros valores fundacionales mientras innovamos constantemente para ofrecer la mejor experiencia de compra a nuestros clientes.</p>
+                    </div>
+                    <div class="history-visual">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2012</div>
+                                <div class="timeline-content">
+                                    <h4>Fundación</h4>
+                                    <p>Nacimiento de Éter Store en Mar del Plata</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2015</div>
+                                <div class="timeline-content">
+                                    <h4>Expansión</h4>
+                                    <p>Ampliación de catálogo y servicios</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2018</div>
+                                <div class="timeline-content">
+                                    <h4>Digital</h4>
+                                    <p>Lanzamiento de plataforma online</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-marker">2024</div>
+                                <div class="timeline-content">
+                                    <h4>Innovación</h4>
+                                    <p>Líder en calzado premium</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Misión, Visión y Valores -->
+            <div class="about-section mission-vision">
+                <div class="mv-grid">
+                    <div class="mv-card mission">
+                        <div class="mv-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3>Nuestra Misión</h3>
+                        <p>Ofrecer calzados de la más alta calidad que combinen elegancia, comodidad y durabilidad, proporcionando a nuestros clientes una experiencia de compra excepcional y productos que superen sus expectativas.</p>
+                    </div>
+                    <div class="mv-card vision">
+                        <div class="mv-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h3>Nuestra Visión</h3>
+                        <p>Ser reconocidos como el referente líder en calzado premium en Mar del Plata y la región, destacando por nuestra innovación, calidad y compromiso con la satisfacción total del cliente.</p>
+                    </div>
+                    <div class="mv-card values">
+                        <div class="mv-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Nuestros Valores</h3>
+                        <ul class="values-list">
+                            <li><strong>Calidad:</strong> Excelencia en cada producto</li>
+                            <li><strong>Integridad:</strong> Transparencia en todas nuestras acciones</li>
+                            <li><strong>Innovación:</strong> Mejora continua y adaptación</li>
+                            <li><strong>Servicio:</strong> Atención personalizada y dedicada</li>
+                            <li><strong>Confianza:</strong> Relaciones duraderas con nuestros clientes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Características Destacadas -->
+            <div class="about-section features">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h4>Envío Rápido</h4>
+                        <p>Entrega en 24-48 horas en Mar del Plata y alrededores</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Garantía Total</h4>
+                        <p>30 días de garantía en todos nuestros productos</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <h4>Atención Personalizada</h4>
+                        <p>Soporte especializado antes, durante y después de la compra</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h4>Calidad Premium</h4>
+                        <p>Selección cuidadosa de materiales y acabados de primera</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                        <h4>Cambios y Devoluciones</h4>
+                        <p>Política flexible de cambios y devoluciones sin complicaciones</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <h4>Precios Mayoristas</h4>
+                        <p>Precios especiales para revendedores con márgenes competitivos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Contáctanos</h2>
+                <p>Estamos aquí para ayudarte a encontrar el calzado perfecto</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Showroom</h3>
+                            <p>Zona Jara y Berutti, Mar del Plata</p>
+                            <p class="contact-note">Visita con cita previa</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Teléfono</h3>
+                            <p>+54 223 502 5196</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>equiporeveter@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Tu email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Tu mensaje" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Información de la Empresa -->
+                <div class="footer-section company-info">
+                    <div class="footer-logo">
+                    <h3>Éter Store</h3>
+                        <p class="footer-tagline">Calzados Premium en Mar del Plata</p>
+                    </div>
+                    <p class="footer-description">Tu destino para calzados de la más alta calidad. Combinamos elegancia, comodidad y durabilidad en cada paso que das.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Síguenos en Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" aria-label="Síguenos en Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/5492235025196" target="_blank" aria-label="Contáctanos por WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navegación Principal -->
+                <div class="footer-section">
+                    <h4>Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#products">Calzados</a></li>
+                        <li><a href="#about">Quiénes Somos</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Información Legal -->
+                <div class="footer-section">
+                    <h4>Información Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Información de Contacto -->
+                <div class="footer-section contact-info">
+                    <h4>Contacto</h4>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <strong>Showroom</strong>
+                                <p>Zona Jara y Berutti<br>Mar del Plata</p>
+                                <small>Visita con cita previa</small>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div>
+                                <strong>Teléfono</strong>
+                                <p>+54 223 502 5196</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <p>equiporeveter@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <div class="copyright">
+                <p>&copy; 2024 Éter Store. Todos los derechos reservados.</p>
+                    </div>
+                    <div class="footer-bottom-links">
+                        <a href="politica-privacidad.html">Privacidad</a>
+                        <span class="separator">|</span>
+                        <a href="terminos-condiciones.html">Términos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Carrito de Compras - Diseño Minimalista -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <!-- Encabezado Minimalista -->
+            <div class="cart-header">
+                <div class="cart-title">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Carrito</h3>
+                    <span class="cart-count-badge" id="cartCountBadge">0</span>
+                </div>
+                <button class="close-cart" id="closeCart" aria-label="Cerrar carrito">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- Lista de Productos Simplificada -->
+            <div class="cart-body">
+                <div class="cart-items" id="cartItems">
+                    <!-- Items del carrito se renderizan aquí -->
+                </div>
+                
+                <!-- Estado Vacío -->
+                <div class="cart-empty" id="cartEmpty">
+                    <div class="empty-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h4>Carrito vacío</h4>
+                    <p>Agrega productos para comenzar</p>
+                    <button class="btn btn-primary" onclick="window.cart.closeCart()">
+                        Continuar Comprando
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Resumen Simplificado -->
+            <div class="cart-summary" id="cartSummary">
+                <div class="summary-info">
+                    <div class="summary-items">
+                        <span>Productos:</span>
+                        <span id="totalItems">0</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span id="finalPrice">$0</span>
+                    </div>
+                </div>
+                <div class="summary-actions">
+                    <button class="btn btn-secondary" id="clearCartBtn">
+                        Vaciar
+                    </button>
+                    <button class="btn btn-primary" id="checkoutBtn">
+                        Finalizar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal Inteligente -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <div class="checkout-header">
+                <h3>Finalizar Pedido</h3>
+                <button id="closeCheckout" class="close-checkout">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="checkoutForm" class="checkout-form">
+                <!-- Paso 1: Método de Entrega -->
+                <div class="form-step active" id="deliveryStep">
+                    <h4>¿Cómo quieres recibir tu pedido?</h4>
+                    <div class="delivery-options">
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryMethod" value="shipping" required>
+                            <div class="option-content">
+                                <i class="fas fa-truck"></i>
+                                <div>
+                                    <h5>Envío a Domicilio</h5>
+                                    <p>Entrega en tu dirección</p>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="delivery-option">
+                            <input type="radio" name="deliveryMethod" value="pickup" required>
+                            <div class="option-content">
+                                <i class="fas fa-store"></i>
+                                <div>
+                                    <h5>Retiro en Showroom</h5>
+                                    <p>Zona Jara y Berutti, Mar del Plata</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">Continuar</button>
+                </div>
+
+                <!-- Paso 2: Datos del Cliente -->
+                <div class="form-step" id="customerStep">
+                    <h4>Datos del Cliente</h4>
+                    <div class="form-group">
+                        <input type="text" id="customerName" name="customerName" placeholder="Nombre completo *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="customerPhone" name="customerPhone" placeholder="Teléfono *" required>
+                    </div>
+                    <div class="form-group" id="addressGroup">
+                        <textarea id="customerAddress" name="customerAddress" placeholder="Dirección de entrega *" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <select id="deliveryTime" name="deliveryTime">
+                            <option value="">Horario preferido</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="18:00">18:00</option>
+                            <option value="flexible">Horario flexible</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="paymentMethod" name="paymentMethod" required>
+                            <option value="">Forma de pago *</option>
+                            <option value="cash">Efectivo</option>
+                            <option value="transfer">Transferencia Bancaria</option>
+                        </select>
+                    </div>
+                    <div class="step-actions">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Anterior</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i>
+                            Enviar Pedido
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-content">
+            <div class="success-icon">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <h3>¡Pedido Enviado Exitosamente!</h3>
+            <p>Tu pedido ha sido enviado por WhatsApp al número +54 223 502 5196. El equipo de Éter Store se pondrá en contacto contigo en breve para confirmar los detalles y coordinar la entrega.</p>
+            <button class="btn btn-primary" id="continueShopping">Continuar Comprando</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

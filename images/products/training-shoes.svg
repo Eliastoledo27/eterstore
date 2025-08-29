@@ -1,0 +1,55 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trainingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF4500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DC143C;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="trainingAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8941f;stop-opacity:1" />
+    </linearGradient>
+    <filter id="trainingShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#trainingGradient)" opacity="0.1"/>
+  
+  <!-- Training shoes -->
+  <g transform="translate(200, 150)" filter="url(#trainingShadow)">
+    <!-- Shoe sole -->
+    <path d="M-120,40 Q-100,30 -80,30 L80,30 Q100,35 110,45 L115,55 Q110,65 100,70 L-80,70 Q-100,65 -120,55 Z" 
+          fill="#1a1a1a" stroke="url(#trainingAccent)" stroke-width="2"/>
+    
+    <!-- Shoe upper -->
+    <path d="M-110,55 Q-90,45 -70,45 L70,45 Q90,50 100,60 L105,70 Q90,75 70,75 L-70,75 Q-90,70 -110,60 Z" 
+          fill="url(#trainingGradient)" stroke="url(#trainingAccent)" stroke-width="1"/>
+    
+    <!-- Shoe tongue -->
+    <path d="M-80,45 Q-60,35 -40,35 L40,35 Q60,40 70,50 L75,60 Q60,65 40,65 L-40,65 Q-60,60 -80,50 Z" 
+          fill="url(#trainingAccent)" stroke="#b8941f" stroke-width="1"/>
+    
+    <!-- Shoe laces -->
+    <path d="M-90,50 L-70,50 M-90,55 L-70,55 M-90,60 L-70,60 M-90,65 L-70,65" 
+          stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Shoe logo -->
+    <circle cx="-50" cy="55" r="8" fill="url(#trainingAccent)" stroke="#b8941f" stroke-width="1"/>
+    <text x="-50" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#1a1a1a">É</text>
+  </g>
+  
+  <!-- Training elements -->
+  <g opacity="0.6">
+    <circle cx="80" cy="80" r="4" fill="url(#trainingGradient)"/>
+    <circle cx="320" cy="120" r="3" fill="url(#trainingGradient)"/>
+    <circle cx="120" cy="220" r="5" fill="url(#trainingGradient)"/>
+    <circle cx="280" cy="240" r="4" fill="url(#trainingGradient)"/>
+  </g>
+  
+  <!-- Energy lines -->
+  <g opacity="0.4">
+    <path d="M50,100 L70,100 M50,105 L70,105 M50,110 L70,110" stroke="url(#trainingAccent)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M330,200 L350,200 M330,205 L350,205 M330,210 L350,210" stroke="url(#trainingAccent)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg> 

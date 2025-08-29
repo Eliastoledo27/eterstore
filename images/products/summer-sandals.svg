@@ -1,0 +1,53 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="summerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA500;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="strapGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F5DEB3;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#DEB887;stop-opacity:1" />
+    </linearGradient>
+    <filter id="summerShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#summerGradient)" opacity="0.1"/>
+  
+  <!-- Summer sandals -->
+  <g transform="translate(200, 150)" filter="url(#summerShadow)">
+    <!-- Sandal sole -->
+    <path d="M-120,40 Q-100,30 -80,30 L80,30 Q100,35 110,45 L115,55 Q110,65 100,70 L-80,70 Q-100,65 -120,55 Z" 
+          fill="url(#summerGradient)" stroke="#FFA500" stroke-width="2"/>
+    
+    <!-- Sandal straps -->
+    <path d="M-90,45 Q-70,35 -50,35 L-30,35 Q-10,40 0,50 L0,60 Q-10,70 -30,70 L-50,70 Q-70,65 -90,55 Z" 
+          fill="url(#strapGradient)" stroke="#DEB887" stroke-width="1"/>
+    
+    <path d="M-30,45 Q-10,35 10,35 L30,35 Q50,40 60,50 L60,60 Q50,70 30,70 L10,70 Q-10,65 -30,55 Z" 
+          fill="url(#strapGradient)" stroke="#DEB887" stroke-width="1"/>
+    
+    <path d="M30,45 Q50,35 70,35 L90,35 Q110,40 120,50 L120,60 Q110,70 90,70 L70,70 Q50,65 30,55 Z" 
+          fill="url(#strapGradient)" stroke="#DEB887" stroke-width="1"/>
+    
+    <!-- Sandal logo -->
+    <circle cx="-50" cy="55" r="8" fill="url(#summerGradient)" stroke="#FFA500" stroke-width="1"/>
+    <text x="-50" y="58" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="700" fill="#ffffff">É</text>
+  </g>
+  
+  <!-- Summer elements -->
+  <g opacity="0.6">
+    <circle cx="80" cy="80" r="4" fill="url(#summerGradient)"/>
+    <circle cx="320" cy="120" r="3" fill="url(#summerGradient)"/>
+    <circle cx="120" cy="220" r="5" fill="url(#summerGradient)"/>
+    <circle cx="280" cy="240" r="4" fill="url(#summerGradient)"/>
+  </g>
+  
+  <!-- Sun rays -->
+  <g opacity="0.4">
+    <path d="M350,50 L370,50 M355,55 L375,55 M360,60 L380,60" stroke="url(#summerGradient)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M350,60 L370,60 M355,65 L375,65 M360,70 L380,70" stroke="url(#summerGradient)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg> 

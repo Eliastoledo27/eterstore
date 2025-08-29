@@ -1,0 +1,59 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="winterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4682B4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2F4F4F;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="winterAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8941f;stop-opacity:1" />
+    </linearGradient>
+    <filter id="winterShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="15" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="300" fill="url(#winterGradient)" opacity="0.1"/>
+  
+  <!-- Winter boots -->
+  <g transform="translate(200, 150)" filter="url(#winterShadow)">
+    <!-- Boot sole -->
+    <path d="M-100,60 Q-80,50 -60,50 L60,50 Q80,55 90,65 L95,75 Q90,85 80,90 L-60,90 Q-80,85 -100,75 Z" 
+          fill="#1a1a1a" stroke="url(#winterAccent)" stroke-width="2"/>
+    
+    <!-- Boot upper -->
+    <path d="M-90,75 Q-70,65 -50,65 L50,65 Q70,70 80,80 L85,90 Q70,95 50,95 L-50,95 Q-70,90 -90,80 Z" 
+          fill="url(#winterGradient)" stroke="url(#winterAccent)" stroke-width="1"/>
+    
+    <!-- Boot shaft -->
+    <path d="M-80,90 Q-60,80 -40,80 L40,80 Q60,85 70,95 L75,105 Q60,110 40,110 L-40,110 Q-60,105 -80,95 Z" 
+          fill="url(#winterGradient)" stroke="url(#winterAccent)" stroke-width="1"/>
+    
+    <!-- Boot top -->
+    <path d="M-70,105 Q-50,95 -30,95 L30,95 Q50,100 60,110 L65,120 Q50,125 30,125 L-30,125 Q-50,120 -70,110 Z" 
+          fill="url(#winterAccent)" stroke="#b8941f" stroke-width="1"/>
+    
+    <!-- Boot laces -->
+    <path d="M-60,85 L-40,85 M-60,90 L-40,90 M-60,95 L-40,95 M-60,100 L-40,100" 
+          stroke="url(#winterAccent)" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Boot logo -->
+    <circle cx="-50" cy="100" r="10" fill="url(#winterGradient)" stroke="url(#winterAccent)" stroke-width="1"/>
+    <text x="-50" y="104" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="url(#winterAccent)">É</text>
+  </g>
+  
+  <!-- Winter elements -->
+  <g opacity="0.6">
+    <circle cx="80" cy="80" r="3" fill="url(#winterGradient)"/>
+    <circle cx="320" cy="120" r="2" fill="url(#winterGradient)"/>
+    <circle cx="120" cy="220" r="4" fill="url(#winterGradient)"/>
+    <circle cx="280" cy="240" r="3" fill="url(#winterGradient)"/>
+  </g>
+  
+  <!-- Snow elements -->
+  <g opacity="0.4">
+    <path d="M50,100 L70,100 M50,105 L70,105" stroke="url(#winterAccent)" stroke-width="2" stroke-linecap="round"/>
+    <path d="M330,200 L350,200 M330,205 L350,205" stroke="url(#winterAccent)" stroke-width="2" stroke-linecap="round"/>
+  </g>
+</svg> 
