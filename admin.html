@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Éter Store</title>
+    <meta name="description" content="Panel de administración de Éter Store - Gestiona productos, pedidos y contenido">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos para el panel de administración */
+        :root {
+            --admin-primary: #4338ca;
+            --admin-primary-dark: #3730a3;
+            --admin-accent: #d4af37;
+            --admin-bg: #0f172a;
+            --admin-bg-light: #1e293b;
+            --admin-text: #e0e7ff;
+            --admin-text-secondary: #94a3b8;
+            --admin-border: rgba(139, 92, 246, 0.2);
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: var(--admin-bg);
+            color: var(--admin-text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        /* Sidebar */
+        .admin-sidebar {
+            width: 280px;
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border-right: 1px solid var(--admin-border);
+            padding: 1.5rem 0;
+            transition: all 0.3s ease;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+        .sidebar-header {
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid var(--admin-border);
+            margin-bottom: 1.5rem;
+        }
+        .sidebar-header h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--admin-accent) 0%, #f4d03f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            margin-bottom: 0.25rem;
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            color: var(--admin-text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            color: var(--admin-accent);
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 3px solid var(--admin-accent);
+        }
+        .sidebar-menu a i {
+            width: 24px;
+            text-align: center;
+        }
+        /* Main Content */
+        .admin-main {
+            flex: 1;
+            margin-left: 280px;
+            padding: 1.5rem;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--admin-border);
+        }
+        .admin-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Dashboard Cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .dashboard-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--admin-border);
+            transition: all 0.3s ease;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(99, 102, 241, 0.3);
+            border-color: rgba(139, 92, 246, 0.4);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--admin-text-secondary);
+        }
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .icon-products {
+            background: rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+        }
+        .icon-orders {
+            background: rgba(236, 72, 153, 0.2);
+            color: #ec4899;
+        }
+        .icon-revenue {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        .icon-users {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+        .card-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--admin-text-secondary);
+        }
+        .positive {
+            color: #22c55e;
+        }
+        .negative {
+            color: #ef4444;
+        }
+        /* Tables & Sections */
+        .admin-section {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--admin-border);
+            margin-bottom: 2rem;
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap; /* Para que en pantallas pequeñas los botones bajen */
+            gap: 1rem; /* Espacio entre elementos */
+        }
+        
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0; /* Reset margin */
+        }
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.95rem;
+            text-decoration: none; /* Para enlaces que se vean como botones */
+            justify-content: center; /* Centrar contenido */
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--admin-accent) 0%, #f4d03f 100%);
+            color: var(--admin-bg);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--admin-text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .btn-danger {
+             background: rgba(239, 68, 68, 0.2);
+             color: #ef4444;
+             border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+        /* Tables */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .admin-table th {
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            color: var(--admin-text-secondary);
+            border-bottom: 1px solid var(--admin-border);
+        }
+        .admin-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+        }
+        .admin-table tr:hover td {
+            background: rgba(212, 175, 55, 0.05);
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .status-pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        .status-processing {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+        }
+        .status-completed {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--admin-text);
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--admin-text);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--admin-accent);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+        }
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Enhanced Product Card - Matching front-end design */
+        .product-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.95));
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 0 20px rgba(212, 175, 55, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow:
+                0 20px 40px rgba(212, 175, 55, 0.25),
+                0 0 0 1px rgba(212, 175, 55, 0.3),
+                0 0 30px rgba(212, 175, 55, 0.15);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 200px;
+            background: linear-gradient(45deg, #1e293b, #0f172a);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: linear-gradient(135deg, var(--admin-accent), #f4d03f);
+            color: var(--admin-bg);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-badge.new {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        }
+
+        .product-badge.sale {
+            background: linear-gradient(135deg, #ef4444, #f87171);
+        }
+
+        .product-badge.popular {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+
+        .product-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--admin-accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--admin-text);
+            margin-bottom: 0.7rem;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+            white-space: normal;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-card:hover .product-name {
+            color: var(--admin-accent);
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--admin-text-secondary);
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rating-stars {
+            color: #fbbf24;
+            margin-right: 0.7rem;
+            font-size: 0.9rem;
+        }
+
+        .rating-count {
+            font-size: 0.85rem;
+            color: var(--admin-text-secondary);
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-bottom: 1.5rem;
+            color: var(--admin-text);
+            font-weight: 600;
+        }
+
+        .original-price {
+            font-size: 0.95rem;
+            color: var(--admin-text-secondary);
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+        }
+
+        .current-price {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--admin-accent);
+            background: linear-gradient(135deg, var(--admin-accent), #f4d03f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .discount-percentage {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            align-self: flex-start;
+        }
+
+        .product-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.7rem;
+        }
+
+        .action-btn {
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .action-btn:hover::before {
+            left: 100%;
+        }
+
+        .edit-btn {
+            background: rgba(212, 175, 55, 0.1);
+            color: var(--admin-accent);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .edit-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .preview-btn {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            grid-column: span 2;
+        }
+
+        .preview-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-content {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--admin-border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: slideIn 0.4s ease;
+        }
+        @keyframes slideIn {
+            from {transform: translateY(-50px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+        .close {
+            color: var(--admin-text-secondary);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+        }
+        .close:hover,
+        .close:focus {
+            color: var(--admin-accent);
+        }
+        .modal-header {
+             margin-bottom: 1.5rem;
+             padding-bottom: 1rem;
+             border-bottom: 1px solid var(--admin-border);
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .modal-footer {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--admin-border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Responsive */
+        @media (max-width: 992px) {
+            .admin-sidebar {
+                width: 80px;
+            }
+            .sidebar-header h2, .sidebar-menu a span {
+                display: none;
+            }
+            .sidebar-menu a {
+                justify-content: center;
+                padding: 1rem;
+            }
+            .admin-main {
+                margin-left: 80px;
+            }
+        }
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                width: 0;
+                overflow: hidden;
+            }
+            .admin-main {
+                margin-left: 0;
+            }
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .section-header .btn {
+                width: 100%;
+            }
+             .products-grid {
+                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+             }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Éter Store</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#dashboard" class="active" data-section="dashboard"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                <li><a href="#products" data-section="products"><i class="fas fa-box"></i> <span>Productos</span></a></li>
+                <li><a href="#orders" data-section="orders"><i class="fas fa-shopping-cart"></i> <span>Pedidos</span></a></li>
+                <li><a href="#customers" data-section="customers"><i class="fas fa-users"></i> <span>Clientes</span></a></li>
+                <li><a href="#analytics" data-section="analytics"><i class="fas fa-chart-line"></i> <span>Analíticas</span></a></li>
+                <li><a href="#content" data-section="content"><i class="fas fa-file-alt"></i> <span>Contenido</span></a></li>
+                <li><a href="#settings" data-section="settings"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
+                <li><a href="index.html"><i class="fas fa-arrow-left"></i> <span>Volver a la tienda</span></a></li>
+            </ul>
+        </aside>
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Panel de Administración</h1>
+                <div class="admin-actions">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user"></i>
+                        <span>Admin User</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="admin-section active">
+                <!-- Dashboard Cards -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Total Productos</div>
+                            <div class="card-icon icon-products">
+                                <i class="fas fa-box"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="totalProductsCount">142</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-up positive"></i>
+                            <span class="positive">12% desde el mes pasado</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Pedidos Pendientes</div>
+                            <div class="card-icon icon-orders">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="pendingOrdersCount">24</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-down negative"></i>
+                            <span class="negative">3% desde la semana pasada</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Ingresos Mensuales</div>
+                            <div class="card-icon icon-revenue">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="monthlyRevenue">$24,580</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-up positive"></i>
+                            <span class="positive">18% desde el mes pasado</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Clientes Nuevos</div>
+                            <div class="card-icon icon-users">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="card-value" id="newCustomersCount">56</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-up positive"></i>
+                            <span class="positive">8% desde el mes pasado</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Recent Orders (movido aquí para que esté dentro del dashboard) -->
+                <div class="admin-section active"> <!-- Sección activa dentro del dashboard -->
+                    <div class="section-header">
+                        <h2 class="section-title">Pedidos Recientes</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            <span>Nuevo Pedido</span>
+                        </button>
+                    </div>
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentOrdersTableBody">
+                            <!-- Filas de pedidos recientes se generarán aquí -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Products Section -->
+            <div id="products" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Productos</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i>
+                            <span>Agregar Producto</span>
+                        </button>
+                        <a href="productos.html" target="_blank" class="btn btn-secondary">
+                            <i class="fas fa-eye"></i>
+                            <span>Ver en Front-end</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="searchProductsInput" class="form-control" placeholder="Buscar productos...">
+                </div>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Tarjetas de productos se generarán aquí -->
+                </div>
+            </div>
+            <!-- Orders Section -->
+            <div id="orders" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Pedidos</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-filter"></i>
+                        <span>Filtrar Pedidos</span>
+                    </button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID Pedido</th>
+                            <th>Cliente</th>
+                            <th>Fecha</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- Filas de pedidos se generarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Customers Section -->
+            <div id="customers" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Clientes</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Agregar Cliente</span>
+                    </button>
+                </div>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ID Cliente</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Última Compra</th>
+                            <th>Total Gastado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                         <!-- Filas de clientes se generarán aquí -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Analytics Section -->
+            <div id="analytics" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Analíticas</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        <span>Exportar Datos</span>
+                    </button>
+                </div>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Ventas Totales</div>
+                            <div class="card-icon icon-revenue">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">$124,580</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-up positive"></i>
+                            <span class="positive">22% desde el año pasado</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Productos Más Vendidos</div>
+                            <div class="card-icon icon-products">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">Zapatillas Premium</div>
+                        <div class="card-footer">
+                            <span>1,245 unidades vendidas</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Tasa de Conversión</div>
+                            <div class="card-icon icon-users">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">3.8%</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-up positive"></i>
+                            <span class="positive">0.5% desde el mes pasado</span>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title">Tiempo Promedio</div>
+                            <div class="card-icon icon-orders">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="card-value">2.4 min</div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-down positive"></i>
+                            <span class="positive">0.3 min menos que antes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Content Section -->
+            <div id="content" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Gestión de Contenido</h2>
+                    <button class="btn btn-primary" id="saveContentBtn">
+                        <i class="fas fa-save"></i>
+                        <span>Guardar Cambios</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="pageTitle">Título de la Página</label>
+                    <input type="text" id="pageTitle" class="form-control" value="Éter Store - Plataforma de Calzados para Revendedores">
+                </div>
+                <div class="form-group">
+                    <label for="pageDescription">Descripción SEO</label>
+                    <textarea id="pageDescription" class="form-control" rows="3">Éter Store: Tu plataforma especializada en calzados para revendedores. Descubre nuestra exclusiva colección de productos únicos y de alta calidad.</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="heroTitle">Título Hero</label>
+                    <input type="text" id="heroTitle" class="form-control" value="Colección Exclusiva Para Revendedores">
+                </div>
+                <div class="form-group">
+                    <label for="heroDescription">Descripción Hero</label>
+                    <textarea id="heroDescription" class="form-control" rows="3">Descubre nuestra plataforma especializada en calzados premium para revendedores. Ofrecemos márgenes de ganancia competitivos y una experiencia de compra excepcional.</textarea>
+                </div>
+            </div>
+            <!-- Settings Section -->
+            <div id="settings" class="admin-section">
+                <div class="section-header">
+                    <h2 class="section-title">Configuración</h2>
+                     <button class="btn btn-primary" id="saveSettingsBtn">
+                        <i class="fas fa-save"></i>
+                        <span>Guardar Configuración</span>
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="storeName">Nombre de la Tienda</label>
+                    <input type="text" id="storeName" class="form-control" value="Éter Store">
+                </div>
+                <div class="form-group">
+                    <label for="storeEmail">Email de Contacto</label>
+                    <input type="email" id="storeEmail" class="form-control" value="info@eterstore.com">
+                </div>
+                <div class="form-group">
+                    <label for="storePhone">Teléfono de Contacto</label>
+                    <input type="text" id="storePhone" class="form-control" value="+1 234 567 890">
+                </div>
+                <div class="form-group">
+                    <label for="storeAddress">Dirección</label>
+                    <input type="text" id="storeAddress" class="form-control" value="Calle Principal 123, Ciudad, País">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Agregar/Editar Producto -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                 <h2 id="modalTitle">Agregar Producto</h2>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label for="productName">Nombre del Producto</label>
+                    <input type="text" id="productName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Categoría</label>
+                    <select id="productCategory" class="form-control">
+                        <option value="deportivos">Deportivos</option>
+                        <option value="casuales">Casuales</option>
+                        <option value="botas">Botas</option>
+                        <option value="formales">Formales</option>
+                        <option value="sandalias">Sandalias</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Precio (CLP)</label>
+                    <input type="number" id="productPrice" class="form-control" min="0" step="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="productOriginalPrice">Precio Original (CLP) - Opcional</label>
+                    <input type="number" id="productOriginalPrice" class="form-control" min="0" step="100">
+                </div>
+                <div class="form-group">
+                    <label for="productImage">URL de la Imagen</label>
+                    <input type="text" id="productImage" class="form-control" placeholder="https://example.com/image.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Descripción</label>
+                    <textarea id="productDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productRating">Calificación (0-5)</label>
+                    <input type="number" id="productRating" class="form-control" min="0" max="5" step="0.1" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="productReviewCount">Número de Reseñas</label>
+                    <input type="number" id="productReviewCount" class="form-control" min="0" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="productBadge">Insignia</label>
+                    <select id="productBadge" class="form-control">
+                        <option value="">Ninguna</option>
+                        <option value="new">Nuevo</option>
+                        <option value="sale">Oferta</option>
+                        <option value="popular">Popular</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productInStock">
+                        <input type="checkbox" id="productInStock" checked> En Stock
+                    </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelProductBtn">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Datos de ejemplo
+        // Cargar productos desde localStorage o usar datos por defecto
+        let products = JSON.parse(localStorage.getItem('products')) || [
+            { 
+                id: 1, 
+                name: "Zapatillas Deportivas Ultra Boost", 
+                category: "deportivos",
+                price: 129990, 
+                originalPrice: 159990,
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Zapatillas de running con tecnología de amortiguación avanzada para máxima comodidad.", 
+                rating: 4.8,
+                reviewCount: 124,
+                badge: "sale",
+                inStock: true
+            },
+            { 
+                id: 2, 
+                name: "Bota de Cuero Clásica", 
+                category: "botas",
+                price: 89990, 
+                originalPrice: null,
+                image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Bota de cuero genuino con diseño atemporal, perfecta para looks formales o casuales.", 
+                rating: 4.6,
+                reviewCount: 89,
+                badge: "new",
+                inStock: true
+            },
+            { 
+                id: 3, 
+                name: "Sandalia de Verano Elegante", 
+                category: "casuales",
+                price: 49990, 
+                originalPrice: 59990,
+                image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Sandalia con tiras cruzadas y tacón bajo, ideal para el verano.", 
+                rating: 4.3,
+                reviewCount: 56,
+                badge: "popular",
+                inStock: false
+            },
+            { 
+                id: 4, 
+                name: "Zapato Formal de Vestir", 
+                category: "formales",
+                price: 109990, 
+                originalPrice: null,
+                image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Zapato de vestir de cuero con punta redonda, ideal para eventos formales.", 
+                rating: 4.9,
+                reviewCount: 210,
+                badge: null,
+                inStock: true
+            },
+            { 
+                id: 5, 
+                name: "Tenis Urbanos Minimalistas", 
+                category: "casuales",
+                price: 69990, 
+                originalPrice: null,
+                image: "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Tenis de estilo urbano con diseño minimalista y suela de goma duradera.", 
+                rating: 4.5,
+                reviewCount: 78,
+                badge: "new",
+                inStock: true
+            },
+            { 
+                id: 6, 
+                name: "Botín de Invierno Impermeable", 
+                category: "botas",
+                price: 119990, 
+                originalPrice: 139990,
+                image: "https://images.unsplash.com/photo-1560343090-f0409e92791a?auto=format&fit=crop&w=600&h=450&q=80", 
+                description: "Botín de invierno con forro polar y suela antideslizante para máxima protección.", 
+                rating: 4.7,
+                reviewCount: 142,
+                badge: "sale",
+                inStock: true
+            }
+        ];
+
+        const orders = [
+            { id: "ET-00124", customer: "María González", date: "15 Jun 2023", total: 124500, status: "completed" },
+            { id: "ET-00123", customer: "Carlos Rodríguez", date: "14 Jun 2023", total: 89050, status: "processing" },
+            { id: "ET-00122", customer: "Laura Martínez", date: "14 Jun 2023", total: 215075, status: "pending" },
+            { id: "ET-00121", customer: "Jorge López", date: "13 Jun 2023", total: 65000, status: "completed" },
+            { id: "ET-00120", customer: "Ana Torres", date: "12 Jun 2023", total: 187525, status: "cancelled" }
+        ];
+
+        const customers = [
+            { id: "CL-00124", name: "María González", email: "maria@example.com", lastPurchase: "15 Jun 2023", totalSpent: 124500 },
+            { id: "CL-00123", name: "Carlos Rodríguez", email: "carlos@example.com", lastPurchase: "14 Jun 2023", totalSpent: 89050 },
+            { id: "CL-00122", name: "Laura Martínez", email: "laura@example.com", lastPurchase: "14 Jun 2023", totalSpent: 215075 },
+            { id: "CL-00121", name: "Jorge López", email: "jorge@example.com", lastPurchase: "13 Jun 2023", totalSpent: 65000 },
+            { id: "CL-00120", name: "Ana Torres", email: "ana@example.com", lastPurchase: "12 Jun 2023", totalSpent: 187525 }
+        ];
+
+        // Función para formatear precios en CLP
+        function formatPrice(price) {
+            return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(price);
+        }
+
+        // Función para generar estrellas de calificación
+        function generateAdminStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+
+            for (let i = 1; i <= 5; i++) {
+                if (i <= fullStars) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+            return stars;
+        }
+
+        // Función para renderizar productos
+        function renderProducts(productsToRender = products) {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            if (productsToRender.length === 0) {
+                 productsGrid.innerHTML = '<p>No se encontraron productos.</p>';
+                 return;
+            }
+
+            productsToRender.forEach(product => {
+                // Calcular porcentaje de descuento si hay precio original
+                const discountPercentage = product.originalPrice ? 
+                    Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : null;
+                
+                // Determinar categoría por defecto si no existe
+                const category = product.category || 'Calzado';
+                
+                // Determinar si está en stock (por defecto true si no se especifica)
+                const inStock = product.inStock !== undefined ? product.inStock : true;
+                
+                // Crear la tarjeta de producto con el nuevo diseño
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.innerHTML = `
+                    <div class="product-image-wrapper">
+                        ${product.image ? `<img src="${product.image}" alt="${product.name}" class="product-image">` : '<i class="fas fa-shoe-prints product-image"></i>'}
+                        ${product.badge ? `<span class="product-badge ${product.badge}">${product.badge === 'sale' ? 'Oferta' : product.badge === 'new' ? 'Nuevo' : 'Popular'}</span>` : ''}
+                    </div>
+                    <div class="product-content">
+                        <span class="product-category">${category.charAt(0).toUpperCase() + category.slice(1)}</span>
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description || 'Sin descripción disponible'}</p>
+                        <div class="product-rating">
+                            <div class="rating-stars">${generateAdminStars(product.rating || 0)}</div>
+                            <span class="rating-count">(${product.reviewCount || 0})</span>
+                        </div>
+                        <div class="product-price">
+                            ${product.originalPrice ? `<span class="original-price">${formatPrice(product.originalPrice)}</span>` : ''}
+                            <span class="current-price">${formatPrice(product.price)}</span>
+                            ${discountPercentage ? `<span class="discount-percentage">-${discountPercentage}%</span>` : ''}
+                        </div>
+                        <div class="product-actions">
+                            <button class="action-btn edit-btn edit-product-btn" data-id="${product.id}">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="action-btn delete-btn delete-product-btn" data-id="${product.id}">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                            <button class="action-btn preview-btn preview-product-btn" data-id="${product.id}">
+                                <i class="fas fa-eye"></i> Vista Previa
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+
+            // Añadir event listeners a los nuevos botones
+            document.querySelectorAll('.edit-product-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    openEditProductModal(productId);
+                });
+            });
+
+            document.querySelectorAll('.delete-product-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = parseInt(this.getAttribute('data-id'));
+                    deleteProduct(productId);
+                });
+            });
+            
+            document.querySelectorAll('.preview-product-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Abrir productos.html en una nueva pestaña
+                    window.open('productos.html', '_blank');
+                });
+            });
+        }
+
+        // Función para renderizar pedidos (reutilizable para ambas tablas)
+        function renderOrders(ordersToRender = orders, tableBodyId) {
+             const tableBody = document.getElementById(tableBodyId);
+             tableBody.innerHTML = '';
+
+             ordersToRender.forEach(order => {
+                 const statusClass = `status-${order.status}`;
+                 const statusText = order.status === 'completed' ? 'Completado' :
+                                    order.status === 'processing' ? 'Procesando' :
+                                    order.status === 'pending' ? 'Pendiente' : 'Cancelado';
+
+                 const row = document.createElement('tr');
+                 row.innerHTML = `
+                     <td>${order.id}</td>
+                     <td>${order.customer}</td>
+                     <td>${order.date}</td>
+                     <td>${formatPrice(order.total)}</td>
+                     <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                     <td>
+                         <button class="btn btn-secondary btn-sm">
+                             <i class="fas fa-eye"></i>
+                         </button>
+                     </td>
+                 `;
+                 tableBody.appendChild(row);
+             });
+        }
+
+        // Función para renderizar clientes
+        function renderCustomers(customersToRender = customers) {
+             const tableBody = document.getElementById('customersTableBody');
+             tableBody.innerHTML = '';
+
+             customersToRender.forEach(customer => {
+                 const row = document.createElement('tr');
+                 row.innerHTML = `
+                     <td>${customer.id}</td>
+                     <td>${customer.name}</td>
+                     <td>${customer.email}</td>
+                     <td>${customer.lastPurchase}</td>
+                     <td>${formatPrice(customer.totalSpent)}</td>
+                     <td>
+                         <button class="btn btn-secondary btn-sm">
+                             <i class="fas fa-eye"></i>
+                         </button>
+                     </td>
+                 `;
+                 tableBody.appendChild(row);
+             });
+        }
+
+        // Función para abrir el modal de agregar producto
+        function openAddProductModal() {
+            document.getElementById('modalTitle').textContent = 'Agregar Producto';
+            document.getElementById('productForm').reset();
+            document.getElementById('productId').value = ''; // Limpiar ID oculto
+            // Establecer valores por defecto
+            document.getElementById('productCategory').value = 'deportivos';
+            document.getElementById('productRating').value = '0';
+            document.getElementById('productReviewCount').value = '0';
+            document.getElementById('productInStock').checked = true;
+            document.getElementById('productModal').style.display = 'block';
+        }
+
+        // Función para abrir el modal de editar producto
+        function openEditProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                document.getElementById('modalTitle').textContent = 'Editar Producto';
+                document.getElementById('productId').value = product.id;
+                document.getElementById('productName').value = product.name;
+                document.getElementById('productCategory').value = product.category || 'deportivos';
+                document.getElementById('productPrice').value = product.price;
+                document.getElementById('productOriginalPrice').value = product.originalPrice || '';
+                document.getElementById('productImage').value = product.image || '';
+                document.getElementById('productDescription').value = product.description || '';
+                document.getElementById('productRating').value = product.rating || 0;
+                document.getElementById('productReviewCount').value = product.reviewCount || 0;
+                document.getElementById('productBadge').value = product.badge || '';
+                document.getElementById('productInStock').checked = product.inStock !== undefined ? product.inStock : true;
+                document.getElementById('productModal').style.display = 'block';
+            }
+        }
+
+        // Función para cerrar el modal
+        function closeProductModal() {
+            document.getElementById('productModal').style.display = 'none';
+        }
+
+        // Función para guardar producto (agregar o editar)
+        function saveProduct(event) {
+            event.preventDefault();
+            const id = document.getElementById('productId').value;
+            const name = document.getElementById('productName').value;
+            const category = document.getElementById('productCategory').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const originalPrice = parseFloat(document.getElementById('productOriginalPrice').value) || null;
+            const image = document.getElementById('productImage').value;
+            const description = document.getElementById('productDescription').value;
+            const rating = parseFloat(document.getElementById('productRating').value) || 0;
+            const reviewCount = parseInt(document.getElementById('productReviewCount').value) || 0;
+            const badge = document.getElementById('productBadge').value || null;
+            const inStock = document.getElementById('productInStock').checked;
+
+            const productData = {
+                id: id ? parseInt(id) : null,
+                name,
+                category,
+                price,
+                originalPrice,
+                image,
+                description,
+                rating,
+                reviewCount,
+                badge,
+                inStock
+            };
+
+            if (id) {
+                // Editar producto existente
+                const productIndex = products.findIndex(p => p.id === parseInt(id));
+                if (productIndex !== -1) {
+                    products[productIndex] = { ...products[productIndex], ...productData };
+                }
+            } else {
+                // Agregar nuevo producto
+                const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                productData.id = newId;
+                products.push(productData);
+            }
+
+            // Guardar productos en localStorage
+            localStorage.setItem('products', JSON.stringify(products));
+
+            renderProducts();
+            closeProductModal();
+            alert(id ? 'Producto actualizado correctamente.' : 'Producto agregado correctamente.');
+        }
+
+        // Función para eliminar producto
+        function deleteProduct(productId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+                products = products.filter(p => p.id !== productId);
+                // Guardar productos actualizados en localStorage
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProducts();
+                alert('Producto eliminado correctamente.');
+            }
+        }
+
+        // Función para filtrar productos (búsqueda simple)
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchProductsInput').value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(searchTerm) ||
+                (product.description && product.description.toLowerCase().includes(searchTerm))
+            );
+            renderProducts(filteredProducts);
+        }
+
+        // Funcionalidad del panel de administración
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navegación entre secciones
+            const sidebarLinks = document.querySelectorAll('.sidebar-menu a[data-section]');
+            const sections = document.querySelectorAll('.admin-section');
+
+            function showSection(sectionId) {
+                 // Ocultar todas las secciones
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Mostrar la sección correspondiente
+                const targetSection = document.getElementById(sectionId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            }
+
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Remover clase active de todos los enlaces
+                    sidebarLinks.forEach(l => l.classList.remove('active'));
+                    // Agregar clase active al enlace clickeado
+                    this.classList.add('active');
+                    // Mostrar la sección correspondiente
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+
+            // --- Inicialización de datos ---
+            renderProducts();
+            renderOrders(orders, 'ordersTableBody');
+            renderOrders(orders.slice(0, 5), 'recentOrdersTableBody'); // Mostrar solo los 5 más recientes
+            renderCustomers();
+
+            // --- Event Listeners para formularios y botones ---
+            // Modal de Producto
+            document.getElementById('addProductBtn').addEventListener('click', openAddProductModal);
+            document.querySelector('#productModal .close').addEventListener('click', closeProductModal);
+            document.getElementById('cancelProductBtn').addEventListener('click', closeProductModal);
+            document.getElementById('productForm').addEventListener('submit', saveProduct);
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('productModal');
+                if (event.target == modal) {
+                    closeProductModal();
+                }
+            });
+
+            // Búsqueda de productos
+            document.getElementById('searchProductsInput').addEventListener('input', filterProducts);
+
+            // Guardar Contenido
+            document.getElementById('saveContentBtn').addEventListener('click', function() {
+                // Guardar datos del formulario de contenido en localStorage
+                const pageTitle = document.getElementById('pageTitle').value;
+                const pageDescription = document.getElementById('pageDescription').value;
+                const heroTitle = document.getElementById('heroTitle').value;
+                const heroDescription = document.getElementById('heroDescription').value;
+                
+                // Guardar en localStorage
+                localStorage.setItem('pageTitle', pageTitle);
+                localStorage.setItem('pageDescription', pageDescription);
+                localStorage.setItem('heroTitle', heroTitle);
+                localStorage.setItem('heroDescription', heroDescription);
+                
+                // También actualizar el título de la página index.html
+                const indexHeroTitle = `<span class="title-line">Colección</span>
+                        <span class="title-line title-line-highlight">Exclusiva</span>
+                        <span class="title-line">Para Revendedores</span>`;
+                localStorage.setItem('heroTitle', indexHeroTitle);
+                localStorage.setItem('heroDescription', heroDescription);
+                
+                alert('Contenido guardado exitosamente.');
+            });
+
+            // Guardar Configuración
+            document.getElementById('saveSettingsBtn').addEventListener('click', function() {
+                 // Aquí se guardarían los datos del formulario de configuración
+                 alert('Configuración guardada (simulado).');
+            });
+
+            console.log('Panel de administración cargado');
+        });
+    </script>
+</body>
+</html>
