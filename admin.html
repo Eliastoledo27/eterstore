@@ -721,7 +721,6 @@
                 <li><a href="#products" data-section="products"><i class="fas fa-box"></i> <span>Productos</span></a></li>
                 <li><a href="#orders" data-section="orders"><i class="fas fa-shopping-cart"></i> <span>Pedidos</span></a></li>
                 <li><a href="#customers" data-section="customers"><i class="fas fa-users"></i> <span>Clientes</span></a></li>
-                <li><a href="#analytics" data-section="analytics"><i class="fas fa-chart-line"></i> <span>Analíticas</span></a></li>
                 <li><a href="#content" data-section="content"><i class="fas fa-file-alt"></i> <span>Contenido</span></a></li>
                 <li><a href="#settings" data-section="settings"><i class="fas fa-cog"></i> <span>Configuración</span></a></li>
                 <li><a href="index.html"><i class="fas fa-arrow-left"></i> <span>Volver a la tienda</span></a></li>
@@ -893,69 +892,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Analytics Section -->
-            <div id="analytics" class="admin-section">
-                <div class="section-header">
-                    <h2 class="section-title">Analíticas</h2>
-                    <button class="btn btn-primary">
-                        <i class="fas fa-download"></i>
-                        <span>Exportar Datos</span>
-                    </button>
-                </div>
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-title">Ventas Totales</div>
-                            <div class="card-icon icon-revenue">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">$124,580</div>
-                        <div class="card-footer">
-                            <i class="fas fa-arrow-up positive"></i>
-                            <span class="positive">22% desde el año pasado</span>
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-title">Productos Más Vendidos</div>
-                            <div class="card-icon icon-products">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">Zapatillas Premium</div>
-                        <div class="card-footer">
-                            <span>1,245 unidades vendidas</span>
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-title">Tasa de Conversión</div>
-                            <div class="card-icon icon-users">
-                                <i class="fas fa-percentage"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">3.8%</div>
-                        <div class="card-footer">
-                            <i class="fas fa-arrow-up positive"></i>
-                            <span class="positive">0.5% desde el mes pasado</span>
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <div class="card-header">
-                            <div class="card-title">Tiempo Promedio</div>
-                            <div class="card-icon icon-orders">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                        </div>
-                        <div class="card-value">2.4 min</div>
-                        <div class="card-footer">
-                            <i class="fas fa-arrow-down positive"></i>
-                            <span class="positive">0.3 min menos que antes</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <!-- Content Section -->
             <div id="content" class="admin-section">
                 <div class="section-header">
@@ -1035,11 +972,11 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="productPrice">Precio (CLP)</label>
+                    <label for="productPrice">Precio (ARS)</label>
                     <input type="number" id="productPrice" class="form-control" min="0" step="100" required>
                 </div>
                 <div class="form-group">
-                    <label for="productOriginalPrice">Precio Original (CLP) - Opcional</label>
+                    <label for="productOriginalPrice">Precio Original (ARS) - Opcional</label>
                     <input type="number" id="productOriginalPrice" class="form-control" min="0" step="100">
                 </div>
                 <div class="form-group">
@@ -1180,9 +1117,9 @@
             { id: "CL-00120", name: "Ana Torres", email: "ana@example.com", lastPurchase: "12 Jun 2023", totalSpent: 187525 }
         ];
 
-        // Función para formatear precios en CLP
+        // Función para formatear precios en ARS
         function formatPrice(price) {
-            return new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(price);
+            return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(price);
         }
 
         // Función para generar estrellas de calificación
