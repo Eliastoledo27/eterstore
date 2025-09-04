@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos - Panel de Administración</title>
+    <meta name="description" content="Administra tu catálogo de productos">
+    <meta name="theme-color" content="#6366f1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-box"></i>
+        </div>
+        <div class="loading-spinner"></div>
+        <p>Cargando Productos...</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="productos-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="brand">
+                        <i class="fas fa-box"></i>
+                        <div class="brand-text">
+                            <h1>Productos</h1>
+                            <span>Panel de Administración</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-center">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" id="productSearch" placeholder="Buscar productos...">
+                        <button class="search-btn">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="nav-right">
+                    <div class="nav-actions">
+                        <button class="nav-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">5</span>
+                        </button>
+                        <button class="nav-btn" onclick="window.open('index.html', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                        <button class="nav-btn" onclick="location.reload()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+
+                    <div class="user-menu">
+                        <button class="user-avatar" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">Administrador</span>
+                                <span class="user-role">Product Manager</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <div class="dropdown-header">
+                                <div class="user-avatar">
+                                    <div class="avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name">Administrador</span>
+                                    <span class="user-email">admin@tiendaeter.com</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Perfil</span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Configuración</span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>Ayuda</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Cerrar Sesión</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="adminSidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>Panel Principal</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="admin.html" class="nav-link">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="analytics.html" class="nav-link">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Analytics</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Gestión</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="admin-productos.html" class="nav-link active">
+                                    <i class="fas fa-box"></i>
+                                    <span>Productos</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">24</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="pedidos.html" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Pedidos</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">12</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="clientes.html" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <span>Clientes</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">1,234</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Contenido</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="hero.html" class="nav-link">
+                                    <i class="fas fa-star"></i>
+                                    <span>Sección Hero</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="contenido.html" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Contenido</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Sistema</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="configuracion.html" class="nav-link">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Configuración</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="backup.html" class="nav-link">
+                                    <i class="fas fa-database"></i>
+                                    <span>Backup</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="quick-links">
+                        <h4>Enlaces Rápidos</h4>
+                        <div class="quick-links-grid">
+                            <a href="index.html" class="quick-link" target="_blank">
+                                <i class="fas fa-home"></i>
+                                <span>Ver Sitio</span>
+                            </a>
+                            <a href="productos.html" class="quick-link" target="_blank">
+                                <i class="fas fa-shopping-bag"></i>
+                                <span>Catálogo Público</span>
+                            </a>
+                            <a href="pedidos.html" class="quick-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Pedidos</span>
+                            </a>
+                            <a href="configuracion.html" class="quick-link">
+                                <i class="fas fa-cog"></i>
+                                <span>Configuración</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1>Gestión de Productos</h1>
+                    <p>Administra tu catálogo de productos</p>
+                </div>
+                <div class="page-header-actions">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="productSearchHeader" placeholder="Buscar productos...">
+                    </div>
+                    <select class="form-select" id="categoryFilter">
+                        <option value="">Todas las categorías</option>
+                        <option value="premium">Premium</option>
+                        <option value="standard">Estándar</option>
+                        <option value="accessories">Accesorios</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="showAddProductModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Agregar Producto</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Management -->
+            <div class="products-management">
+                <div class="products-toolbar">
+                    <div class="toolbar-left">
+                        <span class="products-count">Mostrando 24 productos</span>
+                    </div>
+                    <div class="toolbar-right">
+                        <button class="btn btn-ghost btn-sm" id="bulkEditBtn">
+                            <i class="fas fa-edit"></i>
+                            <span>Editar Múltiples</span>
+                        </button>
+                        <button class="btn btn-ghost btn-sm" id="exportProductsBtn">
+                            <i class="fas fa-download"></i>
+                            <span>Exportar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="products-grid" id="productsGrid">
+                    <div class="product-card">
+                        <div class="product-card-header">
+                            <div class="product-image">
+                                <img src="images/product-placeholder.jpg" alt="Producto Premium A">
+                                <div class="product-overlay">
+                                    <button class="btn btn-sm btn-primary" onclick="editProduct(1)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(1)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-status active">Activo</div>
+                        </div>
+                        <div class="product-card-content">
+                            <h4>Producto Premium A</h4>
+                            <p class="product-category">Categoría: Premium</p>
+                            <div class="product-meta">
+                                <span class="product-price">$25,000</span>
+                                <span class="product-stock">Stock: 45</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-card-header">
+                            <div class="product-image">
+                                <img src="images/product-placeholder.jpg" alt="Producto Premium B">
+                                <div class="product-overlay">
+                                    <button class="btn btn-sm btn-primary" onclick="editProduct(2)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(2)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-status active">Activo</div>
+                        </div>
+                        <div class="product-card-content">
+                            <h4>Producto Premium B</h4>
+                            <p class="product-category">Categoría: Premium</p>
+                            <div class="product-meta">
+                                <span class="product-price">$18,500</span>
+                                <span class="product-stock">Stock: 32</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span>(4.6)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-card-header">
+                            <div class="product-image">
+                                <img src="images/product-placeholder.jpg" alt="Producto Estándar C">
+                                <div class="product-overlay">
+                                    <button class="btn btn-sm btn-primary" onclick="editProduct(3)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(3)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-status warning">Stock Bajo</div>
+                        </div>
+                        <div class="product-card-content">
+                            <h4>Producto Estándar C</h4>
+                            <p class="product-category">Categoría: Estándar</p>
+                            <div class="product-meta">
+                                <span class="product-price">$12,000</span>
+                                <span class="product-stock">Stock: 3</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(4.2)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-card-header">
+                            <div class="product-image">
+                                <img src="images/product-placeholder.jpg" alt="Accesorio D">
+                                <div class="product-overlay">
+                                    <button class="btn btn-sm btn-primary" onclick="editProduct(4)">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteProduct(4)">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="product-status active">Activo</div>
+                        </div>
+                        <div class="product-card-content">
+                            <h4>Accesorio D</h4>
+                            <p class="product-category">Categoría: Accesorios</p>
+                            <div class="product-meta">
+                                <span class="product-price">$8,500</span>
+                                <span class="product-stock">Stock: 67</span>
+                            </div>
+                            <div class="product-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>(4.0)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="products-pagination">
+                    <button class="btn btn-ghost btn-sm" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="pagination-info">Página 1 de 3</span>
+                    <button class="btn btn-ghost btn-sm">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal-overlay" id="addProductModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Agregar Nuevo Producto</h3>
+                <button class="modal-close" onclick="closeAddProductModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addProductForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="productName">Nombre del Producto</label>
+                            <input type="text" id="productName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productCategory">Categoría</label>
+                            <select id="productCategory" class="form-select" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="premium">Premium</option>
+                                <option value="standard">Estándar</option>
+                                <option value="accessories">Accesorios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Precio</label>
+                            <input type="number" id="productPrice" class="form-input" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productStock">Stock</label>
+                            <input type="number" id="productStock" class="form-input" min="0" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="productDescription">Descripción</label>
+                            <textarea id="productDescription" class="form-textarea" rows="4"></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="productImage">Imagen del Producto</label>
+                            <input type="file" id="productImage" class="form-input" accept="image/*">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeAddProductModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveProduct()">Guardar Producto</button>
+            </div>
+        </div>
+    </div>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/productos.js"></script>
+</body>
+</html>
+
+
+

@@ -4,209 +4,425 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éter Store - Calzados Premium</title>
+    <meta name="description" content="Éter Store - Calzados premium de cuero genuino. Descubre la perfecta fusión entre elegancia y comodidad con envío gratuito y garantía de calidad.">
+    <meta name="keywords" content="calzados premium, zapatos de cuero, calzado elegante, zapatos cómodos, tienda de zapatos">
+    <meta name="author" content="Éter Store">
+    <title>Éter Store - Calzados Premium de Cuero Genuino</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <!-- Skip Link para accesibilidad -->
+    <a href="#home" class="skip-link">Saltar al contenido principal</a>
     <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Navegación principal">
             <div class="nav-container">
                 <div class="nav-logo">
                     <h2>Éter Store</h2>
                 </div>
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="#home" class="nav-link">Inicio</a>
+                <ul class="nav-menu" role="menubar">
+                    <li class="nav-item" role="none">
+                        <a href="#home" class="nav-link" role="menuitem" aria-label="Ir a la sección de inicio">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#products" class="nav-link">Calzados</a>
+                    <li class="nav-item" role="none">
+                        <a href="#products" class="nav-link" role="menuitem" aria-label="Ver productos de calzados">Calzados</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#about" class="nav-link">Nosotros</a>
+                    <li class="nav-item" role="none">
+                        <a href="#about" class="nav-link" role="menuitem" aria-label="Conocer más sobre nosotros">Nosotros</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#contact" class="nav-link">Contacto</a>
+                    <li class="nav-item" role="none">
+                        <a href="#contact" class="nav-link" role="menuitem" aria-label="Información de contacto">Contacto</a>
                     </li>
                 </ul>
                 <div class="nav-cart">
-                    <button class="cart-btn" id="cartBtn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount" style="display: none;">0</span>
+                    <button class="cart-btn" id="cartBtn" aria-label="Abrir carrito de compras" aria-describedby="cartCount">
+                        <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                        <span class="cart-count" id="cartCount" style="display: none;" aria-live="polite">0</span>
                     </button>
                 </div>
-                <div class="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </div>
+                <button class="hamburger" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="nav-menu">
+                    <span class="bar" aria-hidden="true"></span>
+                    <span class="bar" aria-hidden="true"></span>
+                    <span class="bar" aria-hidden="true"></span>
+                </button>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <!-- Hero Background with Dynamic Elements -->
-        <div class="hero-background">
+    <!-- Enhanced Hero Section -->
+    <section id="home" class="hero hero-enhanced" role="main" aria-labelledby="hero-title">
+        <!-- Dynamic Background System -->
+        <div class="hero-background-system" aria-hidden="true">
+            <div class="hero-bg-layer hero-bg-gradient-1"></div>
+            <div class="hero-bg-layer hero-bg-gradient-2"></div>
+            <div class="hero-bg-layer hero-bg-gradient-3"></div>
             <div class="hero-bg-pattern"></div>
-            <div class="hero-bg-gradient"></div>
-            <div class="hero-floating-elements">
-                <div class="floating-element fe-1"></div>
-                <div class="floating-element fe-2"></div>
-                <div class="floating-element fe-3"></div>
-                <div class="floating-element fe-4"></div>
-                <div class="floating-element fe-5"></div>
+            
+            <!-- Animated Floating Elements -->
+            <div class="hero-particles">
+                <div class="particle particle-1" data-speed="0.5"></div>
+                <div class="particle particle-2" data-speed="0.7"></div>
+                <div class="particle particle-3" data-speed="0.3"></div>
+                <div class="particle particle-4" data-speed="0.9"></div>
+                <div class="particle particle-5" data-speed="0.4"></div>
+                <div class="particle particle-6" data-speed="0.6"></div>
+            </div>
+            
+            <!-- Geometric Shapes -->
+            <div class="hero-shapes">
+                <div class="shape shape-circle"></div>
+                <div class="shape shape-square"></div>
+                <div class="shape shape-triangle"></div>
             </div>
         </div>
 
         <!-- Hero Content Container -->
-        <div class="hero-main-container">
-            <!-- Producto Estrella Section -->
-            <div class="hero-featured-product" id="heroFeaturedProduct">
-                <div class="featured-product-content">
-                    <div class="featured-product-info">
-                        <div class="featured-badge">
-                            <i class="fas fa-star"></i>
-                            <span>PRODUCTO ESTRELLA</span>
+        <div class="hero-container">
+            <div class="hero-content-grid">
+                <!-- Hero Text Content -->
+                <div class="hero-text-content">
+                    <!-- Premium Badge -->
+                    <div class="hero-premium-badge" role="img" aria-label="Premium footwear collection">
+                        <div class="badge-icon">
+                            <i class="fas fa-crown" aria-hidden="true"></i>
                         </div>
-                        <h1 class="featured-product-title" id="featuredProductTitle">Zapatillas Running Pro</h1>
-                        <p class="featured-product-description" id="featuredProductDescription">
-                            El calzado más vendido de la temporada. Tecnología de amortiguación avanzada para máximo rendimiento y comodidad.
-                        </p>
-                        <div class="featured-product-stats">
-                            <div class="stat-item">
-                                <span class="stat-number" id="featuredProductSales">1,247</span>
-                                <span class="stat-label">Ventas</span>
+                        <span class="badge-text">Colección Premium 2024</span>
+                        <div class="badge-glow"></div>
+                    </div>
+
+                    <!-- Main Title -->
+                    <div class="hero-title-container">
+                        <h1 id="hero-title" class="hero-main-title">
+                            <span class="title-line title-line-1">Eleva tu Estilo</span>
+                            <span class="title-line title-line-2">
+                                con <em class="highlight-text">Excelencia</em>
+                            </span>
+                            <span class="title-line title-line-3">Artesanal</span>
+                        </h1>
+                        <div class="title-underline"></div>
+                    </div>
+
+                    <!-- Enhanced Description -->
+                    <p class="hero-enhanced-description">
+                        Descubre calzados que transcenden lo ordinario. Cada pieza es una obra maestra 
+                        creada con cuero genuino italiano y técnicas artesanales centenarias. 
+                        <strong>Experimenta el lujo que tus pies merecen.</strong>
+                    </p>
+
+                    <!-- Feature Highlights -->
+                    <div class="hero-features" role="region" aria-label="Características principales">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-certificate" aria-hidden="true"></i>
                             </div>
-                            <div class="stat-item">
-                                <span class="stat-number" id="featuredProductRating">4.9</span>
-                                <span class="stat-label">Rating</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number" id="featuredProductReviews">156</span>
-                                <span class="stat-label">Reseñas</span>
+                            <div class="feature-content">
+                                <span class="feature-title">Certificado de Autenticidad</span>
+                                <span class="feature-desc">100% cuero italiano premium</span>
                             </div>
                         </div>
-                        <div class="featured-product-price">
-                            <span class="price-amount" id="featuredProductPrice">$125.000</span>
-                            <span class="price-label">Precio Mayorista</span>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-shipping-fast" aria-hidden="true"></i>
+                            </div>
+                            <div class="feature-content">
+                                <span class="feature-title">Envío Express Global</span>
+                                <span class="feature-desc">Entrega en 24-48 horas</span>
+                            </div>
                         </div>
-                        <div class="featured-product-actions">
-                            <button class="btn btn-primary btn-large" id="featuredProductCTA">
-                                <i class="fas fa-shopping-cart"></i>
-                                Agregar al Carrito
-                            </button>
-                            <button class="btn btn-secondary btn-large" id="featuredProductDetails">
-                                <i class="fas fa-eye"></i>
-                                Ver Detalles
-                            </button>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-medal" aria-hidden="true"></i>
+                            </div>
+                            <div class="feature-content">
+                                <span class="feature-title">Garantía Vitalicia</span>
+                                <span class="feature-desc">Calidad asegurada para siempre</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="featured-product-visual">
-                        <div class="product-image-container">
-                            <img src="images/products/running-shoes.svg" alt="Producto Estrella" id="featuredProductImage" loading="eager">
-                            <div class="product-glow"></div>
+
+                    <!-- Statistics -->
+                    <div class="hero-stats-modern" role="region" aria-label="Estadísticas de éxito">
+                        <div class="stat-modern">
+                            <div class="stat-number" data-count="1000">0</div>
+                            <div class="stat-label">Clientes Felices</div>
                         </div>
-                        <div class="product-badges">
-                            <div class="badge badge-premium">Premium</div>
-                            <div class="badge badge-bestseller">Más Vendido</div>
+                        <div class="stat-modern">
+                            <div class="stat-number" data-count="500">0</div>
+                            <div class="stat-label">Productos Únicos</div>
+                        </div>
+                        <div class="stat-modern">
+                            <div class="stat-number" data-count="50">0</div>
+                            <div class="stat-label">Artistas Locales</div>
+                        </div>
+                    </div>
+
+                    <!-- Enhanced CTAs -->
+                    <div class="hero-cta-group" role="group" aria-label="Acciones principales">
+                        <a href="#products" class="hero-cta-primary-enhanced" data-action="shop-now" aria-describedby="hero-description">
+                            <span class="cta-content">
+                                <i class="fas fa-rocket" aria-hidden="true"></i>
+                                <span class="cta-text">Comprar Ahora</span>
+                            </span>
+                            <div class="cta-glow"></div>
+                            <div class="cta-shine"></div>
+                        </a>
+                        
+                        <a href="#features" class="hero-cta-secondary-enhanced" data-action="learn-more" aria-label="Descubrir más">
+                            <span class="cta-content">
+                                <i class="fas fa-play-circle" aria-hidden="true"></i>
+                                <span class="cta-text">Descubrir Más</span>
+                            </span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Signals -->
+                    <div class="hero-trust-signals" role="region" aria-label="Señales de confianza">
+                        <div class="trust-signal">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            <span>Pago Seguro</span>
+                        </div>
+                        <div class="trust-signal">
+                            <i class="fas fa-undo" aria-hidden="true"></i>
+                            <span>Devolución Gratuita</span>
+                        </div>
+                        <div class="trust-signal">
+                            <i class="fas fa-headset" aria-hidden="true"></i>
+                            <span>Soporte 24/7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Content -->
+                <div class="hero-visual-content">
+                    <div class="hero-showcase">
+                        <!-- Product Showcase -->
+                        <div class="showcase-container">
+                            <div class="showcase-background"></div>
+                            
+                            <!-- Main Product Image -->
+                            <div class="product-showcase-main">
+                                <img src="images/products/formal-oxford.svg" 
+                                     alt="Zapato Oxford formal premium de cuero italiano - Edición Limitada" 
+                                     class="showcase-image-main"
+                                     loading="eager">
+                                <div class="product-glow"></div>
+                            </div>
+                            
+                            <!-- Secondary Products -->
+                            <div class="product-showcase-secondary">
+                                <img src="images/products/leather-boots.svg" 
+                                     alt="Botas de cuero premium artesanales" 
+                                     class="showcase-image-secondary">
+                                <img src="images/products/summer-sandals.svg" 
+                                     alt="Sandalias de lujo con diseño exclusivo" 
+                                     class="showcase-image-secondary">
+                            </div>
+                        </div>
+
+                        <!-- Interactive Elements -->
+                        <div class="showcase-interactive">
+                            <div class="interactive-badge">
+                                <span class="badge-label">Edición Limitada</span>
+                                <span class="badge-value">150 unidades</span>
+                            </div>
+                            
+                            <div class="price-display">
+                                <span class="price-original">$299</span>
+                                <span class="price-current">$199</span>
+                                <span class="price-discount">-33%</span>
+                            </div>
+                        </div>
+
+                        <!-- Floating Elements -->
+                        <div class="floating-elements">
+                            <div class="floating-card" data-delay="0">
+                                <i class="fas fa-gem"></i>
+                                <span>Artesanía Única</span>
+                            </div>
+                            <div class="floating-card" data-delay="1">
+                                <i class="fas fa-star"></i>
+                                <span>5★ Calificado</span>
+                            </div>
+                            <div class="floating-card" data-delay="2">
+                                <i class="fas fa-fire"></i>
+                                <span>Tendencia 2024</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Cartelera de Anuncios Premium -->
-            <div class="hero-premium-billboard" id="heroPremiumBillboard">
-                <div class="billboard-header">
-                    <h2 class="billboard-title">
-                        <i class="fas fa-crown"></i>
-                        ANUNCIOS PREMIUM
-                    </h2>
-                    <p class="billboard-subtitle">Oportunidades exclusivas para revendedores</p>
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator" aria-hidden="true">
+            <div class="scroll-text">Descubre más</div>
+            <div class="scroll-arrow">
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </section>
+
+            <!-- Nuevos Anuncios Funcionales -->
+            <div class="eter-ads-container" id="eterAdsContainer" role="region" aria-label="Anuncios promocionales de Tienda Éter">
+                <div class="eter-ads-wrapper">
+                    <!-- Anuncio 1: Promocional - Mega Descuento -->
+                    <div class="eter-ad promotional-ad active" data-ad="0" data-type="promotional" role="article" aria-labelledby="promo-title" tabindex="0">
+                    <div class="ad-background">
+                        <div class="ad-pattern"></div>
+                        <div class="ad-glow"></div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-badge">
+                            <i class="fas fa-fire"></i>
+                            <span>🔥 OFERTA FLASH</span>
+                        </div>
+                        <div class="ad-main">
+                            <h3 class="ad-title" id="promo-title">¡EXPLOSIÓN DE GANANCIAS! 70% OFF + INVENTARIO GRATIS</h3>
+                            <p class="ad-description"><strong>¡OPORTUNIDAD HISTÓRICA!</strong> Solo para los primeros 50 distribuidores VIP. <em>¡Multiplica tus ingresos x10 en 30 días!</em> Esta oferta JAMÁS se repetirá.</p>
+                            <div class="countdown-timer" id="promotionalCountdown">
+                                <div class="countdown-unit">
+                                    <span class="countdown-number">23</span>
+                                    <span class="countdown-label">Horas</span>
+                                </div>
+                                <div class="countdown-separator">:</div>
+                                <div class="countdown-unit">
+                                    <span class="countdown-number">45</span>
+                                    <span class="countdown-label">Min</span>
+                                </div>
+                                <div class="countdown-separator">:</div>
+                                <div class="countdown-unit">
+                                    <span class="countdown-number">30</span>
+                                    <span class="countdown-label">Seg</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ad-action">
+                            <button class="eter-ad-action promotional-btn" aria-label="Reclamar oportunidad histórica ahora" role="button" tabindex="0">
+                                 <i class="fas fa-fire" aria-hidden="true"></i>
+                                 <span>¡RECLAMAR FORTUNA!</span>
+                                 <div class="btn-shine" aria-hidden="true"></div>
+                             </button>
+                        </div>
+                    </div>
+                    <div class="ad-progress"></div>
+                </div>
+
+                <!-- Anuncio 2: Informativo - Servicios Premium -->
+                     <div class="eter-ad informative-ad" data-ad="1" data-type="informative" role="article" aria-labelledby="info-title" tabindex="0">
+                    <div class="ad-background">
+                        <div class="ad-pattern"></div>
+                        <div class="ad-particles"></div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="ad-main">
+                            <h3 class="ad-title" id="info-title">💎 ECOSISTEMA MILLONARIO COMPLETO</h3>
+                            <p class="ad-description"><strong>¡DOMINA EL MERCADO COMO UN TITÁN!</strong> Herramientas que solo los magnates del calzado poseen. <em>¡Convierte cada venta en una fortuna!</em></p>
+                            <div class="ad-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-rocket"></i>
+                                    <span>⚡ Entrega Cuántica 6h</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>🎯 Estratega Millonario Personal</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-diamond"></i>
+                                    <span>🛡️ Blindaje Total de Inversión</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>🧠 IA Predictiva de Ventas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ad-action">
+                            <button class="eter-ad-action informative-btn" aria-label="Acceder al ecosistema millonario" role="button" tabindex="0">
+                                 <i class="fas fa-crown" aria-hidden="true"></i>
+                                 <span>¡QUIERO SER MAGNATE!</span>
+                             </button>
+                        </div>
+                    </div>
+                    <div class="ad-progress"></div>
+                </div>
+
+                <!-- Anuncio 3: Fidelidad - Club Elite -->
+                     <div class="eter-ad loyalty-ad" data-ad="2" data-type="loyalty" role="article" aria-labelledby="loyalty-title" tabindex="0">
+                    <div class="ad-background">
+                        <div class="ad-pattern"></div>
+                        <div class="ad-stars"></div>
+                    </div>
+                    <div class="ad-content">
+                        <div class="ad-crown">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="ad-main">
+                            <h3 class="ad-title" id="loyalty-title">🏆 IMPERIO BILLONARIO EXCLUSIVO</h3>
+                            <p class="ad-description"><strong>¡ÚNETE A LOS MAGNATES!</strong> Solo para visionarios que buscan <em>RIQUEZA ILIMITADA</em>. ¡Privilegios que transformarán tu destino financiero!</p>
+                            <div class="benefit-tiers">
+                                <div class="benefit-tier">
+                                    <div class="tier-icon">
+                                        <i class="fas fa-medal"></i>
+                                    </div>
+                                    <div class="tier-info">
+                                        <span class="tier-name">⚡ Nivel Titanio</span>
+                                        <span class="tier-benefits">40% margen + territorio exclusivo</span>
+                                    </div>
+                                </div>
+                                <div class="benefit-tier">
+                                    <div class="tier-icon">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="tier-info">
+                                        <span class="tier-name">💎 Nivel Platino</span>
+                                        <span class="tier-benefits">60% margen + mentor billonario</span>
+                                    </div>
+                                </div>
+                                <div class="benefit-tier">
+                                    <div class="tier-icon">
+                                        <i class="fas fa-gem"></i>
+                                    </div>
+                                    <div class="tier-info">
+                                        <span class="tier-name">👑 Nivel Infinito</span>
+                                        <span class="tier-benefits">80% margen + imperio personal</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ad-action">
+                            <button class="eter-ad-action loyalty-btn" aria-label="Unirse al Imperio Billonario" role="button" tabindex="0">
+                                <i class="fas fa-gem" aria-hidden="true"></i>
+                                <span>¡QUIERO MI IMPERIO!</span>
+                                <div class="btn-glow" aria-hidden="true"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="ad-progress"></div>
+                </div>
+
+                <!-- Navegación de Anuncios -->
+                <div class="eter-ads-nav" role="navigation" aria-label="Navegación de anuncios">
+                    <button class="nav-btn" id="eterAdsPrev" aria-label="Anuncio anterior" tabindex="0">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <button class="nav-btn" id="eterAdsNext" aria-label="Siguiente anuncio" tabindex="0">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
                 </div>
                 
-                <div class="billboard-slider" id="billboardSlider">
-                    <!-- Anuncio 1: Oferta Especial -->
-                    <div class="billboard-slide active" data-slide="1">
-                        <div class="slide-content">
-                            <div class="slide-icon">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <div class="slide-text">
-                                <h3>OFERTA ESPECIAL</h3>
-                                <p>Descuento del 25% en pedidos mayoristas superiores a $500.000</p>
-                                <div class="slide-timer">
-                                    <span class="timer-label">Termina en:</span>
-                                    <div class="countdown" id="countdown1">
-                                        <span class="time-unit">02</span>d
-                                        <span class="time-unit">18</span>h
-                                        <span class="time-unit">45</span>m
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="slide-cta">Ver Oferta</button>
-                        </div>
-                    </div>
-
-                    <!-- Anuncio 2: Nuevo Producto -->
-                    <div class="billboard-slide" data-slide="2">
-                        <div class="slide-content">
-                            <div class="slide-icon">
-                                <i class="fas fa-rocket"></i>
-                            </div>
-                            <div class="slide-text">
-                                <h3>NUEVO LANZAMIENTO</h3>
-                                <p>Colección Invierno 2024 - Exclusiva para revendedores premium</p>
-                                <div class="slide-features">
-                                    <span class="feature-tag">Exclusivo</span>
-                                    <span class="feature-tag">Limitado</span>
-                                </div>
-                            </div>
-                            <button class="slide-cta">Explorar</button>
-                        </div>
-                    </div>
-
-                    <!-- Anuncio 3: Programa de Fidelidad -->
-                    <div class="billboard-slide" data-slide="3">
-                        <div class="slide-content">
-                            <div class="slide-icon">
-                                <i class="fas fa-gem"></i>
-                            </div>
-                            <div class="slide-text">
-                                <h3>PROGRAMA VIP</h3>
-                                <p>Acceso prioritario a nuevos productos y descuentos exclusivos</p>
-                                <div class="slide-benefits">
-                                    <div class="benefit-item">
-                                        <i class="fas fa-check"></i>
-                                        <span>Envío Gratis</span>
-                                    </div>
-                                    <div class="benefit-item">
-                                        <i class="fas fa-check"></i>
-                                        <span>Descuentos Especiales</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="slide-cta">Unirse</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Controles del Slider -->
-                <div class="billboard-controls">
-                    <button class="control-btn prev" id="billboardPrev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <div class="control-dots" id="billboardDots">
-                        <span class="dot active" data-slide="1"></span>
-                        <span class="dot" data-slide="2"></span>
-                        <span class="dot" data-slide="3"></span>
-                    </div>
-                    <button class="control-btn next" id="billboardNext">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
+                <!-- Indicadores de Anuncios -->
+                <div class="eter-ads-indicators" role="tablist" aria-label="Indicadores de anuncios">
+                    <span class="eter-ad-indicator active" data-ad="0" role="tab" aria-selected="true" aria-label="Anuncio promocional" tabindex="0"></span>
+                    <span class="eter-ad-indicator" data-ad="1" role="tab" aria-selected="false" aria-label="Servicios VIP" tabindex="0"></span>
+                    <span class="eter-ad-indicator" data-ad="2" role="tab" aria-selected="false" aria-label="Club Élite" tabindex="0"></span>
                 </div>
             </div>
         </div>
@@ -216,30 +432,30 @@
             <div class="hero-sidebar-content">
                 <div class="sidebar-brand">
                     <div class="brand-logo">
-                    <i class="fas fa-shoe-prints"></i>
+                    <i class="fas fa-crown"></i>
                     </div>
                     <div class="brand-text">
-                        <span class="brand-tagline">STYLE TAKES OVER</span>
+                        <span class="brand-tagline">WEALTH REVOLUTION</span>
                         <span class="brand-year">2024</span>
                     </div>
                 </div>
                 <div class="sidebar-stats">
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-users"></i>
+                            <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number">2,847</span>
-                            <span class="stat-label">Clientes Satisfechos</span>
+                            <span class="stat-number">$2.8M</span>
+                            <span class="stat-label">Ganancias Generadas</span>
             </div>
         </div>
                     <div class="stat-card">
                         <div class="stat-icon">
-                            <i class="fas fa-shipping-fast"></i>
+                            <i class="fas fa-rocket"></i>
                         </div>
                         <div class="stat-info">
-                            <span class="stat-number">24h</span>
-                            <span class="stat-label">Envío Rápido</span>
+                            <span class="stat-number">6h</span>
+                            <span class="stat-label">Entrega Cuántica</span>
             </div>
                     </div>
                 </div>
@@ -310,6 +526,10 @@
                     <button id="clearFilters" class="btn btn-secondary">
                         <i class="fas fa-times"></i>
                         Limpiar Filtros
+                    </button>
+                    <button id="viewAllProducts" class="btn btn-primary">
+                        <i class="fas fa-eye"></i>
+                        Ver Todos
                     </button>
                 </div>
             </div>
@@ -544,37 +764,11 @@
                     <ul class="footer-links">
                         <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
                         <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="admin.html" style="opacity: 0.5; font-size: 0.8em;">Panel</a></li>
                     </ul>
                 </div>
 
-                <!-- Información de Contacto -->
-                <div class="footer-section contact-info">
-                    <h4>Contacto</h4>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <div>
-                                <strong>Showroom</strong>
-                                <p>Zona Jara y Berutti<br>Mar del Plata</p>
-                                <small>Visita con cita previa</small>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-phone"></i>
-                            <div>
-                                <strong>Teléfono</strong>
-                                <p>+54 223 502 5196</p>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <strong>Email</strong>
-                                <p>equiporeveter@gmail.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
 
             </div>
@@ -760,5 +954,6 @@
     <script src="js/products.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/hero-interactions.js"></script>
 </body>
 </html>

@@ -3,317 +3,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Éter Store - Panel de Administración</title>
-    <link rel="stylesheet" href="styles/admin.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Panel de Administración - Tienda Éter</title>
+    <meta name="description" content="Panel de administración para gestionar productos, pedidos y contenido de Tienda Éter">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+    
+    <!-- Critical CSS inline for performance -->
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --transition: all 0.2s ease-in-out;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .admin-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--surface-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease-out;
+        }
+        
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+        
+        .metric-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .metric-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+        
+        .metric-content h3 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        
+        .metric-content p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .dashboard-section {
+            background: var(--surface-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+        
+        .dashboard-section h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 1rem 0;
+        }
+        
+        @media (max-width: 768px) {
+             .dashboard-content {
+                 grid-template-columns: 1fr;
+             }
+         }
+         
+         .quick-actions {
+             display: flex;
+             gap: 1rem;
+             margin-top: 2rem;
+             flex-wrap: wrap;
+         }
+         
+         .text-secondary {
+             color: var(--text-secondary);
+             font-style: italic;
+         }
+         
+         .btn {
+             padding: 0.75rem 1.5rem;
+             border-radius: var(--radius-md);
+             border: none;
+             font-weight: 500;
+             cursor: pointer;
+             transition: var(--transition);
+             display: inline-flex;
+             align-items: center;
+             gap: 0.5rem;
+             text-decoration: none;
+         }
+         
+         .btn-primary {
+             background: var(--primary-color);
+             color: white;
+         }
+         
+         .btn-primary:hover {
+             background: var(--primary-hover);
+             transform: translateY(-1px);
+         }
+         
+         .btn-secondary {
+             background: var(--surface-color);
+             color: var(--text-primary);
+             border: 1px solid var(--border-color);
+         }
+         
+         .btn-secondary:hover {
+             background: var(--hover-color);
+             transform: translateY(-1px);
+         }
+    </style>
+    
+    <!-- External stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/admin-consolidated.css">
 </head>
 <body>
-    <!-- Login Modal -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-content">
-            <div class="login-header">
-                <h2>Éter Store - Administración</h2>
-                <p>Ingresa tus credenciales para acceder al panel</p>
+    <!-- Loading Screen -->
+    <div class="loading-screen hidden" id="loadingScreen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div class="modal-overlay" id="authModal" aria-hidden="true">
+        <div class="modal auth-modal" role="dialog" aria-labelledby="authTitle" aria-modal="true">
+            <div class="modal-header">
+                <h2 id="authTitle">Acceso al Panel de Administración</h2>
             </div>
-            <form class="login-form" id="loginForm">
+            <form class="auth-form" id="authForm" novalidate>
                 <div class="form-group">
                     <label for="username">Usuario</label>
-                    <input type="text" id="username" name="username" required>
+                    <input type="text" id="username" name="username" required autocomplete="username" aria-describedby="usernameError">
+                    <div class="error-message" id="usernameError" role="alert"></div>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required autocomplete="current-password" aria-describedby="passwordError">
+                    <div class="error-message" id="passwordError" role="alert"></div>
                 </div>
-                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary btn-full">
+                    <i class="fas fa-sign-in-alt" aria-hidden="true"></i>
+                    Iniciar Sesión
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- Admin Dashboard -->
-    <div class="admin-dashboard" id="adminDashboard" style="display: none;">
+    <!-- Main Application -->
+    <div class="admin-container" id="adminApp" style="display: none;">
         <!-- Header -->
-        <header class="admin-header">
+        <header class="admin-header" role="banner">
             <div class="header-content">
                 <div class="header-left">
-                    <h1>Éter Store - Panel de Administración</h1>
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Alternar menú lateral">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <div class="logo">
+                        <i class="fas fa-store" aria-hidden="true"></i>
+                        <span>Tienda Éter Admin</span>
+                    </div>
                 </div>
                 <div class="header-right">
-                    <button class="btn btn-secondary" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        Cerrar Sesión
+                    <button class="btn btn-ghost" id="viewSiteBtn" title="Ver sitio web">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        <span class="btn-text">Ver Sitio</span>
                     </button>
+                    <div class="user-menu">
+                        <button class="user-avatar" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user-circle" aria-hidden="true"></i>
+                            <span id="userName">Admin</span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown" role="menu">
+                            <a href="#" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                                Perfil
+                            </a>
+                            <a href="#" class="dropdown-item" role="menuitem">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                                Configuración
+                            </a>
+                            <hr class="dropdown-divider">
+                            <button class="dropdown-item" id="logoutBtn" role="menuitem">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                                Cerrar Sesión
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
-        <!-- Navigation -->
-        <nav class="admin-nav">
-            <ul class="nav-tabs">
-                <li class="nav-tab active" data-tab="dashboard">
-                    <i class="fas fa-tachometer-alt"></i>
-                    Dashboard
-                </li>
-                <li class="nav-tab" data-tab="hero">
-                    <i class="fas fa-star"></i>
-                    Sección Hero
-                </li>
-                <li class="nav-tab" data-tab="products">
-                    <i class="fas fa-shoe-prints"></i>
-                    Productos
-                </li>
-                <li class="nav-tab" data-tab="orders">
-                    <i class="fas fa-shopping-cart"></i>
-                    Pedidos
-                </li>
-                <li class="nav-tab" data-tab="content">
-                    <i class="fas fa-edit"></i>
-                    Contenido
-                </li>
-            </ul>
-        </nav>
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Navegación principal">
+            <nav class="sidebar-nav">
+                <ul class="nav-list" role="menubar">
+                    <li class="nav-item" role="none">
+                        <button class="nav-link active" data-tab="dashboard" role="menuitem" aria-current="page">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="hero" role="menuitem">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <span>Sección Hero</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="products" role="menuitem">
+                            <i class="fas fa-box" aria-hidden="true"></i>
+                            <span>Productos</span>
+                            <span class="nav-badge" id="productsBadge">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="orders" role="menuitem">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span>Pedidos</span>
+                            <span class="nav-badge" id="ordersBadge">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="content" role="menuitem">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                            <span>Contenido</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
         <!-- Main Content -->
-        <main class="admin-main">
+        <main class="admin-main" role="main">
             <!-- Dashboard Tab -->
-            <div class="tab-content active" id="dashboard">
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="card-icon">
-                            <i class="fas fa-shoe-prints"></i>
+            <section class="tab-panel active" id="dashboardPanel" role="tabpanel" aria-labelledby="dashboard">
+                <div class="panel-header">
+                    <h1>Dashboard</h1>
+                    <p>Resumen general de tu tienda</p>
+                </div>
+                
+                <div class="metrics-grid" id="metricsGrid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-box"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Total Productos</h3>
-                            <p class="card-number" id="totalProducts">0</p>
+                        <div class="metric-content">
+                            <h3 id="totalProducts">0</h3>
+                            <p>Total Productos</p>
                         </div>
                     </div>
-                    <div class="dashboard-card">
-                        <div class="card-icon">
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
                             <i class="fas fa-shopping-cart"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Pedidos Pendientes</h3>
-                            <p class="card-number" id="pendingOrders">0</p>
+                        <div class="metric-content">
+                            <h3 id="pendingOrders">0</h3>
+                            <p>Pedidos Pendientes</p>
                         </div>
                     </div>
-                    <div class="dashboard-card">
-                        <div class="card-icon">
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
                             <i class="fas fa-dollar-sign"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Ventas del Mes</h3>
-                            <p class="card-number" id="monthlySales">$0</p>
+                        <div class="metric-content">
+                            <h3 id="monthlySales">$0</h3>
+                            <p>Ventas del Mes</p>
                         </div>
                     </div>
-                    <div class="dashboard-card">
-                        <div class="card-icon">
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="card-content">
-                            <h3>Clientes Nuevos</h3>
-                            <p class="card-number" id="newCustomers">0</p>
+                        <div class="metric-content">
+                            <h3 id="newCustomers">0</h3>
+                            <p>Nuevos Clientes</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="dashboard-sections">
-                    <div class="section-card">
-                        <h3>Últimos Pedidos</h3>
+                <div class="dashboard-content">
+                    <div class="dashboard-section">
+                        <h2>Últimos Pedidos</h2>
                         <div class="recent-orders" id="recentOrders">
-                            <!-- Orders will be loaded here -->
+                            <!-- Recent orders will be loaded here -->
                         </div>
                     </div>
-                    <div class="section-card">
-                        <h3>Productos con Bajo Stock</h3>
+                    
+                    <div class="dashboard-section">
+                        <h2>Productos con Bajo Stock</h2>
                         <div class="low-stock-products" id="lowStockProducts">
                             <!-- Low stock products will be loaded here -->
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Hero Section Tab -->
-            <div class="tab-content" id="hero">
-                <div class="content-header">
-                    <h2>Gestionar Sección Hero</h2>
-                    <p>Personaliza el contenido principal de la página de inicio</p>
+                
+                <div class="dashboard-content">
+                    <div class="dashboard-section">
+                        <h2><i class="fas fa-chart-line"></i> Actividad Reciente</h2>
+                        <div id="recentActivity">
+                            <p class="text-secondary">No hay actividad reciente</p>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-section">
+                        <h2><i class="fas fa-exclamation-triangle"></i> Alertas</h2>
+                        <div id="systemAlerts">
+                            <p class="text-secondary">No hay alertas</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <form class="hero-form" id="heroForm">
-                    <div class="form-section">
-                        <h3>Producto Estrella</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="featuredProductTitle">Título del Producto Estrella</label>
-                                <input type="text" id="featuredProductTitle" name="featuredProductTitle" placeholder="Ej: Zapatillas Running Pro">
-                            </div>
-                            <div class="form-group">
-                                <label for="featuredProductPrice">Precio Mayorista</label>
-                                <input type="number" id="featuredProductPrice" name="featuredProductPrice" placeholder="125000" min="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="featuredProductDescription">Descripción del Producto</label>
-                            <textarea id="featuredProductDescription" name="featuredProductDescription" placeholder="Descripción del producto estrella"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="featuredProductSales">Número de Ventas</label>
-                                <input type="number" id="featuredProductSales" name="featuredProductSales" placeholder="1247" min="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="featuredProductRating">Rating</label>
-                                <input type="number" id="featuredProductRating" name="featuredProductRating" placeholder="4.9" min="0" max="5" step="0.1">
-                            </div>
-                            <div class="form-group">
-                                <label for="featuredProductReviews">Número de Reseñas</label>
-                                <input type="number" id="featuredProductReviews" name="featuredProductReviews" placeholder="156" min="0">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="featuredProductImage">URL de la Imagen del Producto</label>
-                            <input type="text" id="featuredProductImage" name="featuredProductImage" placeholder="images/products/running-shoes.svg">
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Anuncios Premium</h3>
-                        <div class="billboard-slides">
-                            <div class="slide-config">
-                                <h4>Anuncio 1: Oferta Especial</h4>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard1Title">Título</label>
-                                        <input type="text" id="billboard1Title" name="billboard1Title" placeholder="OFERTA ESPECIAL">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard1Icon">Icono (Font Awesome)</label>
-                                        <input type="text" id="billboard1Icon" name="billboard1Icon" placeholder="fas fa-fire">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="billboard1Description">Descripción</label>
-                                    <textarea id="billboard1Description" name="billboard1Description" placeholder="Descuento del 25% en pedidos mayoristas superiores a $500.000"></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard1Days">Días restantes</label>
-                                        <input type="number" id="billboard1Days" name="billboard1Days" placeholder="2" min="0">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard1Hours">Horas restantes</label>
-                                        <input type="number" id="billboard1Hours" name="billboard1Hours" placeholder="18" min="0" max="23">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard1Minutes">Minutos restantes</label>
-                                        <input type="number" id="billboard1Minutes" name="billboard1Minutes" placeholder="45" min="0" max="59">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="slide-config">
-                                <h4>Anuncio 2: Nuevo Lanzamiento</h4>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard2Title">Título</label>
-                                        <input type="text" id="billboard2Title" name="billboard2Title" placeholder="NUEVO LANZAMIENTO">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard2Icon">Icono (Font Awesome)</label>
-                                        <input type="text" id="billboard2Icon" name="billboard2Icon" placeholder="fas fa-rocket">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="billboard2Description">Descripción</label>
-                                    <textarea id="billboard2Description" name="billboard2Description" placeholder="Colección Invierno 2024 - Exclusiva para revendedores premium"></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard2Tag1">Etiqueta 1</label>
-                                        <input type="text" id="billboard2Tag1" name="billboard2Tag1" placeholder="Exclusivo">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard2Tag2">Etiqueta 2</label>
-                                        <input type="text" id="billboard2Tag2" name="billboard2Tag2" placeholder="Limitado">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="slide-config">
-                                <h4>Anuncio 3: Programa VIP</h4>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard3Title">Título</label>
-                                        <input type="text" id="billboard3Title" name="billboard3Title" placeholder="PROGRAMA VIP">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="billboard3Icon">Icono (Font Awesome)</label>
-                                        <input type="text" id="billboard3Icon" name="billboard3Icon" placeholder="fas fa-gem">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="billboard3Description">Descripción</label>
-                                    <textarea id="billboard3Description" name="billboard3Description" placeholder="Acceso prioritario a nuevos productos y descuentos exclusivos"></textarea>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group">
-                                        <label for="billboard3Benefit1">Beneficio 1</label>
-                                        <input type="text" id="billboard3Benefit1" name="billboard3Benefit1" placeholder="Envío Gratis">
-                                    </div>
-                        <div class="form-group">
-                                        <label for="billboard3Benefit2">Beneficio 2</label>
-                                        <input type="text" id="billboard3Benefit2" name="billboard3Benefit2" placeholder="Descuentos Especiales">
-                                    </div>
-                                </div>
-                        </div>
-                        </div>
-                    </div>
-                    
-                                                    <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-secondary" id="resetHero">Restaurar Original</button>
-                                    <button type="button" class="btn btn-info" id="testSync">Probar Sincronización</button>
-                                </div>
-                </form>
-            </div>
-
-            <!-- Products Tab -->
-            <div class="tab-content" id="products">
-                <div class="content-header">
-                    <h2>Gestionar Productos</h2>
-                    <button class="btn btn-primary" id="addProductBtn">
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="btn btn-primary" onclick="showSection('products')">
                         <i class="fas fa-plus"></i>
                         Agregar Producto
                     </button>
+                    <button class="btn btn-secondary" onclick="showSection('orders')">
+                        <i class="fas fa-list"></i>
+                        Ver Pedidos
+                    </button>
+                    <button class="btn btn-secondary" onclick="showSection('hero')">
+                        <i class="fas fa-image"></i>
+                        Gestionar Hero
+                    </button>
+                </div>
+            </section>
+
+            <!-- Hero Section Tab -->
+            <section class="tab-panel" id="heroPanel" role="tabpanel" aria-labelledby="hero">
+                <div class="panel-header">
+                    <h1>Gestionar Sección Hero</h1>
+                    <p>Personaliza el contenido principal de la página de inicio</p>
                 </div>
                 
-                <div class="products-table-container">
-                    <table class="products-table" id="productsTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Categoría</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
-                                <th>Rating</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productsTableBody">
-                            <!-- Products will be loaded here -->
-                        </tbody>
-                    </table>
+                <div class="hero-content" id="heroContent">
+                    <!-- Hero management content will be loaded here -->
                 </div>
-            </div>
+            </section>
+
+            <!-- Products Tab -->
+            <section class="tab-panel" id="productsPanel" role="tabpanel" aria-labelledby="products">
+                <div class="panel-header">
+                    <h1>Gestionar Productos</h1>
+                    <div class="panel-actions">
+                        <button class="btn btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                            Agregar Producto
+                        </button>
+                        <button class="btn btn-secondary" id="syncProductsBtn">
+                            <i class="fas fa-sync" aria-hidden="true"></i>
+                            Sincronizar
+                        </button>
+                        <button class="btn btn-warning" id="exportProductsBtn">
+                            <i class="fas fa-download" aria-hidden="true"></i>
+                            Exportar
+                        </button>
+                        <label class="btn btn-success" id="importProductsBtn">
+                            <i class="fas fa-upload" aria-hidden="true"></i>
+                            Importar XML
+                            <input type="file" id="importXMLFile" accept=".xml" style="display: none;">
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="products-content" id="productsContent">
+                    <!-- Products management content will be loaded here -->
+                </div>
+            </section>
 
             <!-- Orders Tab -->
-            <div class="tab-content" id="orders">
-                <div class="content-header">
-                    <h2>Gestionar Pedidos</h2>
-                    <div class="order-filters">
-                        <select id="orderStatusFilter">
+            <section class="tab-panel" id="ordersPanel" role="tabpanel" aria-labelledby="orders">
+                <div class="panel-header">
+                    <h1>Gestionar Pedidos</h1>
+                    <div class="panel-actions">
+                        <select class="form-select" id="orderStatusFilter">
                             <option value="all">Todos los Estados</option>
                             <option value="pending">Pendientes</option>
                             <option value="confirmed">Confirmados</option>
@@ -324,175 +487,49 @@
                     </div>
                 </div>
                 
-                <div class="orders-table-container">
-                    <table class="orders-table" id="ordersTable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Productos</th>
-                                <th>Total</th>
-                                <th>Estado</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ordersTableBody">
-                            <!-- Orders will be loaded here -->
-                        </tbody>
-                    </table>
+                <div class="orders-content" id="ordersContent">
+                    <!-- Orders management content will be loaded here -->
                 </div>
-            </div>
+            </section>
 
             <!-- Content Tab -->
-            <div class="tab-content" id="content">
-                <div class="content-header">
-                    <h2>Gestionar Contenido</h2>
+            <section class="tab-panel" id="contentPanel" role="tabpanel" aria-labelledby="content">
+                <div class="panel-header">
+                    <h1>Gestionar Contenido</h1>
                     <p>Edita el contenido general de la tienda</p>
                 </div>
                 
-                <form class="content-form" id="contentForm">
-                    <div class="form-section">
-                        <h3>Información de Contacto</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="storePhone">Teléfono</label>
-                                <input type="tel" id="storePhone" name="storePhone" placeholder="+54 223 123 4567">
-                            </div>
-                            <div class="form-group">
-                                <label for="storeEmail">Email</label>
-                                <input type="email" id="storeEmail" name="storeEmail" placeholder="info@eterstore.com">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="storeAddress">Dirección del Showroom</label>
-                            <input type="text" id="storeAddress" name="storeAddress" placeholder="Zona Jara y Berutti, Mar del Plata">
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Sección Nosotros</h3>
-                        <div class="form-group">
-                            <label for="aboutTitle">Título</label>
-                            <input type="text" id="aboutTitle" name="aboutTitle" placeholder="Quiénes Somos">
-                        </div>
-                        <div class="form-group">
-                            <label for="aboutDescription">Descripción</label>
-                            <textarea id="aboutDescription" name="aboutDescription" rows="4" placeholder="Descripción de la empresa..."></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="form-section">
-                        <h3>Redes Sociales</h3>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="facebookUrl">Facebook</label>
-                                <input type="url" id="facebookUrl" name="facebookUrl" placeholder="https://facebook.com/eterstore">
-                            </div>
-                            <div class="form-group">
-                                <label for="instagramUrl">Instagram</label>
-                                <input type="url" id="instagramUrl" name="instagramUrl" placeholder="https://instagram.com/eterstore">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="whatsappNumber">WhatsApp</label>
-                            <input type="tel" id="whatsappNumber" name="whatsappNumber" placeholder="+54 223 123 4567">
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                        <button type="button" class="btn btn-secondary" id="resetContent">Restaurar Original</button>
-                    </div>
-                </form>
-            </div>
+                <div class="content-management" id="contentManagement">
+                    <!-- Content management will be loaded here -->
+                </div>
+            </section>
         </main>
     </div>
 
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="productModalTitle">Agregar Producto</h3>
-                <button class="close-modal" id="closeProductModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form class="product-form" id="productForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="productName">Nombre del Producto</label>
-                        <input type="text" id="productName" name="productName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productCategory">Categoría</label>
-                        <select id="productCategory" name="productCategory" required>
-                            <option value="">Seleccionar categoría</option>
-                            <option value="deportivo">Deportivo</option>
-                            <option value="casual">Casual</option>
-                            <option value="formal">Formal</option>
-                            <option value="verano">Verano</option>
-                            <option value="invierno">Invierno</option>
-                            <option value="urbano">Urbano</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="productDescription">Descripción</label>
-                    <textarea id="productDescription" name="productDescription" rows="3" required></textarea>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="productPrice">Precio</label>
-                        <input type="number" id="productPrice" name="productPrice" step="0.01" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productStock">Stock</label>
-                        <input type="number" id="productStock" name="productStock" min="0" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="productImage">URL de la Imagen</label>
-                        <input type="text" id="productImage" name="productImage" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="productRating">Rating</label>
-                        <input type="number" id="productRating" name="productRating" step="0.1" min="0" max="5" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="productReviews">Número de Reseñas</label>
-                    <input type="number" id="productReviews" name="productReviews" min="0" required>
-                </div>
-                
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Guardar Producto</button>
-                    <button type="button" class="btn btn-secondary" id="cancelProduct">Cancelar</button>
-                </div>
-            </form>
-        </div>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer" aria-live="polite" aria-atomic="true">
+        <!-- Notifications will be dynamically added here -->
     </div>
 
-    <!-- Order Details Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Detalles del Pedido</h3>
-                <button class="close-modal" id="closeOrderModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="order-details" id="orderDetails">
-                <!-- Order details will be loaded here -->
-            </div>
-        </div>
+    <!-- Modal Container -->
+    <div class="modal-container" id="modalContainer">
+        <!-- Dynamic modals will be rendered here -->
     </div>
 
+    <!-- JavaScript -->
+    <script src="js/sync-manager.js"></script>
+    <script src="js/product-crud.js"></script>
     <script src="js/admin.js"></script>
+
+    <!-- Service Worker for caching -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => console.log('SW registered:', registration))
+                    .catch(error => console.log('SW registration failed:', error));
+            });
+        }
+    </script>
 </body>
-</html> 
+</html>

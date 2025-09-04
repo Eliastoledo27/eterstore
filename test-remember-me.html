@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Recordar Sesión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding: 2rem;
+        }
+
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .test-section h3 {
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #1e293b;
+            user-select: none;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked {
+            background: #d4af37;
+            border-color: #d4af37;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .checkbox-label input[type="checkbox"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .checkbox-label:hover input[type="checkbox"] {
+            border-color: #d4af37;
+        }
+
+        .btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #b8941f;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .info-box {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .info-box strong {
+            color: #1f2937;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test - Funcionalidad "Recordar Sesión"</h1>
+
+        <div class="test-section">
+            <h3>📋 Estado Actual</h3>
+            <div id="currentStatus" class="status info">
+                Verificando estado de sesión...
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Simular Login</h3>
+            <div class="info-box">
+                <strong>Credenciales de prueba:</strong><br>
+                Usuario: admin<br>
+                Contraseña: eterstore2024
+            </div>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="testRememberMe">
+                <span>Recordar sesión</span>
+            </label>
+
+            <button class="btn" onclick="simulateLogin()">Simular Login</button>
+            <button class="btn btn-secondary" onclick="clearSession()">Limpiar Sesión</button>
+        </div>
+
+        <div class="test-section">
+            <h3>⏰ Verificar Expiración</h3>
+            <button class="btn" onclick="checkExpiration()">Verificar Expiración</button>
+            <button class="btn btn-secondary" onclick="simulateTimePass()">Simular Paso de Tiempo</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Datos de Sesión</h3>
+            <div id="sessionData" class="info-box">
+                No hay datos de sesión
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Acciones</h3>
+            <button class="btn" onclick="openAdmin()">Abrir Admin.html</button>
+            <button class="btn btn-secondary" onclick="refreshPage()">Recargar Página</button>
+        </div>
+    </div>
+
+        <script>
+        // Funciones para manejar cookies
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Strict";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(";");
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === " ") c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        }
+
+        // Función para mostrar estado
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('currentStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        // Función para actualizar datos de sesión
+        function updateSessionData() {
+            const sessionDiv = document.getElementById('sessionData');
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    const loginTime = new Date(userData.loginTime);
+                    const currentTime = new Date();
+                    const timeDiff = currentTime - loginTime;
+                    const hoursDiff = timeDiff / (1000 * 60 * 60);
+                    const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+                    sessionDiv.innerHTML = `
+                        <strong>Usuario:</strong> ${userData.username}<br>
+                        <strong>Rol:</strong> ${userData.role}<br>
+                        <strong>Recordar sesión:</strong> ${userData.rememberMe ? 'Sí' : 'No'}<br>
+                        <strong>Token de sesión:</strong> ${sessionToken ? '✅ Presente' : '❌ Ausente'}<br>
+                        <strong>Fecha de login:</strong> ${loginTime.toLocaleString()}<br>
+                        <strong>Tiempo transcurrido:</strong> ${hoursDiff.toFixed(1)} horas (${daysDiff.toFixed(2)} días)<br>
+                        <strong>Expira en:</strong> ${userData.rememberMe ? '30 días' : '8 horas'}
+                    `;
+                } catch (error) {
+                    sessionDiv.innerHTML = `Error al leer datos: ${error.message}`;
+                }
+            } else {
+                sessionDiv.innerHTML = 'No hay datos de sesión';
+            }
+        }
+
+        // Función para simular login
+        function simulateLogin() {
+            const rememberMe = document.getElementById('testRememberMe').checked;
+
+            // Generar token de sesión
+            const sessionToken = 'admin_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            const userData = {
+                username: 'admin',
+                role: 'admin',
+                rememberMe: rememberMe,
+                loginTime: new Date().toISOString(),
+                sessionToken: sessionToken
+            };
+
+            localStorage.setItem('adminUser', JSON.stringify(userData));
+
+            // Establecer cookie de sesión
+            if (rememberMe) {
+                setCookie('adminSessionToken', sessionToken, 30); // 30 días
+                console.log('🍪 Cookie establecida por 30 días');
+            } else {
+                setCookie('adminSessionToken', sessionToken, 1); // 1 día
+                console.log('🍪 Cookie establecida por 1 día');
+            }
+
+            showStatus(`✅ Login simulado exitosamente. Recordar sesión: ${rememberMe ? 'Sí' : 'No'}`, 'success');
+            updateSessionData();
+        }
+
+        // Función para limpiar sesión
+        function clearSession() {
+            localStorage.removeItem('adminUser');
+            deleteCookie('adminSessionToken');
+            showStatus('🗑️ Sesión limpiada correctamente', 'info');
+            updateSessionData();
+        }
+
+        // Función para verificar expiración
+        function checkExpiration() {
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                try {
+                    const userData = JSON.parse(savedUser);
+
+                    // Verificar que el token coincida
+                    if (userData.sessionToken !== sessionToken) {
+                        showStatus('🔒 Token de sesión no coincide', 'error');
+                        localStorage.removeItem('adminUser');
+                        deleteCookie('adminSessionToken');
+                        updateSessionData();
+                        return;
+                    }
+
+                    const loginTime = new Date(userData.loginTime);
+                    const currentTime = new Date();
+
+                    if (!userData.rememberMe) {
+                        const hoursDiff = (currentTime - loginTime) / (1000 * 60 * 60);
+                        if (hoursDiff > 8) {
+                            showStatus('⏰ Sesión expirada (más de 8 horas)', 'error');
+                            localStorage.removeItem('adminUser');
+                            deleteCookie('adminSessionToken');
+                        } else {
+                            showStatus(`✅ Sesión válida. Faltan ${(8 - hoursDiff).toFixed(1)} horas para expirar`, 'success');
+                        }
+                    } else {
+                        const daysDiff = (currentTime - loginTime) / (1000 * 60 * 60 * 24);
+                        if (daysDiff > 30) {
+                            showStatus('⏰ Sesión expirada (más de 30 días)', 'error');
+                            localStorage.removeItem('adminUser');
+                            deleteCookie('adminSessionToken');
+                        } else {
+                            showStatus(`✅ Sesión válida. Faltan ${(30 - daysDiff).toFixed(1)} días para expirar`, 'success');
+                        }
+                    }
+                } catch (error) {
+                    showStatus(`❌ Error al verificar: ${error.message}`, 'error');
+                }
+            } else {
+                showStatus('ℹ️ No hay sesión activa', 'info');
+            }
+            updateSessionData();
+        }
+
+        // Función para simular paso de tiempo
+        function simulateTimePass() {
+            const savedUser = localStorage.getItem('adminUser');
+            if (savedUser) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    // Simular que pasaron 10 horas
+                    const oldLoginTime = new Date(userData.loginTime);
+                    const newLoginTime = new Date(oldLoginTime.getTime() - (10 * 60 * 60 * 1000));
+
+                    userData.loginTime = newLoginTime.toISOString();
+                    localStorage.setItem('adminUser', JSON.stringify(userData));
+
+                    showStatus('⏰ Simulado paso de 10 horas', 'info');
+                    updateSessionData();
+                } catch (error) {
+                    showStatus(`❌ Error al simular tiempo: ${error.message}`, 'error');
+                }
+            } else {
+                showStatus('ℹ️ No hay sesión para simular tiempo', 'info');
+            }
+        }
+
+        // Función para abrir admin.html
+        function openAdmin() {
+            window.open('admin.html', '_blank');
+        }
+
+        // Función para recargar página
+        function refreshPage() {
+            location.reload();
+        }
+
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSessionData();
+
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    showStatus(`✅ Sesión activa: ${userData.username}`, 'success');
+
+                    // Restaurar estado del checkbox
+                    if (userData.rememberMe) {
+                        document.getElementById('testRememberMe').checked = true;
+                    }
+                } catch (error) {
+                    showStatus('❌ Error al leer sesión', 'error');
+                }
+            } else {
+                showStatus('ℹ️ No hay sesión activa', 'info');
+            }
+        });
+    </script>
+</body>
+</html>

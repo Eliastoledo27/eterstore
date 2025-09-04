@@ -1,0 +1,846 @@
+================================================================================
+                    ESTRUCTURA ORGANIZACIONAL HTML - ÉTER STORE
+                         Guía de Mejores Prácticas
+================================================================================
+
+📋 ÍNDICE:
+1. Encabezado HTML5 Estándar
+2. Estructura Principal por Página
+3. Pie de Página Común
+4. Organización de Archivos Externos
+5. Consideraciones Adicionales
+6. Ejemplos Prácticos
+
+================================================================================
+                            1. ENCABEZADO HTML5 ESTÁNDAR
+================================================================================
+
+/* ESTRUCTURA BÁSICA COMÚN PARA TODAS LAS PÁGINAS */
+
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <!-- METADATOS ESENCIALES -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- TÍTULO ESPECÍFICO POR PÁGINA -->
+    <title>[TÍTULO ESPECÍFICO] - Éter Store | Calzados Premium Mar del Plata</title>
+    
+    <!-- SEO Y METADATOS -->
+    <meta name="description" content="[DESCRIPCIÓN ESPECÍFICA DE LA PÁGINA]">
+    <meta name="keywords" content="calzados premium, zapatos Mar del Plata, [KEYWORDS ESPECÍFICAS]">
+    <meta name="author" content="Éter Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- OPEN GRAPH PARA REDES SOCIALES -->
+    <meta property="og:title" content="[TÍTULO] - Éter Store">
+    <meta property="og:description" content="[DESCRIPCIÓN]">
+    <meta property="og:image" content="/images/og-image.jpg">
+    <meta property="og:url" content="https://eterstore.com.ar/[PÁGINA]">
+    <meta property="og:type" content="website">
+    
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    
+    <!-- PRECONNECT PARA OPTIMIZACIÓN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- CSS CRÍTICO INLINE (OPCIONAL) -->
+    <style>
+        /* CSS crítico para evitar FOUC */
+        body { margin: 0; font-family: 'Inter', sans-serif; }
+        .loading { display: none; }
+    </style>
+    
+    <!-- CSS EXTERNO -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/[PÁGINA-ESPECÍFICO].css">
+</head>
+
+================================================================================
+                        2. ESTRUCTURA PRINCIPAL POR PÁGINA
+================================================================================
+
+/* ESTRUCTURA COMÚN DEL BODY */
+
+<body class="[CLASE-PÁGINA]">
+    <!-- SKIP NAVIGATION PARA ACCESIBILIDAD -->
+    <a href="#main-content" class="skip-link" aria-label="Saltar al contenido principal">
+        Saltar al contenido
+    </a>
+    
+    <!-- BARRA DE NAVEGACIÓN COMÚN -->
+    <header class="site-header" role="banner">
+        <nav class="main-navigation" role="navigation" aria-label="Navegación principal">
+            <!-- Logo y navegación común para todas las páginas -->
+            <div class="nav-brand">
+                <a href="/" aria-label="Éter Store - Inicio">
+                    <img src="/images/logo.svg" alt="Éter Store" width="120" height="40">
+                </a>
+            </div>
+            
+            <ul class="nav-menu" role="menubar">
+                <li role="none"><a href="/" role="menuitem">Inicio</a></li>
+                <li role="none"><a href="/productos.html" role="menuitem">Productos</a></li>
+                <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
+                <li role="none"><a href="/admin.html" role="menuitem" class="admin-link">Admin</a></li>
+            </ul>
+            
+            <!-- Carrito de compras -->
+            <div class="nav-actions">
+                <button class="cart-toggle" aria-label="Abrir carrito" aria-expanded="false">
+                    <span class="cart-icon" aria-hidden="true">🛒</span>
+                    <span class="cart-count" aria-label="Productos en carrito">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- CONTENIDO PRINCIPAL ESPECÍFICO -->
+    <main id="main-content" class="main-content" role="main">
+        
+        /* ===== INDEX.HTML - PÁGINA DE INICIO ===== */
+        
+        <!-- Sección Hero/Bienvenida -->
+        <section class="hero-section" aria-labelledby="hero-title">
+            <div class="hero-content">
+                <h1 id="hero-title">Éter Store - Calzados Premium</h1>
+                <p class="hero-subtitle">Descubre nuestra colección exclusiva en Mar del Plata</p>
+                <div class="hero-actions">
+                    <a href="/productos.html" class="btn btn-primary" role="button">
+                        Ver Catálogo
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image" aria-hidden="true">
+                <img src="/images/hero/hero-shoes.svg" alt="" loading="lazy">
+            </div>
+        </section>
+        
+        <!-- Productos Destacados -->
+        <section class="featured-products" aria-labelledby="featured-title">
+            <div class="container">
+                <h2 id="featured-title">Productos Destacados</h2>
+                <div class="products-grid" role="list">
+                    <!-- Productos dinámicos cargados por JS -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Sección Acerca de -->
+        <section class="about-section" aria-labelledby="about-title">
+            <div class="container">
+                <h2 id="about-title">Quiénes Somos</h2>
+                <p>Contenido dinámico cargado desde content-manager.js</p>
+            </div>
+        </section>
+        
+        /* ===== PRODUCTOS.HTML - CATÁLOGO ===== */
+        
+        <!-- Encabezado de página -->
+        <section class="page-header" aria-labelledby="catalog-title">
+            <div class="container">
+                <h1 id="catalog-title">Catálogo de Productos</h1>
+                <p class="page-description">Explora nuestra colección completa de calzados premium</p>
+            </div>
+        </section>
+        
+        <!-- Filtros y búsqueda -->
+        <section class="catalog-filters" aria-labelledby="filters-title">
+            <div class="container">
+                <h2 id="filters-title" class="sr-only">Filtros de productos</h2>
+                
+                <!-- Barra de búsqueda -->
+                <div class="search-bar">
+                    <label for="product-search" class="sr-only">Buscar productos</label>
+                    <input type="search" id="product-search" placeholder="Buscar productos..." 
+                           aria-describedby="search-help">
+                    <span id="search-help" class="sr-only">Ingresa el nombre del producto que buscas</span>
+                </div>
+                
+                <!-- Filtros por categoría -->
+                <div class="filter-group">
+                    <fieldset>
+                        <legend>Categorías</legend>
+                        <div class="filter-options" role="group" aria-labelledby="category-filters">
+                            <button class="filter-btn active" data-category="all" aria-pressed="true">
+                                Todos
+                            </button>
+                            <button class="filter-btn" data-category="zapatillas" aria-pressed="false">
+                                Zapatillas
+                            </button>
+                            <!-- Más filtros... -->
+                        </div>
+                    </fieldset>
+                </div>
+                
+                <!-- Ordenamiento -->
+                <div class="sort-controls">
+                    <label for="sort-select">Ordenar por:</label>
+                    <select id="sort-select" aria-describedby="sort-help">
+                        <option value="name">Nombre</option>
+                        <option value="price-low">Precio: Menor a Mayor</option>
+                        <option value="price-high">Precio: Mayor a Menor</option>
+                        <option value="rating">Calificación</option>
+                    </select>
+                    <span id="sort-help" class="sr-only">Cambia el orden de los productos</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Grid de productos -->
+        <section class="products-catalog" aria-labelledby="products-title">
+            <div class="container">
+                <h2 id="products-title" class="sr-only">Lista de productos</h2>
+                <div class="products-grid" role="list" aria-live="polite" aria-label="Productos disponibles">
+                    <!-- Productos cargados dinámicamente -->
+                </div>
+                
+                <!-- Paginación -->
+                <nav class="pagination" aria-label="Navegación de páginas">
+                    <button class="pagination-btn" aria-label="Página anterior" disabled>
+                        Anterior
+                    </button>
+                    <span class="pagination-info" aria-live="polite">
+                        Página 1 de 3
+                    </span>
+                    <button class="pagination-btn" aria-label="Página siguiente">
+                        Siguiente
+                    </button>
+                </nav>
+            </div>
+        </section>
+        
+        /* ===== ADMIN.HTML - PANEL DE ADMINISTRACIÓN ===== */
+        
+        <!-- Autenticación -->
+        <section class="auth-section" id="authSection" aria-labelledby="auth-title">
+            <div class="auth-container">
+                <h1 id="auth-title">Panel de Administración</h1>
+                <form id="authForm" class="auth-form" novalidate>
+                    <div class="form-group">
+                        <label for="username">Usuario:</label>
+                        <input type="text" id="username" name="username" required 
+                               aria-describedby="username-error" autocomplete="username">
+                        <div id="username-error" class="error-message" role="alert" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Contraseña:</label>
+                        <input type="password" id="password" name="password" required 
+                               aria-describedby="password-error" autocomplete="current-password">
+                        <div id="password-error" class="error-message" role="alert" aria-live="polite"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkbox-custom" aria-hidden="true"></span>
+                            Recordar sesión por 30 días
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        Iniciar Sesión
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <!-- Dashboard principal -->
+        <section class="admin-dashboard" id="adminApp" style="display: none;" aria-labelledby="dashboard-title">
+            <!-- Header del admin -->
+            <header class="admin-header">
+                <div class="admin-header-content">
+                    <h1 id="dashboard-title">Panel de Administración - Éter Store</h1>
+                    <div class="admin-actions">
+                        <button id="viewSiteBtn" class="btn btn-secondary" aria-label="Ver sitio web">
+                            Ver Sitio
+                        </button>
+                        <button id="logoutBtn" class="btn btn-outline" aria-label="Cerrar sesión">
+                            Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Navegación por pestañas -->
+            <nav class="admin-tabs" role="tablist" aria-label="Secciones del panel">
+                <button class="nav-tab active" data-tab="dashboard" role="tab" 
+                        aria-selected="true" aria-controls="dashboardPanel">
+                    Dashboard
+                </button>
+                <button class="nav-tab" data-tab="products" role="tab" 
+                        aria-selected="false" aria-controls="productsPanel">
+                    Productos
+                </button>
+                <button class="nav-tab" data-tab="orders" role="tab" 
+                        aria-selected="false" aria-controls="ordersPanel">
+                    Pedidos
+                </button>
+                <button class="nav-tab" data-tab="content" role="tab" 
+                        aria-selected="false" aria-controls="contentPanel">
+                    Contenido
+                </button>
+                <button class="nav-tab" data-tab="analytics" role="tab" 
+                        aria-selected="false" aria-controls="analyticsPanel">
+                    Analytics
+                </button>
+            </nav>
+            
+            <!-- Paneles de contenido -->
+            <div class="admin-content">
+                <!-- Panel Dashboard -->
+                <section class="tab-panel active" id="dashboardPanel" role="tabpanel" 
+                         aria-labelledby="dashboard-tab">
+                    <div class="dashboard-metrics">
+                        <!-- Métricas y estadísticas -->
+                    </div>
+                </section>
+                
+                <!-- Panel Productos -->
+                <section class="tab-panel" id="productsPanel" role="tabpanel" 
+                         aria-labelledby="products-tab">
+                    <div class="panel-header">
+                        <h2>Gestión de Productos</h2>
+                        <button class="btn btn-primary" onclick="showAddProductModal()" 
+                                aria-label="Agregar nuevo producto">
+                            Agregar Producto
+                        </button>
+                    </div>
+                    
+                    <div class="products-table-container">
+                        <table class="admin-table" role="table" aria-label="Lista de productos">
+                            <thead>
+                                <tr role="row">
+                                    <th scope="col">Imagen</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Stock</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTable">
+                                <!-- Productos cargados dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                
+                <!-- Más paneles... -->
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- CARRITO DE COMPRAS (COMÚN) -->
+    <aside class="cart-sidebar" id="cartSidebar" role="complementary" aria-labelledby="cart-title">
+        <div class="cart-header">
+            <h2 id="cart-title">Carrito de Compras</h2>
+            <button class="cart-close" aria-label="Cerrar carrito">&times;</button>
+        </div>
+        <div class="cart-content">
+            <div class="cart-items" role="list" aria-label="Productos en el carrito">
+                <!-- Items del carrito -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total" aria-live="polite">
+                    Total: $0.00
+                </div>
+                <button class="btn btn-primary btn-full" id="checkoutBtn">
+                    Finalizar Compra
+                </button>
+            </div>
+        </div>
+    </aside>
+
+================================================================================
+                            3. PIE DE PÁGINA COMÚN
+================================================================================
+
+    <!-- FOOTER COMÚN PARA TODAS LAS PÁGINAS -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <!-- Información de contacto -->
+            <section class="footer-section" aria-labelledby="contact-title">
+                <h3 id="contact-title">Contacto</h3>
+                <address class="contact-info">
+                    <p>
+                        <span class="contact-label">Dirección:</span>
+                        <span class="contact-value">Av. Constitución 1234, Mar del Plata, Buenos Aires</span>
+                    </p>
+                    <p>
+                        <span class="contact-label">Teléfono:</span>
+                        <a href="tel:+542235025196" class="contact-link">+54 223 502 5196</a>
+                    </p>
+                    <p>
+                        <span class="contact-label">Email:</span>
+                        <a href="mailto:info@eterstore.com.ar" class="contact-link">info@eterstore.com.ar</a>
+                    </p>
+                    <p>
+                        <span class="contact-label">Horarios:</span>
+                        <span class="contact-value">Lun-Vie: 9:00-19:00, Sáb: 9:00-17:00, Dom: 10:00-16:00</span>
+                    </p>
+                </address>
+            </section>
+            
+            <!-- Redes sociales -->
+            <section class="footer-section" aria-labelledby="social-title">
+                <h3 id="social-title">Síguenos</h3>
+                <div class="social-links" role="list">
+                    <a href="https://instagram.com/eterstore_mdp" class="social-link" 
+                       aria-label="Síguenos en Instagram" target="_blank" rel="noopener">
+                        <span class="social-icon" aria-hidden="true">📷</span>
+                        Instagram
+                    </a>
+                    <a href="https://facebook.com/EterStoreMDP" class="social-link" 
+                       aria-label="Síguenos en Facebook" target="_blank" rel="noopener">
+                        <span class="social-icon" aria-hidden="true">📘</span>
+                        Facebook
+                    </a>
+                    <a href="https://wa.me/542235025196" class="social-link" 
+                       aria-label="Contáctanos por WhatsApp" target="_blank" rel="noopener">
+                        <span class="social-icon" aria-hidden="true">💬</span>
+                        WhatsApp
+                    </a>
+                </div>
+            </section>
+            
+            <!-- Enlaces legales -->
+            <section class="footer-section" aria-labelledby="legal-title">
+                <h3 id="legal-title">Información Legal</h3>
+                <nav class="legal-links" aria-label="Enlaces legales">
+                    <a href="/terminos-condiciones.html" class="legal-link">Términos y Condiciones</a>
+                    <a href="/politica-privacidad.html" class="legal-link">Política de Privacidad</a>
+                    <a href="#cambios-devoluciones" class="legal-link">Cambios y Devoluciones</a>
+                </nav>
+            </section>
+        </div>
+        
+        <!-- Copyright -->
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="copyright">
+                    &copy; <span id="currentYear">2024</span> Éter Store. Todos los derechos reservados.
+                    <span class="separator">|</span>
+                    Diseñado con ❤️ en Mar del Plata
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- SCRIPTS AL FINAL DEL BODY -->
+    <!-- Scripts críticos primero -->
+    <script src="/js/main.js" defer></script>
+    
+    <!-- Scripts específicos por página -->
+    <!-- Para index.html -->
+    <script src="/js/content-manager.js" defer></script>
+    
+    <!-- Para productos.html -->
+    <script src="/js/products.js" defer></script>
+    <script src="/js/catalog.js" defer></script>
+    
+    <!-- Para admin.html -->
+    <script src="/js/admin.js" defer></script>
+    <script src="/js/admin-enhanced.js" defer></script>
+    
+    <!-- Scripts comunes -->
+    <script src="/js/cart.js" defer></script>
+    
+    <!-- Analytics (opcional) -->
+    <script>
+        // Google Analytics o similar
+        // Solo si está habilitado en la configuración
+    </script>
+    
+</body>
+</html>
+
+================================================================================
+                        4. ORGANIZACIÓN DE ARCHIVOS EXTERNOS
+================================================================================
+
+/* ESTRUCTURA DE CARPETAS RECOMENDADA */
+
+proyecto/
+├── index.html                 # Página principal
+├── productos.html             # Catálogo de productos
+├── admin.html                 # Panel de administración
+├── terminos-condiciones.html  # Página legal
+├── politica-privacidad.html   # Página legal
+├── favicon.ico               # Icono del sitio
+├── robots.txt                # SEO
+├── sitemap.xml               # SEO
+│
+├── styles/                   # Archivos CSS
+│   ├── main.css             # Estilos principales y comunes
+│   ├── responsive.css       # Media queries
+│   ├── catalog.css          # Específico para productos.html
+│   ├── admin/               # Estilos del admin
+│   │   ├── base.css        # Base del admin
+│   │   ├── components.css  # Componentes del admin
+│   │   ├── layout.css      # Layout del admin
+│   │   └── utilities.css   # Utilidades del admin
+│   └── consolidated/        # CSS compilado/minificado
+│
+├── js/                      # Archivos JavaScript
+│   ├── main.js             # Script principal común
+│   ├── cart.js             # Funcionalidad del carrito
+│   ├── products.js         # Gestión de productos
+│   ├── catalog.js          # Funcionalidad del catálogo
+│   ├── content-manager.js  # Gestión de contenido
+│   ├── admin.js            # Panel de administración
+│   ├── admin-enhanced.js   # Funcionalidades avanzadas del admin
+│   ├── security.js         # Funciones de seguridad
+│   ├── analytics.js        # Analytics y métricas
+│   ├── modules/            # Módulos específicos
+│   └── admin/              # Scripts específicos del admin
+│       ├── admin-core.js
+│       ├── dashboard-manager.js
+│       ├── product-manager.js
+│       ├── order-manager.js
+│       └── utils.js
+│
+├── images/                  # Recursos gráficos
+│   ├── logo.svg            # Logo principal
+│   ├── favicon.png         # Favicon en PNG
+│   ├── og-image.jpg        # Imagen para Open Graph
+│   ├── apple-touch-icon.png # Icono para iOS
+│   ├── hero/               # Imágenes del hero
+│   │   └── hero-shoes.svg
+│   ├── products/           # Imágenes de productos
+│   │   ├── running-shoes.svg
+│   │   ├── classic-moccasins.svg
+│   │   └── ...
+│   ├── icons/              # Iconografía
+│   └── backgrounds/        # Fondos y texturas
+│
+├── fonts/                   # Fuentes personalizadas
+│   ├── inter/              # Familia Inter
+│   └── custom/             # Fuentes personalizadas
+│
+├── assets/                  # Otros recursos
+│   ├── documents/          # PDFs, documentos
+│   ├── videos/             # Videos promocionales
+│   └── audio/              # Archivos de audio
+│
+└── data/                    # Datos y configuración
+    ├── products.json       # Datos de productos
+    ├── config.json         # Configuración del sitio
+    └── backup/             # Respaldos
+
+/* ORDEN DE CARGA DE CSS */
+
+1. CSS crítico inline (en <head>)
+2. main.css (estilos base y comunes)
+3. responsive.css (media queries)
+4. [página-específico].css (estilos específicos)
+5. CSS de terceros (si es necesario)
+
+/* ORDEN DE CARGA DE JAVASCRIPT */
+
+1. Scripts críticos en <head> (si es absolutamente necesario)
+2. main.js (funcionalidad común)
+3. Scripts específicos de página
+4. Scripts de terceros
+5. Analytics y tracking (al final)
+
+================================================================================
+                        5. CONSIDERACIONES ADICIONALES
+================================================================================
+
+/* ===== SEMÁNTICA HTML5 ===== */
+
+✅ ELEMENTOS SEMÁNTICOS CORRECTOS:
+- <header>: Encabezado de página o sección
+- <nav>: Navegación principal
+- <main>: Contenido principal de la página
+- <section>: Secciones temáticas
+- <article>: Contenido independiente (productos, posts)
+- <aside>: Contenido relacionado (carrito, sidebar)
+- <footer>: Pie de página
+- <figure> y <figcaption>: Imágenes con descripción
+- <address>: Información de contacto
+
+✅ JERARQUÍA DE ENCABEZADOS:
+- H1: Un solo H1 por página (título principal)
+- H2-H6: Jerarquía lógica y secuencial
+- No saltar niveles (H1 → H3 ❌, H1 → H2 ✅)
+
+/* ===== ACCESIBILIDAD (ARIA) ===== */
+
+✅ ATRIBUTOS ARIA ESENCIALES:
+- aria-label: Etiquetas descriptivas
+- aria-labelledby: Referencia a elemento que etiqueta
+- aria-describedby: Referencia a descripción adicional
+- aria-expanded: Estado de elementos expandibles
+- aria-selected: Estado de elementos seleccionables
+- aria-live: Regiones que cambian dinámicamente
+- role: Rol semántico del elemento
+
+✅ NAVEGACIÓN POR TECLADO:
+- Todos los elementos interactivos accesibles con Tab
+- Orden lógico de tabulación
+- Indicadores visuales de foco
+- Teclas de escape para cerrar modales
+
+✅ LECTORES DE PANTALLA:
+- Textos alternativos en imágenes
+- Etiquetas en formularios
+- Estructura de encabezados clara
+- Contenido oculto con .sr-only
+
+/* ===== OPTIMIZACIÓN PARA SEO ===== */
+
+✅ METADATOS ESENCIALES:
+- Título único y descriptivo por página (50-60 caracteres)
+- Meta description relevante (150-160 caracteres)
+- Meta keywords (opcional, pero útil)
+- Open Graph para redes sociales
+- Schema.org markup para productos
+
+✅ ESTRUCTURA DE URLs:
+- URLs amigables y descriptivas
+- Uso de guiones para separar palabras
+- Estructura lógica de carpetas
+- Canonical URLs para evitar contenido duplicado
+
+✅ CONTENIDO OPTIMIZADO:
+- Encabezados con palabras clave
+- Texto alternativo descriptivo en imágenes
+- Enlaces internos relevantes
+- Contenido único y valioso
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+✅ BREAKPOINTS RECOMENDADOS:
+- Mobile: 320px - 767px
+- Tablet: 768px - 1023px
+- Desktop: 1024px+
+- Large Desktop: 1440px+
+
+✅ TÉCNICAS RESPONSIVE:
+- Mobile-first approach
+- Flexbox y CSS Grid
+- Imágenes responsive con srcset
+- Tipografía fluida con clamp()
+- Touch targets mínimo 44px
+
+✅ OPTIMIZACIÓN DE IMÁGENES:
+- Formatos modernos (WebP, AVIF)
+- Lazy loading para imágenes
+- Diferentes tamaños según dispositivo
+- Compresión adecuada
+
+================================================================================
+                            6. EJEMPLOS PRÁCTICOS
+================================================================================
+
+/* ===== EJEMPLO: PRODUCTO EN CATÁLOGO ===== */
+
+<article class="product-card" role="listitem" itemscope itemtype="https://schema.org/Product">
+    <div class="product-image">
+        <img src="/images/products/running-shoes.svg" 
+             alt="Zapatillas Running Pro - Calzado deportivo premium" 
+             itemprop="image"
+             loading="lazy"
+             width="300" 
+             height="300">
+        <div class="product-badges">
+            <span class="badge badge-premium" aria-label="Producto premium">Premium</span>
+            <span class="badge badge-new" aria-label="Producto nuevo">Nuevo</span>
+        </div>
+    </div>
+    
+    <div class="product-info">
+        <h3 class="product-name" itemprop="name">
+            <a href="/producto/zapatillas-running-pro" itemprop="url">
+                Zapatillas Running Pro
+            </a>
+        </h3>
+        
+        <p class="product-description" itemprop="description">
+            Zapatillas de running de alta performance con tecnología de amortiguación avanzada.
+        </p>
+        
+        <div class="product-rating" aria-label="Calificación: 4.8 de 5 estrellas">
+            <div class="stars" aria-hidden="true">
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star filled">★</span>
+                <span class="star half">★</span>
+            </div>
+            <span class="rating-text" itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating">
+                <meta itemprop="ratingValue" content="4.8">
+                <meta itemprop="reviewCount" content="127">
+                4.8 (127 reseñas)
+            </span>
+        </div>
+        
+        <div class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+            <span class="price-current" itemprop="price" content="89999">
+                $89.999
+            </span>
+            <span class="price-original" aria-label="Precio anterior">$99.999</span>
+            <meta itemprop="priceCurrency" content="ARS">
+            <meta itemprop="availability" content="https://schema.org/InStock">
+        </div>
+        
+        <div class="product-actions">
+            <button class="btn btn-primary add-to-cart" 
+                    data-product-id="1"
+                    aria-label="Agregar Zapatillas Running Pro al carrito">
+                Agregar al Carrito
+            </button>
+            <button class="btn btn-secondary quick-view" 
+                    data-product-id="1"
+                    aria-label="Vista rápida de Zapatillas Running Pro">
+                Vista Rápida
+            </button>
+        </div>
+    </div>
+</article>
+
+/* ===== EJEMPLO: FORMULARIO DE ADMIN ===== */
+
+<form class="admin-form" id="productForm" novalidate>
+    <fieldset>
+        <legend>Información del Producto</legend>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="productName" class="required">Nombre del Producto:</label>
+                <input type="text" 
+                       id="productName" 
+                       name="name" 
+                       required 
+                       aria-describedby="productName-error productName-help"
+                       autocomplete="off">
+                <div id="productName-help" class="form-help">
+                    Ingresa un nombre descriptivo y único para el producto
+                </div>
+                <div id="productName-error" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="productCategory">Categoría:</label>
+                <select id="productCategory" 
+                        name="category" 
+                        required 
+                        aria-describedby="productCategory-error">
+                    <option value="">Selecciona una categoría</option>
+                    <option value="zapatillas">Zapatillas</option>
+                    <option value="mocasines">Mocasines</option>
+                    <option value="botas">Botas</option>
+                    <option value="sandalias">Sandalias</option>
+                </select>
+                <div id="productCategory-error" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="productDescription">Descripción:</label>
+            <textarea id="productDescription" 
+                      name="description" 
+                      rows="4" 
+                      aria-describedby="productDescription-help"
+                      placeholder="Describe las características principales del producto..."></textarea>
+            <div id="productDescription-help" class="form-help">
+                Máximo 500 caracteres. Incluye características, materiales y beneficios.
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="productPrice" class="required">Precio (ARS):</label>
+                <div class="input-group">
+                    <span class="input-prefix" aria-hidden="true">$</span>
+                    <input type="number" 
+                           id="productPrice" 
+                           name="price" 
+                           min="0" 
+                           step="0.01" 
+                           required 
+                           aria-describedby="productPrice-error">
+                </div>
+                <div id="productPrice-error" class="error-message" role="alert" aria-live="polite"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="productStock">Stock Disponible:</label>
+                <input type="number" 
+                       id="productStock" 
+                       name="stock" 
+                       min="0" 
+                       aria-describedby="productStock-help">
+                <div id="productStock-help" class="form-help">
+                    Cantidad disponible en inventario
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <fieldset class="checkbox-group">
+                <legend>Opciones del Producto</legend>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="isPremium" value="true">
+                    <span class="checkbox-custom" aria-hidden="true"></span>
+                    Producto Premium
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" name="featured" value="true">
+                    <span class="checkbox-custom" aria-hidden="true"></span>
+                    Producto Destacado
+                </label>
+            </fieldset>
+        </div>
+    </fieldset>
+    
+    <div class="form-actions">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">
+            Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">
+            Guardar Producto
+        </button>
+    </div>
+</form>
+
+================================================================================
+                                NOTAS FINALES
+================================================================================
+
+🎯 PUNTOS CLAVE PARA RECORDAR:
+
+1. **Consistencia**: Mantener la misma estructura en todas las páginas
+2. **Semántica**: Usar elementos HTML5 apropiados para cada contenido
+3. **Accesibilidad**: Considerar usuarios con discapacidades desde el diseño
+4. **Performance**: Optimizar carga de recursos y renderizado
+5. **SEO**: Estructura clara y metadatos completos
+6. **Mantenibilidad**: Código limpio y bien documentado
+
+🔧 HERRAMIENTAS RECOMENDADAS:
+
+- **Validación HTML**: W3C Markup Validator
+- **Accesibilidad**: WAVE, axe DevTools
+- **SEO**: Google Search Console, Lighthouse
+- **Performance**: PageSpeed Insights, WebPageTest
+- **Responsive**: Browser DevTools, Responsively App
+
+📚 RECURSOS ADICIONALES:
+
+- MDN Web Docs: https://developer.mozilla.org/
+- WCAG Guidelines: https://www.w3.org/WAI/WCAG21/quickref/
+- Schema.org: https://schema.org/
+- Google SEO Guide: https://developers.google.com/search/docs
+
+================================================================================
+                            FIN DEL DOCUMENTO
+================================================================================

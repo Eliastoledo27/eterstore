@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .test-button:hover {
+            background: #b8941f;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .login-form {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background: #d4af37;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔐 Test de Login - Admin Panel</h1>
+
+        <div id="status"></div>
+
+        <h2>Credenciales de Prueba:</h2>
+        <ul>
+            <li><strong>Usuario:</strong> admin</li>
+            <li><strong>Contraseña:</strong> eterstore2024</li>
+        </ul>
+
+        <h2>Pruebas:</h2>
+        <button class="test-button" onclick="testLogin()">Probar Login</button>
+        <button class="test-button" onclick="openAdmin()">Abrir Admin.html</button>
+        <button class="test-button" onclick="clearStorage()">Limpiar Storage</button>
+
+        <div class="login-form">
+            <h3>Login Manual:</h3>
+            <input type="text" id="username" placeholder="Usuario" value="admin">
+            <input type="password" id="password" placeholder="Contraseña" value="eterstore2024">
+            <button onclick="manualLogin()">Iniciar Sesión</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function showStatus(message, type = 'success') {
+            const status = document.getElementById('status');
+            status.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function addResult(message) {
+            const results = document.getElementById('results');
+            results.innerHTML += `<p>${message}</p>`;
+        }
+
+        function testLogin() {
+            const username = 'admin';
+            const password = 'eterstore2024';
+
+            // Simular login
+            if (username === 'admin' && password === 'eterstore2024') {
+                showStatus('✅ Login exitoso con credenciales correctas', 'success');
+                addResult('Login: Credenciales válidas');
+
+                // Guardar en localStorage
+                const userData = { username, role: 'admin' };
+                localStorage.setItem('adminUser', JSON.stringify(userData));
+                addResult('Storage: Usuario guardado en localStorage');
+            } else {
+                showStatus('❌ Login fallido', 'error');
+                addResult('Login: Credenciales inválidas');
+            }
+        }
+
+        function manualLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'eterstore2024') {
+                showStatus('✅ Login manual exitoso', 'success');
+                addResult(`Login manual: ${username} autenticado`);
+
+                // Guardar en localStorage
+                const userData = { username, role: 'admin' };
+                localStorage.setItem('adminUser', JSON.stringify(userData));
+                addResult('Storage: Usuario guardado en localStorage');
+            } else {
+                showStatus('❌ Login manual fallido - Credenciales incorrectas', 'error');
+                addResult(`Login manual: Credenciales inválidas (${username})`);
+            }
+        }
+
+        function openAdmin() {
+            window.open('admin.html', '_blank');
+        }
+
+        function clearStorage() {
+            localStorage.removeItem('adminUser');
+            showStatus('🗑️ Storage limpiado', 'success');
+            addResult('Storage: localStorage limpiado');
+        }
+
+        // Verificar estado actual
+        window.addEventListener('load', () => {
+            const savedUser = localStorage.getItem('adminUser');
+            if (savedUser) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    showStatus(`👤 Usuario ya autenticado: ${userData.username}`, 'success');
+                    addResult(`Estado actual: ${userData.username} autenticado`);
+                } catch (error) {
+                    showStatus('❌ Error en datos guardados', 'error');
+                    addResult('Estado actual: Error en localStorage');
+                }
+            } else {
+                showStatus('🔒 No hay usuario autenticado', 'error');
+                addResult('Estado actual: Sin autenticación');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

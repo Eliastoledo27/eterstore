@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Importador XML - Catálogo Éter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+   
+    <style>
+        :root {
+            --primary-color: #00ffff;
+            --secondary-color: #ff00ff;
+            --bg-dark: #0a0a1a;
+            --bg-medium: #1a1a2a;
+        }
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-medium));
+            font-family: 'Arial', sans-serif;
+            color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .neon-border {
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, var(--primary-color), var(--secondary-color)) 1;
+            box-shadow: 
+                0 0 10px rgba(0,255,255,0.5), 
+                0 0 20px rgba(255,0,255,0.3);
+        }
+        .neon-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 
+                0 0 15px var(--primary-color), 
+                0 0 25px var(--secondary-color);
+        }
+        #listaProductos {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .notification.success {
+            background-color: #4CAF50;
+        }
+        .notification.error {
+            background-color: #f44336;
+        }
+        .notification.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="notification" class="notification"></div>
+    
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-center text-4xl md:text-5xl font-bold mb-8 tracking-wider uppercase text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">
+            Importador XML - Catálogo Éter
+        </h1>
+        
+        <div class="glass-morphism p-6 rounded-2xl neon-border max-w-4xl mx-auto">
+            <div class="flex justify-center mb-8">
+                <label class="bg-gradient-to-r from-emerald-500 to-green-500 text-white neon-hover text-center cursor-pointer flex items-center justify-center p-4 rounded-lg text-lg font-bold">
+                    <i class="fas fa-file-import mr-2"></i> Importar XML
+                    <input 
+                        type="file" 
+                        id="importarXML" 
+                        accept=".xml" 
+                        class="hidden" 
+                        onchange="importarXML(event)"
+                    >
+                </label>
+            </div>
+            
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl">Productos Importados</h2>
+                <span class="bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-3 py-1 rounded-full">
+                    Total: <span id="totalProductos">0</span>
+                </span>
+            </div>
+            
+            <div id="listaProductos" class="space-y-4">
+                <div class="text-center text-gray-400 py-8">
+                    <i class="fas fa-box-open text-4xl mb-4"></i>
+                    <p>No hay productos importados. Haz clic en "Importar XML" para cargar un catálogo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let productos = [];
+        
+        // Función para mostrar notificaciones
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        function actualizarListaProductos() {
+            const listaProductos = document.getElementById('listaProductos');
+            const totalProductos = document.getElementById('totalProductos');
+            listaProductos.innerHTML = '';
+            
+            if (productos.length === 0) {
+                listaProductos.innerHTML = `
+                    <div class="text-center text-gray-400 py-8">
+                        <i class="fas fa-box-open text-4xl mb-4"></i>
+                        <p>No hay productos importados. Haz clic en "Importar XML" para cargar un catálogo.</p>
+                    </div>
+                `;
+            } else {
+                productos.forEach((producto) => {
+                    const div = document.createElement('div');
+                    div.className = 'product-card p-4 rounded-xl flex items-center space-x-4 cursor-pointer glass-morphism neon-hover';
+                    div.innerHTML = `
+                        <img src="${producto.imagen}" class="w-24 h-24 object-cover rounded-lg">
+                        <div class="flex-grow">
+                            <p class="text-lg font-bold">${producto.nombre}</p>
+                            <p class="text-sm">Talla: ${producto.talle}</p>
+                            <p class="text-sm text-green-300">Precio: $${producto.precio}</p>
+                            <p class="text-sm text-purple-300">Categoría: ${producto.categoria}</p>
+                        </div>
+                    `;
+                    listaProductos.appendChild(div);
+                });
+            }
+            
+            totalProductos.textContent = productos.length;
+        }
+        
+        function importarXML(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            
+            reader.onload = (e) => {
+                try {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(e.target.result, 'text/xml');
+                    
+                    // Verificar si hay errores de parseo
+                    const parserError = xmlDoc.querySelector('parsererror');
+                    if (parserError) {
+                        throw new Error('El archivo XML no tiene un formato válido');
+                    }
+                    
+                    // Limpiar productos existentes
+                    productos = [];
+                    
+                    // Parsear productos
+                    const productosElements = xmlDoc.querySelectorAll('producto');
+                    if (productosElements.length === 0) {
+                        throw new Error('No se encontraron productos en el archivo XML');
+                    }
+                    
+                    productosElements.forEach(productoElement => {
+                        const nombre = productoElement.querySelector('nombre')?.textContent || '';
+                        const talle = productoElement.querySelector('talle')?.textContent || '';
+                        const precio = productoElement.querySelector('precio')?.textContent || '';
+                        const categoria = productoElement.querySelector('categoria')?.textContent || '';
+                        const imagen = productoElement.querySelector('imagen')?.textContent || '';
+                        
+                        // Validar campos obligatorios
+                        if (!nombre || !talle || !precio || !categoria) {
+                            console.warn('Producto con datos incompletos omitido:', {nombre, talle, precio, categoria});
+                            return;
+                        }
+                        
+                        const producto = {
+                            id: Date.now() + Math.random(),
+                            nombre: nombre,
+                            talle: talle,
+                            precio: precio,
+                            categoria: categoria,
+                            imagen: imagen,
+                            seleccionado: false
+                        };
+                        
+                        productos.push(producto);
+                    });
+                    
+                    actualizarListaProductos();
+                    showNotification(`Catálogo importado exitosamente (${productos.length} productos)`);
+                } catch (error) {
+                    showNotification('Error al importar el XML: ' + error.message, 'error');
+                    console.error('Error de importación:', error);
+                }
+                
+                // Limpiar el input para permitir importar el mismo archivo nuevamente
+                event.target.value = '';
+            };
+            
+            reader.onerror = () => {
+                showNotification('Error al leer el archivo XML', 'error');
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        // Inicializar la lista de productos vacía
+        actualizarListaProductos();
+    </script>
+</body>
+</html>

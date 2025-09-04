@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogo>
+    <nombre>Catálogo Éter Store - Ejemplo</nombre>
+    <fecha>2024-12-19T10:30:00Z</fecha>
+    <productos>
+        <producto>
+            <nombre>Zapatillas Running Elite</nombre>
+            <talle>42</talle>
+            <precio>135000</precio>
+            <categoria>deportivo</categoria>
+            <imagen>images/products/running-elite.svg</imagen>
+            <descripcion>Zapatillas de running con tecnología avanzada de amortiguación</descripcion>
+            <stock>15</stock>
+            <rating>4.8</rating>
+            <reviews>89</reviews>
+        </producto>
+        <producto>
+            <nombre>Botas de Cuero Artesanal</nombre>
+            <talle>40</talle>
+            <precio>195000</precio>
+            <categoria>formal</categoria>
+            <imagen>images/products/leather-artisan.svg</imagen>
+            <descripcion>Botas de cuero genuino hechas a mano por artesanos locales</descripcion>
+            <stock>8</stock>
+            <rating>4.9</rating>
+            <reviews>45</reviews>
+        </producto>
+        <producto>
+            <nombre>Sandalias Premium Verano</nombre>
+            <talle>38</talle>
+            <precio>55000</precio>
+            <categoria>verano</categoria>
+            <imagen>images/products/premium-sandals.svg</imagen>
+            <descripcion>Sandalias elegantes con suela de corcho natural</descripcion>
+            <stock>25</stock>
+            <rating>4.6</rating>
+            <reviews>67</reviews>
+        </producto>
+        <producto>
+            <nombre>Zapatos Oxford Premium</nombre>
+            <talle>43</talle>
+            <precio>175000</precio>
+            <categoria>formal</categoria>
+            <imagen>images/products/oxford-premium.svg</imagen>
+            <descripcion>Zapatos Oxford de cuero italiano con acabado espejo</descripcion>
+            <stock>12</stock>
+            <rating>4.7</rating>
+            <reviews>34</reviews>
+        </producto>
+        <producto>
+            <nombre>Sneakers Urbanos Limitados</nombre>
+            <talle>41</talle>
+            <precio>105000</precio>
+            <categoria>urbano</categoria>
+            <imagen>images/products/urban-limited.svg</imagen>
+            <descripcion>Edición limitada de sneakers urbanos con diseño exclusivo</descripcion>
+            <stock>20</stock>
+            <rating>4.5</rating>
+            <reviews>78</reviews>
+        </producto>
+    </productos>
+</catalogo>
+
+
+

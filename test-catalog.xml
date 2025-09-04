@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalogo>
+    <producto>
+        <nombre>Producto de Prueba</nombre>
+        <descripcion>Este es un producto de prueba para verificar la importación XML</descripcion>
+        <precio>99.99</precio>
+        <categoria>Electrónicos</categoria>
+        <stock>10</stock>
+        <imagen>https://via.placeholder.com/300x300</imagen>
+        <activo>true</activo>
+    </producto>
+    <producto>
+        <nombre>Segundo Producto</nombre>
+        <descripcion>Otro producto de prueba</descripcion>
+        <precio>149.99</precio>
+        <categoria>Hogar</categoria>
+        <stock>5</stock>
+        <imagen>https://via.placeholder.com/300x300</imagen>
+        <activo>true</activo>
+    </producto>
+</catalogo>

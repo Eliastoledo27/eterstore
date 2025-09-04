@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Premium - Éter Store | Calzados de Excelencia</title>
+    <meta name="description" content="Descubre nuestra colección exclusiva de calzados premium. Elegancia, comodidad y calidad excepcional en cada paso.">
+    <meta name="keywords" content="calzados premium, zapatos de lujo, mar del plata, éter store, calzado elegante">
+    <meta name="author" content="Éter Store">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://eterstore.com/productos">
+    <meta property="og:title" content="Catálogo Premium - Éter Store">
+    <meta property="og:description" content="Descubre nuestra colección exclusiva de calzados premium">
+    <meta property="og:image" content="https://eterstore.com/images/hero/hero-shoes.svg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://eterstore.com/productos">
+    <meta property="twitter:title" content="Catálogo Premium - Éter Store">
+    <meta property="twitter:description" content="Descubre nuestra colección exclusiva de calzados premium">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon.ico">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles/main.css" as="style">
+    <link rel="preload" href="styles/catalog.css" as="style">
+    <link rel="preload" href="js/products.js" as="script">
+    <link rel="preload" href="js/cart.js" as="script">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/catalog.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Éter Store",
+        "description": "Calzados Premium en Mar del Plata",
+        "url": "https://eterstore.com",
+        "telephone": "+54 223 502 5196",
+        "email": "equiporeveter@gmail.com",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Mar del Plata",
+            "addressRegion": "Buenos Aires",
+            "addressCountry": "AR"
+        },
+        "openingHours": "Mo-Fr 09:00-18:00, Sa 09:00-13:00"
+    }
+    </script>
+</head>
+<body class="catalog-page">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Navegación principal">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="index.html" class="logo" aria-label="Éter Store - Inicio">
+                        <div class="logo-icon">
+                            <i class="fas fa-crown" aria-hidden="true"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1 class="logo-title">Éter Store</h1>
+                            <span class="logo-tagline">Calzados Premium</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="nav-menu" id="navMenu" role="menubar">
+                    <ul class="nav-list">
+                        <li class="nav-item" role="none">
+                            <a href="index.html" class="nav-link" role="menuitem">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="productos.html" class="nav-link active" role="menuitem" aria-current="page">
+                                <i class="fas fa-shoe-prints" aria-hidden="true"></i>
+                                <span>Catálogo</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="index.html#about" class="nav-link" role="menuitem">
+                                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                                <span>Nosotros</span>
+                            </a>
+                        </li>
+                        <li class="nav-item" role="none">
+                            <a href="index.html#contact" class="nav-link" role="menuitem">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Contacto</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="nav-actions">
+                    <button class="cart-toggle" id="cartToggle" aria-label="Abrir carrito de compras" aria-expanded="false">
+                        <div class="cart-icon">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+                        </div>
+                    </button>
+                    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content" role="main">
+        <!-- Hero Section -->
+        <section class="catalog-hero" aria-labelledby="catalog-title">
+            <div class="catalog-hero-bg">
+                <div class="catalog-hero-gradient"></div>
+                <div class="catalog-hero-pattern"></div>
+                <div class="catalog-hero-particles"></div>
+            </div>
+            <div class="container">
+                <div class="catalog-hero-content">
+                    <div class="hero-badge">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <span>Colección Premium</span>
+                    </div>
+                    <h1 id="catalog-title" class="catalog-title">
+                        <span class="title-line">Descubre</span>
+                        <span class="title-accent">Nuestro</span>
+                        <span class="title-line">Catálogo</span>
+                        <span class="title-accent">Exclusivo</span>
+                    </h1>
+                    <p class="catalog-subtitle">Elegancia, comodidad y calidad excepcional en cada paso. Nuestra colección premium redefine el estándar del calzado de lujo.</p>
+                    <div class="hero-features">
+                        <div class="feature-item">
+                            <i class="fas fa-gem" aria-hidden="true"></i>
+                            <span>Calidad Premium</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shipping-fast" aria-hidden="true"></i>
+                            <span>Envío Rápido</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            <span>Garantía Total</span>
+                        </div>
+                    </div>
+                    <nav class="breadcrumb" aria-label="Navegación de migas de pan">
+                        <ol class="breadcrumb-list">
+                            <li class="breadcrumb-item">
+                                <a href="index.html" class="breadcrumb-link">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">
+                                <span class="breadcrumb-current">Catálogo</span>
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="products-section" aria-labelledby="products-title">
+            <div class="container">
+                <!-- Section Header -->
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-crown" aria-hidden="true"></i>
+                        <span>Colección Premium</span>
+                    </div>
+                    <h2 id="products-title" class="section-title">Explora Nuestros Productos</h2>
+                    <p class="section-subtitle">Filtra y ordena para encontrar exactamente lo que buscas en nuestra colección exclusiva</p>
+                </div>
+
+                <!-- Advanced Filters -->
+                <section class="filters-container" role="search" aria-label="Filtrar productos">
+                    <div class="filters-header">
+                        <h3 class="filters-title">
+                            <i class="fas fa-filter" aria-hidden="true"></i>
+                            Filtros Avanzados
+                        </h3>
+                        <button class="filters-toggle" id="filtersToggle" aria-expanded="true">
+                            <span>Mostrar/Ocultar Filtros</span>
+                            <i class="fas fa-chevron-down toggle-icon" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
+                    <div class="filters-content" id="filtersContent">
+                        <div class="filters-grid">
+                            <!-- Category Filter -->
+                            <div class="filter-group">
+                                <label for="categoryFilter" class="filter-label">
+                                    <i class="fas fa-tags" aria-hidden="true"></i>
+                                    Categoría
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="categoryFilter" class="filter-select" aria-describedby="categoryHelp">
+                                        <option value="">Todas las categorías</option>
+                                        <option value="deportivo">Deportivo</option>
+                                        <option value="casual">Casual</option>
+                                        <option value="formal">Formal</option>
+                                        <option value="verano">Verano</option>
+                                        <option value="invierno">Invierno</option>
+                                        <option value="urbano">Urbano</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow" aria-hidden="true"></i>
+                                </div>
+                                <div id="categoryHelp" class="filter-help">Selecciona el tipo de calzado que buscas</div>
+                            </div>
+
+                            <!-- Price Filter -->
+                            <div class="filter-group">
+                                <label for="priceFilter" class="filter-label">
+                                    <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                                    Rango de Precio
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="priceFilter" class="filter-select" aria-describedby="priceHelp">
+                                        <option value="">Todos los precios</option>
+                                        <option value="premium">Premium (+$35.000)</option>
+                                        <option value="standard">Estándar (-$35.000)</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow" aria-hidden="true"></i>
+                                </div>
+                                <div id="priceHelp" class="filter-help">Filtra por rango de precio</div>
+                            </div>
+
+                            <!-- Sort Filter -->
+                            <div class="filter-group">
+                                <label for="sortFilter" class="filter-label">
+                                    <i class="fas fa-sort" aria-hidden="true"></i>
+                                    Ordenar por
+                                </label>
+                                <div class="select-wrapper">
+                                    <select id="sortFilter" class="filter-select" aria-describedby="sortHelp">
+                                        <option value="">Ordenar por</option>
+                                        <option value="price-asc">Precio: Menor a Mayor</option>
+                                        <option value="price-desc">Precio: Mayor a Menor</option>
+                                        <option value="rating">Mejor Valorados</option>
+                                        <option value="name">Nombre A-Z</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down select-arrow" aria-hidden="true"></i>
+                                </div>
+                                <div id="sortHelp" class="filter-help">Ordena los productos según tu preferencia</div>
+                            </div>
+
+                            <!-- Search Filter -->
+                            <div class="filter-group search-group">
+                                <label for="searchFilter" class="filter-label">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                    Buscar
+                                </label>
+                                <div class="search-input-wrapper">
+                                    <input type="text" id="searchFilter" class="search-input" placeholder="Buscar productos..." aria-describedby="searchHelp">
+                                    <button type="button" class="search-clear" id="searchClear" aria-label="Limpiar búsqueda">
+                                        <i class="fas fa-times" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div id="searchHelp" class="filter-help">Busca por nombre, categoría o características</div>
+                            </div>
+                        </div>
+
+                        <!-- Filter Actions -->
+                        <div class="filter-actions">
+                            <button id="clearFilters" class="btn btn-secondary btn-icon">
+                                <i class="fas fa-times" aria-hidden="true"></i>
+                                <span>Limpiar Filtros</span>
+                            </button>
+                            <button id="applyFilters" class="btn btn-primary btn-icon">
+                                <i class="fas fa-check" aria-hidden="true"></i>
+                                <span>Aplicar Filtros</span>
+                            </button>
+                            <a href="index.html#products" class="btn btn-outline btn-icon">
+                                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                                <span>Volver al Inicio</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Results -->
+                <div class="products-results">
+                    <div class="results-header">
+                        <div class="results-info">
+                            <span class="results-count" id="resultsCount" aria-live="polite">Mostrando todos los productos</span>
+                            <span class="results-loading" id="resultsLoading" aria-hidden="true">
+                                <div class="loading-dots">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                Cargando productos...
+                            </span>
+                        </div>
+                        <div class="view-options">
+                            <button class="view-toggle view-grid active" id="viewGrid" aria-label="Vista de cuadrícula" aria-pressed="true">
+                                <i class="fas fa-th" aria-hidden="true"></i>
+                            </button>
+                            <button class="view-toggle view-list" id="viewList" aria-label="Vista de lista" aria-pressed="false">
+                                <i class="fas fa-list" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="products-container">
+                        <!-- Grid semántica para la lista de productos (rellenada dinámicamente por JS) -->
+                        <section class="products-grid" id="productsGrid" role="list" aria-label="Lista de productos" aria-busy="false" aria-describedby="products-title">
+                            <!-- Los productos se insertan aquí dinámicamente -->
+                        </section>
+
+                        <!-- No Results Message -->
+                        <div class="no-results" id="noResults" aria-hidden="true">
+                            <div class="no-results-content">
+                                <div class="no-results-icon">
+                                    <i class="fas fa-search" aria-hidden="true"></i>
+                                </div>
+                                <h3>No se encontraron productos</h3>
+                                <p>Intenta ajustar los filtros o buscar con otros términos</p>
+                                <button class="btn btn-primary" id="resetSearch">
+                                    <i class="fas fa-refresh" aria-hidden="true"></i>
+                                    Reiniciar Búsqueda
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div class="loading-container" id="loadingContainer" aria-hidden="true">
+                            <div class="loading-spinner">
+                                <div class="spinner-ring"></div>
+                                <div class="spinner-ring"></div>
+                                <div class="spinner-ring"></div>
+                            </div>
+                            <p>Cargando productos...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section class="cta-section" aria-labelledby="cta-title">
+            <div class="cta-bg">
+                <div class="cta-gradient"></div>
+                <div class="cta-pattern"></div>
+            </div>
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-badge">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                        <span>Servicio Personalizado</span>
+                    </div>
+                    <h2 id="cta-title" class="cta-title">¿No encuentras lo que buscas?</h2>
+                    <p class="cta-description">Nuestro equipo de expertos está aquí para ayudarte a encontrar el calzado perfecto. Contáctanos y te brindaremos atención personalizada.</p>
+                    <div class="cta-actions">
+                        <a href="https://wa.me/5492235025196" class="btn btn-primary btn-large" target="_blank" rel="noopener">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                            <span>Contactar por WhatsApp</span>
+                        </a>
+                        <a href="index.html#contact" class="btn btn-outline btn-large">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>Enviar Mensaje</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Company Information -->
+                <div class="footer-section company-info">
+                    <div class="footer-logo">
+                        <div class="footer-logo-icon">
+                            <i class="fas fa-crown" aria-hidden="true"></i>
+                        </div>
+                        <div class="footer-logo-text">
+                            <h3 class="footer-title">Éter Store</h3>
+                            <p class="footer-tagline">Calzados Premium en Mar del Plata</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Tu destino para calzados de la más alta calidad. Combinamos elegancia, comodidad y durabilidad en cada paso que das.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Síguenos en Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Síguenos en Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="https://wa.me/5492235025196" class="social-link" target="_blank" rel="noopener" aria-label="Contáctanos por WhatsApp">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="footer-section">
+                    <h4 class="footer-heading">Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="productos.html">Catálogo</a></li>
+                        <li><a href="index.html#about">Nosotros</a></li>
+                        <li><a href="index.html#contact">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="footer-section">
+                    <h4 class="footer-heading">Contacto</h4>
+                    <div class="contact-info">
+                        <p class="contact-item">
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span>Zona Jara y Berutti, Mar del Plata</span>
+                        </p>
+                        <p class="contact-item">
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <a href="tel:+542235025196">+54 223 502 5196</a>
+                        </p>
+                        <p class="contact-item">
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <a href="mailto:equiporeveter@gmail.com">equiporeveter@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Schedule -->
+                <div class="footer-section">
+                    <h4 class="footer-heading">Horarios</h4>
+                    <div class="schedule">
+                        <p class="schedule-title"><strong>Showroom:</strong></p>
+                        <p class="schedule-item">Lunes a Viernes: 9:00 - 18:00</p>
+                        <p class="schedule-item">Sábados: 9:00 - 13:00</p>
+                        <p class="schedule-note"><em>Visitas con cita previa</em></p>
+                    </div>
+                </div>
+
+                <!-- Información Legal -->
+                <div class="footer-section">
+                    <h4 class="footer-heading">Información Legal</h4>
+                    <ul class="footer-links">
+                        <li><a href="politica-privacidad.html">Política de Privacidad</a></li>
+                        <li><a href="terminos-condiciones.html">Términos y Condiciones</a></li>
+                        <li><a href="admin.html" style="opacity: 0.5; font-size: 0.8em;">Panel</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-bottom-content">
+                    <p class="copyright">&copy; 2024 Éter Store. Todos los derechos reservados.</p>
+                    <div class="footer-bottom-links">
+                        <a href="terminos-condiciones.html">Términos y Condiciones</a>
+                        <a href="politica-privacidad.html">Política de Privacidad</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <aside class="cart-sidebar" id="cartSidebar" role="complementary" aria-label="Carrito de compras" aria-hidden="true">
+        <div class="cart-header">
+            <h3 class="cart-title">
+                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                Carrito de Compras
+            </h3>
+            <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="cart-content" id="cartContent" role="region" aria-label="Productos en el carrito">
+            <!-- Cart items will be loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span class="total-label">Total:</span>
+                <span class="total-amount" id="cartTotal" aria-live="polite">$0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="btn btn-secondary" id="clearCart" aria-label="Vaciar carrito">
+                    <i class="fas fa-trash" aria-hidden="true"></i>
+                    <span>Vaciar Carrito</span>
+                </button>
+                <button class="btn btn-primary" id="checkoutBtn" aria-label="Finalizar compra">
+                    <i class="fas fa-credit-card" aria-hidden="true"></i>
+                    <span>Finalizar Compra</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver arriba" aria-hidden="true">
+        <i class="fas fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/sync-manager.js" defer></script>
+    <script src="js/premium-config.js" defer></script>
+    <script src="js/products.js" defer></script>
+    <script src="js/cart.js" defer></script>
+    <script src="js/catalog.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+    <script>
+        // Initialize catalog page with enhanced functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize products with smooth loading
+            if (window.ProductManager && window.ProductManager.renderProducts) {
+                setTimeout(() => {
+                    window.ProductManager.renderProducts(window.ProductManager.products, true);
+                }, 100);
+            }
+
+            // Initialize enhanced filters
+            initializeEnhancedFilters();
+
+            // Initialize view toggles with animations
+            initializeViewToggles();
+
+            // Initialize back to top with smooth scroll
+            initializeBackToTop();
+
+            // Initialize particle effects
+            initializeParticleEffects();
+        });
+
+        // Enhanced filter functionality with animations
+        function initializeEnhancedFilters() {
+            const filtersToggle = document.getElementById('filtersToggle');
+            const filtersContent = document.getElementById('filtersContent');
+
+            if (filtersToggle && filtersContent) {
+                filtersToggle.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    this.setAttribute('aria-expanded', !isExpanded);
+
+                    if (isExpanded) {
+                        filtersContent.style.maxHeight = '0';
+                        filtersContent.classList.add('collapsed');
+                    } else {
+                        filtersContent.style.maxHeight = filtersContent.scrollHeight + 'px';
+                        filtersContent.classList.remove('collapsed');
+                    }
+                });
+            }
+
+            // Enhanced search functionality
+            const searchInput = document.getElementById('searchFilter');
+            const searchClear = document.getElementById('searchClear');
+
+            if (searchInput && searchClear) {
+                searchInput.addEventListener('input', function() {
+                    if (this.value.length > 0) {
+                        searchClear.style.opacity = '1';
+                        searchClear.style.pointerEvents = 'auto';
+                    } else {
+                        searchClear.style.opacity = '0';
+                        searchClear.style.pointerEvents = 'none';
+                    }
+                });
+
+                searchClear.addEventListener('click', function() {
+                    searchInput.value = '';
+                    searchInput.focus();
+                    this.style.opacity = '0';
+                    this.style.pointerEvents = 'none';
+                });
+            }
+        }
+
+        // Enhanced view toggle functionality with smooth transitions
+        function initializeViewToggles() {
+            const viewGrid = document.getElementById('viewGrid');
+            const viewList = document.getElementById('viewList');
+            const productsGrid = document.getElementById('productsGrid');
+
+            if (viewGrid && viewList && productsGrid) {
+                viewGrid.addEventListener('click', function() {
+                    productsGrid.style.opacity = '0';
+                    setTimeout(() => {
+                        productsGrid.className = 'products-grid';
+                        productsGrid.style.opacity = '1';
+                    }, 150);
+                    viewGrid.setAttribute('aria-pressed', 'true');
+                    viewList.setAttribute('aria-pressed', 'false');
+                });
+
+                viewList.addEventListener('click', function() {
+                    productsGrid.style.opacity = '0';
+                    setTimeout(() => {
+                        productsGrid.className = 'products-grid products-list';
+                        productsGrid.style.opacity = '1';
+                    }, 150);
+                    viewList.setAttribute('aria-pressed', 'true');
+                    viewGrid.setAttribute('aria-pressed', 'false');
+                });
+            }
+        }
+
+        // Enhanced back to top functionality with smooth scroll
+        function initializeBackToTop() {
+            const backToTop = document.getElementById('backToTop');
+
+            if (backToTop) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTop.setAttribute('aria-hidden', 'false');
+                        backToTop.classList.add('visible');
+                    } else {
+                        backToTop.setAttribute('aria-hidden', 'true');
+                        backToTop.classList.remove('visible');
+                    }
+                });
+
+                backToTop.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        }
+
+        // Initialize particle effects for hero section
+        function initializeParticleEffects() {
+            const particlesContainer = document.querySelector('.catalog-hero-particles');
+            if (particlesContainer) {
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 20 + 's';
+                    particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                    particlesContainer.appendChild(particle);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

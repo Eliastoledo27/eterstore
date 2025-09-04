@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <radialGradient id="pearlGradient" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#FFF8DC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5F5DC;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="threadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.2)"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#fafafa"/>
+  
+  <!-- Bracelet curve -->
+  <path d="M80 200 Q200 150 320 200 Q200 250 80 200" 
+        fill="none" 
+        stroke="url(#threadGradient)" 
+        stroke-width="3" 
+        filter="url(#shadow)"/>
+  
+  <!-- Pearls along the bracelet -->
+  <g filter="url(#shadow)">
+    <!-- Large center pearl -->
+    <circle cx="200" cy="200" r="18" fill="url(#pearlGradient)"/>
+    <circle cx="200" cy="195" r="6" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- Medium pearls -->
+    <circle cx="160" cy="185" r="14" fill="url(#pearlGradient)"/>
+    <circle cx="160" cy="182" r="4" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="240" cy="185" r="14" fill="url(#pearlGradient)"/>
+    <circle cx="240" cy="182" r="4" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- Smaller pearls -->
+    <circle cx="120" cy="175" r="12" fill="url(#pearlGradient)"/>
+    <circle cx="120" cy="172" r="3" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="280" cy="175" r="12" fill="url(#pearlGradient)"/>
+    <circle cx="280" cy="172" r="3" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="90" cy="190" r="10" fill="url(#pearlGradient)"/>
+    <circle cx="90" cy="188" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="310" cy="190" r="10" fill="url(#pearlGradient)"/>
+    <circle cx="310" cy="188" r="2.5" fill="#FFFFFF" opacity="0.8"/>
+    
+    <!-- Additional small pearls -->
+    <circle cx="180" cy="192" r="8" fill="url(#pearlGradient)"/>
+    <circle cx="180" cy="190" r="2" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="220" cy="192" r="8" fill="url(#pearlGradient)"/>
+    <circle cx="220" cy="190" r="2" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="140" cy="180" r="8" fill="url(#pearlGradient)"/>
+    <circle cx="140" cy="178" r="2" fill="#FFFFFF" opacity="0.8"/>
+    
+    <circle cx="260" cy="180" r="8" fill="url(#pearlGradient)"/>
+    <circle cx="260" cy="178" r="2" fill="#FFFFFF" opacity="0.8"/>
+  </g>
+  
+  <!-- Clasp -->
+  <g transform="translate(80, 200)">
+    <rect x="-8" y="-4" width="16" height="8" rx="4" 
+          fill="url(#threadGradient)" 
+          filter="url(#shadow)"/>
+    <circle cx="0" cy="0" r="3" fill="#FFD700"/>
+  </g>
+  
+  <!-- Connecting threads between pearls -->
+  <g stroke="url(#threadGradient)" stroke-width="2" fill="none" opacity="0.7">
+    <line x1="98" y1="190" x2="112" y2="175"/>
+    <line x1="128" y1="175" x2="148" y2="180"/>
+    <line x1="152" y1="180" x2="172" y2="185"/>
+    <line x1="188" y1="192" x2="208" y2="192"/>
+    <line x1="228" y1="192" x2="248" y2="180"/>
+    <line x1="252" y1="180" x2="272" y2="175"/>
+    <line x1="288" y1="175" x2="302" y2="190"/>
+  </g>
+  
+  <!-- Sparkle effects -->
+  <g fill="#FFFFFF" opacity="0.6" filter="url(#glow)">
+    <polygon points="150,160 151,163 154,163 152,165 153,168 150,166 147,168 148,165 146,163 149,163"/>
+    <polygon points="250,160 251,163 254,163 252,165 253,168 250,166 247,168 248,165 246,163 249,163"/>
+    <polygon points="200,140 201,143 204,143 202,145 203,148 200,146 197,148 198,145 196,143 199,143"/>
+    <polygon points="120,220 121,223 124,223 122,225 123,228 120,226 117,228 118,225 116,223 119,223"/>
+    <polygon points="280,220 281,223 284,223 282,225 283,228 280,226 277,228 278,225 276,223 279,223"/>
+  </g>
+  
+  <!-- Reflection on pearls -->
+  <g fill="#FFFFFF" opacity="0.4">
+    <ellipse cx="195" cy="195" rx="8" ry="4" transform="rotate(-30 195 195)"/>
+    <ellipse cx="155" cy="182" rx="6" ry="3" transform="rotate(-30 155 182)"/>
+    <ellipse cx="235" cy="182" rx="6" ry="3" transform="rotate(-30 235 182)"/>
+  </g>
+  
+  <!-- Luxury brand text -->
+  <text x="200" y="350" 
+        font-family="serif" 
+        font-size="16" 
+        font-weight="bold" 
+        text-anchor="middle" 
+        fill="#8B4513" 
+        opacity="0.7">ÉTER PEARLS</text>
+</svg>

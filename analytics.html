@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - Panel de Administración</title>
+    <meta name="description" content="Análisis detallado de ventas y comportamiento de la tienda">
+    <meta name="theme-color" content="#6366f1">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/analytics.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="loading-spinner"></div>
+        <p>Cargando Analytics...</p>
+    </div>
+
+    <!-- Main Container -->
+    <div class="analytics-container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <button class="sidebar-toggle" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="brand">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="brand-text">
+                            <h1>Analytics</h1>
+                            <span>Panel de Administración</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav-center">
+                    <div class="search-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" placeholder="Buscar en analytics...">
+                        <button class="search-btn">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="nav-right">
+                    <div class="nav-actions">
+                        <button class="nav-btn" id="notificationBtn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                        <button class="nav-btn" onclick="window.open('index.html', '_blank')">
+                            <i class="fas fa-external-link-alt"></i>
+                        </button>
+                        <button class="nav-btn" onclick="location.reload()">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                    </div>
+
+                    <div class="user-menu">
+                        <button class="user-avatar" id="userMenuBtn" aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">Administrador</span>
+                                <span class="user-role">Analytics Manager</span>
+                            </div>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu" id="userDropdown">
+                            <div class="dropdown-header">
+                                <div class="user-avatar">
+                                    <div class="avatar">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name">Administrador</span>
+                                    <span class="user-email">admin@tiendaeter.com</span>
+                                </div>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Perfil</span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Configuración</span>
+                                </a>
+                                <a href="#" class="dropdown-item">
+                                    <i class="fas fa-question-circle"></i>
+                                    <span>Ayuda</span>
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a href="#" class="dropdown-item" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Cerrar Sesión</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="adminSidebar">
+            <div class="sidebar-content">
+                <div class="sidebar-nav">
+                    <div class="nav-section">
+                        <h3>Panel Principal</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="admin.html" class="nav-link">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>Dashboard</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="analytics.html" class="nav-link active">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Analytics</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Gestión</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="productos.html" class="nav-link">
+                                    <i class="fas fa-box"></i>
+                                    <span>Productos</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">24</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="pedidos.html" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Pedidos</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">12</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="clientes.html" class="nav-link">
+                                    <i class="fas fa-users"></i>
+                                    <span>Clientes</span>
+                                    <div class="nav-indicator"></div>
+                                    <span class="nav-badge">1,234</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Contenido</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="hero.html" class="nav-link">
+                                    <i class="fas fa-star"></i>
+                                    <span>Sección Hero</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="contenido.html" class="nav-link">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Contenido</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <h3>Sistema</h3>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a href="configuracion.html" class="nav-link">
+                                    <i class="fas fa-cog"></i>
+                                    <span>Configuración</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="backup.html" class="nav-link">
+                                    <i class="fas fa-database"></i>
+                                    <span>Backup</span>
+                                    <div class="nav-indicator"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="quick-links">
+                        <h4>Enlaces Rápidos</h4>
+                        <div class="quick-links-grid">
+                            <a href="index.html" class="quick-link" target="_blank">
+                                <i class="fas fa-home"></i>
+                                <span>Ver Sitio</span>
+                            </a>
+                            <a href="productos.html" class="quick-link">
+                                <i class="fas fa-box"></i>
+                                <span>Productos</span>
+                            </a>
+                            <a href="pedidos.html" class="quick-link">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>Pedidos</span>
+                            </a>
+                            <a href="configuracion.html" class="quick-link">
+                                <i class="fas fa-cog"></i>
+                                <span>Configuración</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1>Analytics</h1>
+                    <p>Análisis detallado de ventas y comportamiento</p>
+                </div>
+                <div class="page-header-actions">
+                    <div class="date-picker">
+                        <i class="fas fa-calendar"></i>
+                        <select class="period-select" id="analyticsPeriod">
+                            <option value="7">Últimos 7 días</option>
+                            <option value="30" selected>Últimos 30 días</option>
+                            <option value="90">Últimos 90 días</option>
+                            <option value="365">Último año</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="exportAnalyticsBtn">
+                        <i class="fas fa-download"></i>
+                        <span>Exportar Reporte</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Analytics Overview -->
+            <div class="analytics-overview">
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h3>Ventas por Período</h3>
+                        <div class="analytics-legend">
+                            <span class="legend-item">
+                                <span class="legend-color" style="background: var(--primary-color)"></span>
+                                Ventas
+                            </span>
+                            <span class="legend-item">
+                                <span class="legend-color" style="background: var(--success-color)"></span>
+                                Meta
+                            </span>
+                        </div>
+                    </div>
+                    <div class="analytics-chart">
+                        <canvas id="salesChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h3>Productos Más Vendidos</h3>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="product-ranking">
+                            <div class="ranking-item">
+                                <span class="ranking-number">1</span>
+                                <div class="ranking-product">
+                                    <h4>Producto Premium A</h4>
+                                    <p>156 ventas</p>
+                                </div>
+                                <div class="ranking-bar">
+                                    <div class="bar-fill" style="width: 85%"></div>
+                                </div>
+                                <span class="ranking-percentage">85%</span>
+                            </div>
+                            <div class="ranking-item">
+                                <span class="ranking-number">2</span>
+                                <div class="ranking-product">
+                                    <h4>Producto Premium B</h4>
+                                    <p>134 ventas</p>
+                                </div>
+                                <div class="ranking-bar">
+                                    <div class="bar-fill" style="width: 72%"></div>
+                                </div>
+                                <span class="ranking-percentage">72%</span>
+                            </div>
+                            <div class="ranking-item">
+                                <span class="ranking-number">3</span>
+                                <div class="ranking-product">
+                                    <h4>Producto Estándar C</h4>
+                                    <p>98 ventas</p>
+                                </div>
+                                <div class="ranking-bar">
+                                    <div class="bar-fill" style="width: 53%"></div>
+                                </div>
+                                <span class="ranking-percentage">53%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Grid -->
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h3>Métricas de Conversión</h3>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="conversion-metrics">
+                            <div class="conversion-item">
+                                <div class="conversion-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="conversion-data">
+                                    <h4>Visitas</h4>
+                                    <span class="conversion-value">12,450</span>
+                                    <span class="conversion-change positive">+8.2%</span>
+                                </div>
+                            </div>
+                            <div class="conversion-item">
+                                <div class="conversion-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="conversion-data">
+                                    <h4>Pedidos</h4>
+                                    <span class="conversion-value">1,234</span>
+                                    <span class="conversion-change positive">+12.5%</span>
+                                </div>
+                            </div>
+                            <div class="conversion-item">
+                                <div class="conversion-icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <div class="conversion-data">
+                                    <h4>Tasa de Conversión</h4>
+                                    <span class="conversion-value">9.9%</span>
+                                    <span class="conversion-change positive">+3.8%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-card">
+                    <div class="analytics-header">
+                        <h3>Distribución de Ventas</h3>
+                    </div>
+                    <div class="analytics-content">
+                        <div class="sales-distribution">
+                            <div class="distribution-item">
+                                <div class="distribution-label">
+                                    <span class="distribution-color" style="background: var(--primary-color)"></span>
+                                    <span>Productos Premium</span>
+                                </div>
+                                <span class="distribution-value">45%</span>
+                            </div>
+                            <div class="distribution-item">
+                                <div class="distribution-label">
+                                    <span class="distribution-color" style="background: var(--success-color)"></span>
+                                    <span>Productos Estándar</span>
+                                </div>
+                                <span class="distribution-value">35%</span>
+                            </div>
+                            <div class="distribution-item">
+                                <div class="distribution-label">
+                                    <span class="distribution-color" style="background: var(--warning-color)"></span>
+                                    <span>Accesorios</span>
+                                </div>
+                                <span class="distribution-value">20%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <!-- JavaScript -->
+    <script src="js/analytics.js"></script>
+</body>
+</html>
+
+
+

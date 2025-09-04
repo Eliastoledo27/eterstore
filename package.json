@@ -1,0 +1,58 @@
+{
+  "name": "eter-store",
+  "version": "1.0.0",
+  "description": "Tienda online de calzados premium - Éter Store",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --open=/index.html",
+    "dev": "live-server --port=3000 --open=/index.html --watch=.",
+    "admin": "live-server --port=3000 --open=/admin.html",
+    "productos": "live-server --port=3000 --open=/productos.html",
+    "build": "echo 'Proyecto frontend estático - No requiere build'",
+    "test": "echo 'Tests no configurados aún'",
+    "lint": "eslint js/**/*.js",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "ecommerce",
+    "calzados",
+    "tienda",
+    "frontend",
+    "javascript",
+    "html",
+    "css"
+  ],
+  "author": "Éter Store",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "http-server": "^14.1.1",
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eter-store/eter-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eter-store/eter-store/issues"
+  },
+  "homepage": "https://github.com/eter-store/eter-store#readme",
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "cdnDependencies": {
+    "note": "Las siguientes dependencias se cargan vía CDN en los archivos HTML:",
+    "fontAwesome": "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css",
+    "googleFonts": "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap",
+    "geminiAPI": "https://generativelanguage.googleapis.com/v1beta/models (para funcionalidad AI)"
+  }
+}

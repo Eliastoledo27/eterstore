@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Tienda Éter</title>
+    <meta name="description" content="Panel de administración moderno para gestionar productos, pedidos y contenido de Tienda Éter">
+    <meta name="theme-color" content="#d4af37">
+
+    <!-- External stylesheets -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/admin-final.css">
+</head>
+<body>
+    <!-- Main Application -->
+    <div class="admin-container" id="adminApp">
+        <!-- Header -->
+        <header class="admin-header" role="banner">
+            <div class="header-content">
+                <div class="header-left">
+                    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Alternar menú lateral">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                    <div class="logo">
+                        <i class="fas fa-store" aria-hidden="true"></i>
+                        <span>Tienda Éter Admin</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn btn-ghost" id="viewSiteBtn" title="Ver sitio web">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+                        <span class="btn-text">Ver Sitio</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar" role="navigation" aria-label="Navegación principal">
+            <nav class="sidebar-nav">
+                <ul class="nav-list" role="menubar">
+                    <li class="nav-item" role="none">
+                        <button class="nav-link active" data-tab="dashboard" role="menuitem" aria-current="page">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="products" role="menuitem">
+                            <i class="fas fa-box" aria-hidden="true"></i>
+                            <span>Productos</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="none">
+                        <button class="nav-link" data-tab="orders" role="menuitem">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                            <span>Pedidos</span>
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Enlaces externos -->
+                <div class="sidebar-external-links">
+                    <h4>Enlaces Externos</h4>
+                    <a href="index.html" class="nav-link external-link" target="_blank" data-external="index">
+                        <i class="fas fa-home"></i> Ver Sitio Principal
+                    </a>
+                    <a href="productos.html" class="nav-link external-link" target="_blank" data-external="productos">
+                        <i class="fas fa-shopping-bag"></i> Ver Catálogo
+                    </a>
+                    <a href="https://wa.me/542235025196" class="nav-link external-link" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main" role="main">
+            <!-- Dashboard Tab -->
+            <section class="tab-panel active" id="dashboardPanel" role="tabpanel" aria-labelledby="dashboard">
+                <div class="panel-header">
+                    <div class="panel-header-content">
+                        <h1>Dashboard</h1>
+                        <p>Resumen general de tu tienda</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-box" aria-hidden="true"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>24</h3>
+                            <p>Total Productos</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>12</h3>
+                            <p>Pedidos Pendientes</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-dollar-sign" aria-hidden="true"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>$450,000</h3>
+                            <p>Ventas del Mes</p>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                        <div class="metric-content">
+                            <h3>8</h3>
+                            <p>Clientes Nuevos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <div class="dashboard-section">
+                        <h2>
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            Pedidos Recientes
+                        </h2>
+                        <div id="recentOrders">
+                            <div class="order-item">
+                                <div class="order-info">
+                                    <h4>ORD-001</h4>
+                                    <p>María González</p>
+                                    <span class="order-date">Hace 2 horas</span>
+                                </div>
+                                <div class="order-status">
+                                    <span class="order-total">$45,000</span>
+                                    <span class="badge badge-warning">Pendiente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-section">
+                        <h2>
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                            Productos con Bajo Stock
+                        </h2>
+                        <div id="lowStockProducts">
+                            <div class="product-item">
+                                <div class="product-info">
+                                    <h4>Botas de Cuero</h4>
+                                    <p>Categoría: Botas</p>
+                                </div>
+                                <div class="product-stock">
+                                    <span class="stock-warning">Stock: 3</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Tab -->
+            <section class="tab-panel" id="productsPanel" role="tabpanel" aria-labelledby="products">
+                <div class="panel-header">
+                    <div class="panel-header-content">
+                        <h1>Gestionar Productos</h1>
+                        <p>Administra tu catálogo de productos</p>
+                    </div>
+                    <div class="panel-header-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus" aria-hidden="true"></i>
+                            Agregar Producto
+                        </button>
+                    </div>
+                </div>
+                <div class="products-management">
+                    <p>Gestión de productos en desarrollo...</p>
+                </div>
+            </section>
+
+            <!-- Orders Tab -->
+            <section class="tab-panel" id="ordersPanel" role="tabpanel" aria-labelledby="orders">
+                <div class="panel-header">
+                    <div class="panel-header-content">
+                        <h1>Gestionar Pedidos</h1>
+                        <p>Administra los pedidos de tus clientes</p>
+                    </div>
+                </div>
+                <div class="orders-management">
+                    <p>Gestión de pedidos en desarrollo...</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/admin-enhanced.js"></script>
+    <script src="js/content-manager.js"></script>
+
+    <script>
+        // Script simple para manejar las pestañas
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link[data-tab]');
+            const tabPanels = document.querySelectorAll('.tab-panel');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remover clase active de todos los enlaces
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // Agregar clase active al enlace clickeado
+                    this.classList.add('active');
+
+                    // Ocultar todos los paneles
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    // Mostrar el panel correspondiente
+                    const targetPanel = document.getElementById(targetTab + 'Panel');
+                    if (targetPanel) {
+                        targetPanel.classList.add('active');
+                    }
+                });
+            });
+
+            // Manejar enlaces externos
+            const externalLinks = document.querySelectorAll('.external-link');
+            externalLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href !== '#') {
+                        window.open(href, '_blank');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+

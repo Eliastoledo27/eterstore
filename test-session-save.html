@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Guardado de Sesión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            padding: 2rem;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .test-section h3 {
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background: #d4af37;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            margin: 0.5rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: #b8941f;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .btn-success {
+            background: #10b981;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .status.warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+
+        .status.info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #bfdbfe;
+        }
+
+        .info-box {
+            background: #f3f4f6;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .info-box strong {
+            color: #1f2937;
+        }
+
+        .debug-info {
+            background: #fef3c7;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.75rem;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .test-card {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .test-card h4 {
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        .test-card p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔐 Test - Guardado de Sesión</h1>
+
+        <div class="test-section">
+            <h3>📋 Estado Actual del Sistema</h3>
+            <div id="currentStatus" class="status info">
+                Verificando estado del sistema...
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧪 Pruebas de Sesión</h3>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h4>1. Simular Login</h4>
+                    <p>Simula un login exitoso y verifica el guardado</p>
+                    <button class="btn" onclick="simulateLogin()">Simular Login</button>
+                </div>
+
+                <div class="test-card">
+                    <h4>2. Verificar Persistencia</h4>
+                    <p>Recarga la página y verifica que la sesión persista</p>
+                    <button class="btn btn-success" onclick="checkPersistence()">Verificar Persistencia</button>
+                </div>
+
+                <div class="test-card">
+                    <h4>3. Probar en Admin.html</h4>
+                    <p>Abre admin.html y prueba el login real</p>
+                    <button class="btn" onclick="testInAdmin()">Probar en Admin</button>
+                </div>
+
+                <div class="test-card">
+                    <h4>4. Limpiar Todo</h4>
+                    <p>Elimina todas las sesiones y cookies</p>
+                    <button class="btn btn-secondary" onclick="clearEverything()">Limpiar Todo</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Datos de Sesión</h3>
+            <div id="sessionData" class="info-box">
+                No hay datos de sesión
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🍪 Estado de Cookies</h3>
+            <div id="cookieStatus" class="info-box">
+                Verificando cookies...
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔍 Información de Debug</h3>
+            <div id="debugInfo" class="debug-info">
+                Sistema de prueba inicializado
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funciones para manejar cookies de manera segura
+        function setSecureCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toUTCString();
+            }
+
+            const cookieString = name + "=" + encodeURIComponent(value) + expires + "; path=/; SameSite=Strict";
+            document.cookie = cookieString;
+
+            console.log('🍪 Cookie establecida:', name, 'por', days, 'días');
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(";");
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === " ") c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) {
+                    const value = c.substring(nameEQ.length, c.length);
+                    return decodeURIComponent(value);
+                }
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict";
+            console.log('🗑️ Cookie eliminada:', name);
+        }
+
+        function areCookiesEnabled() {
+            try {
+                setSecureCookie('testCookie', 'test', 1);
+                const testValue = getCookie('testCookie');
+                deleteCookie('testCookie');
+                return testValue === 'test';
+            } catch (error) {
+                console.error('❌ Error al verificar cookies:', error);
+                return false;
+            }
+        }
+
+        // Función para mostrar estado
+        function showStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('currentStatus');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        // Función para mostrar debug
+        function showDebug(info) {
+            const debugDiv = document.getElementById('debugInfo');
+            debugDiv.innerHTML = info;
+        }
+
+        // Función para actualizar datos de sesión
+        function updateSessionData() {
+            const sessionDiv = document.getElementById('sessionData');
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                try {
+                    const userData = JSON.parse(savedUser);
+                    const loginTime = new Date(userData.loginTime);
+                    const currentTime = new Date();
+                    const timeDiff = currentTime - loginTime;
+                    const hoursDiff = timeDiff / (1000 * 60 * 60);
+                    const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+                    sessionDiv.innerHTML = `
+                        <strong>✅ Sesión Activa</strong><br>
+                        <strong>Usuario:</strong> ${userData.username}<br>
+                        <strong>Rol:</strong> ${userData.role}<br>
+                        <strong>Recordar sesión:</strong> ${userData.rememberMe ? 'Sí' : 'No'}<br>
+                        <strong>Token de sesión:</strong> ${sessionToken ? '✅ Presente' : '❌ Ausente'}<br>
+                        <strong>Fecha de login:</strong> ${loginTime.toLocaleString()}<br>
+                        <strong>Tiempo transcurrido:</strong> ${hoursDiff.toFixed(1)} horas (${daysDiff.toFixed(2)} días)<br>
+                        <strong>Expira en:</strong> ${userData.rememberMe ? '30 días' : '8 horas'}
+                    `;
+                } catch (error) {
+                    sessionDiv.innerHTML = `Error al leer datos: ${error.message}`;
+                }
+            } else {
+                sessionDiv.innerHTML = '❌ No hay sesión activa';
+            }
+        }
+
+        // Función para actualizar estado de cookies
+        function updateCookieStatus() {
+            const cookieDiv = document.getElementById('cookieStatus');
+            const cookiesEnabled = areCookiesEnabled();
+            const sessionToken = getCookie('adminSessionToken');
+
+            cookieDiv.innerHTML = `
+                <strong>Cookies habilitadas:</strong> ${cookiesEnabled ? '✅ Sí' : '❌ No'}<br>
+                <strong>Token de sesión:</strong> ${sessionToken ? '✅ Presente' : '❌ Ausente'}<br>
+                <strong>Todas las cookies:</strong> ${document.cookie || 'Ninguna'}
+            `;
+        }
+
+        // Función para simular login
+        function simulateLogin() {
+            const rememberMe = Math.random() > 0.5; // Aleatorio para probar ambos casos
+
+            // Generar token de sesión
+            const sessionToken = 'admin_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+            const userData = {
+                username: 'admin',
+                role: 'admin',
+                rememberMe: rememberMe,
+                loginTime: new Date().toISOString(),
+                sessionToken: sessionToken
+            };
+
+            localStorage.setItem('adminUser', JSON.stringify(userData));
+
+            // Establecer cookie de sesión
+            if (rememberMe) {
+                setSecureCookie('adminSessionToken', sessionToken, 30);
+            } else {
+                setSecureCookie('adminSessionToken', sessionToken, 1);
+            }
+
+            showStatus(`✅ Login simulado exitosamente. Recordar sesión: ${rememberMe ? 'Sí' : 'No'}`, 'success');
+            updateSessionData();
+            updateCookieStatus();
+
+            const debugInfo = `
+                <strong>Login simulado:</strong><br>
+                Usuario: ${userData.username}<br>
+                Recordar sesión: ${rememberMe}<br>
+                Token: ${sessionToken}<br>
+                Fecha: ${new Date().toLocaleString()}<br>
+                <br>
+                <strong>localStorage:</strong> ${localStorage.getItem('adminUser') ? '✅ Guardado' : '❌ No guardado'}<br>
+                <strong>Cookie:</strong> ${getCookie('adminSessionToken') ? '✅ Guardada' : '❌ No guardada'}
+            `;
+            showDebug(debugInfo);
+        }
+
+        // Función para verificar persistencia
+        function checkPersistence() {
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                showStatus('✅ La sesión persiste correctamente', 'success');
+
+                const debugInfo = `
+                    <strong>Verificación de persistencia:</strong><br>
+                    localStorage: ✅ Presente<br>
+                    Cookie: ✅ Presente<br>
+                    Token coincide: ${JSON.parse(savedUser).sessionToken === sessionToken ? '✅ Sí' : '❌ No'}<br>
+                    <br>
+                    <strong>Datos recuperados:</strong><br>
+                    ${savedUser}
+                `;
+                showDebug(debugInfo);
+            } else {
+                showStatus('❌ La sesión no persiste correctamente', 'error');
+
+                const debugInfo = `
+                    <strong>Error de persistencia:</strong><br>
+                    localStorage: ${savedUser ? '✅ Presente' : '❌ Ausente'}<br>
+                    Cookie: ${sessionToken ? '✅ Presente' : '❌ Ausente'}<br>
+                    <br>
+                    <strong>Posibles causas:</strong><br>
+                    - Cookies deshabilitadas<br>
+                    - Modo incógnito<br>
+                    - Configuración del navegador<br>
+                    - Error en el código
+                `;
+                showDebug(debugInfo);
+            }
+
+            updateSessionData();
+            updateCookieStatus();
+        }
+
+        // Función para probar en admin.html
+        function testInAdmin() {
+            const adminWindow = window.open('admin.html', '_blank');
+
+            setTimeout(() => {
+                if (adminWindow) {
+                    try {
+                        adminWindow.postMessage({
+                            type: 'fillCredentials',
+                            username: 'admin',
+                            password: 'eterstore2024'
+                        }, '*');
+
+                        showStatus('✅ Credenciales enviadas a admin.html', 'success');
+                    } catch (error) {
+                        showStatus('❌ Error al enviar credenciales a admin.html', 'error');
+                    }
+                }
+            }, 2000);
+        }
+
+        // Función para limpiar todo
+        function clearEverything() {
+            localStorage.removeItem('adminUser');
+            deleteCookie('adminSessionToken');
+
+            showStatus('🗑️ Todo limpiado correctamente', 'info');
+            updateSessionData();
+            updateCookieStatus();
+
+            showDebug('Sistema limpiado completamente');
+        }
+
+        // Escuchar mensajes de admin.html
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'loginResult') {
+                if (event.data.success) {
+                    showStatus('✅ Login exitoso en admin.html', 'success');
+                    updateSessionData();
+                    updateCookieStatus();
+                } else {
+                    showStatus('❌ Login fallido en admin.html', 'error');
+                }
+            }
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSessionData();
+            updateCookieStatus();
+
+            const savedUser = localStorage.getItem('adminUser');
+            const sessionToken = getCookie('adminSessionToken');
+
+            if (savedUser && sessionToken) {
+                showStatus('✅ Sesión activa detectada', 'success');
+            } else {
+                showStatus('ℹ️ No hay sesión activa', 'info');
+            }
+
+            const debugInfo = `
+                <strong>Sistema inicializado:</strong><br>
+                Cookies habilitadas: ${areCookiesEnabled() ? '✅ Sí' : '❌ No'}<br>
+                localStorage disponible: ${typeof localStorage !== 'undefined' ? '✅ Sí' : '❌ No'}<br>
+                Sesión activa: ${savedUser && sessionToken ? '✅ Sí' : '❌ No'}<br>
+                <br>
+                <strong>Información del navegador:</strong><br>
+                User Agent: ${navigator.userAgent}<br>
+                Cookies: ${document.cookie || 'Ninguna'}<br>
+                localStorage: ${Object.keys(localStorage).length} elementos
+            `;
+            showDebug(debugInfo);
+        });
+    </script>
+</body>
+</html>
+
+
+

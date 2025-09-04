@@ -61,9 +61,9 @@ class CompleteShoppingCart {
             }
         } catch (error) {
             console.error('❌ Error cargando carrito:', error);
-                    this.items = [];
-                }
-            }
+            this.items = [];
+        }
+    }
 
     /**
      * Guardar carrito en localStorage
@@ -213,11 +213,6 @@ class CompleteShoppingCart {
             this.updateDisplay();
             this.showAddToCartAnimation();
             
-            // Actualización optimizada del contador
-            setTimeout(() => {
-                this.updateCartCount();
-            }, 100);
-            
             this.showNotification(`✅ ${product.name} agregado al carrito`, 'success');
             return true;
         } catch (error) {
@@ -327,37 +322,14 @@ class CompleteShoppingCart {
         const cartCount = document.getElementById('cartCount');
         if (cartCount) {
             cartCount.textContent = totalItems;
-            
-            // Usar clase 'show' para controlar visibilidad
-            if (totalItems > 0) {
-                cartCount.classList.add('show');
-                // Forzar estilos como respaldo
-                cartCount.style.display = 'flex';
-                cartCount.style.visibility = 'visible';
-                cartCount.style.opacity = '1';
-                cartCount.style.transform = 'scale(1)';
-            } else {
-                cartCount.classList.remove('show');
-                // Mantener estilos ocultos
-                cartCount.style.opacity = '0';
-                cartCount.style.transform = 'scale(0)';
-                cartCount.style.visibility = 'hidden';
-            }
-            
-            console.log('🛒 Contador actualizado:', totalItems, 'productos, clase show:', cartCount.classList.contains('show'));
-        } else {
-            console.warn('⚠️ No se encontró el elemento cartCount');
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
         }
-        
+
         // Actualizar badge en modal
         const cartCountBadge = document.getElementById('cartCountBadge');
         if (cartCountBadge) {
             cartCountBadge.textContent = totalItems;
-            if (totalItems > 0) {
-                cartCountBadge.classList.add('show');
-            } else {
-                cartCountBadge.classList.remove('show');
-            }
+            cartCountBadge.style.display = totalItems > 0 ? 'inline-flex' : 'none';
         }
     }
 
@@ -365,21 +337,21 @@ class CompleteShoppingCart {
      * Renderizar carrito con gestión completa de productos
      */
     renderCart() {
-            const cartItems = document.getElementById('cartItems');
-            const cartEmpty = document.getElementById('cartEmpty');
-            const cartSummary = document.getElementById('cartSummary');
-            
-            if (!cartItems) return;
+        const cartItems = document.getElementById('cartItems');
+        const cartEmpty = document.getElementById('cartEmpty');
+        const cartSummary = document.getElementById('cartSummary');
+        
+        if (!cartItems) return;
 
-            if (this.items.length === 0) {
+        if (this.items.length === 0) {
             cartItems.style.display = 'none';
             if (cartEmpty) cartEmpty.style.display = 'flex';
-                if (cartSummary) cartSummary.style.display = 'none';
-                return;
-            }
+            if (cartSummary) cartSummary.style.display = 'none';
+            return;
+        }
 
         // Mostrar items
-                cartItems.style.display = 'block';
+        cartItems.style.display = 'block';
         cartItems.innerHTML = this.items.map(item => this.renderCartItem(item)).join('');
         
         if (cartEmpty) cartEmpty.style.display = 'none';
@@ -387,18 +359,17 @@ class CompleteShoppingCart {
     }
 
     /**
-     * Renderizar item individual del carrito simplificado
+     * Renderizar item individual del carrito con subtotales
      */
     renderCartItem(item) {
         const itemKey = this.getItemKey(item.id, item.size);
         const itemSubtotal = item.finalPrice * item.quantity;
-        const wholesaleSubtotal = item.wholesalePrice * item.quantity;
-        const profitAmount = itemSubtotal - wholesaleSubtotal;
         
         return `
             <div class="cart-item" data-item-key="${itemKey}">
                 <div class="cart-item-image">
                     ${this.getProductImage(item.image, item.name)}
+                    ${item.stock <= 5 ? '<div class="low-stock-badge">Stock bajo</div>' : ''}
                 </div>
                 
                 <div class="cart-item-content">
@@ -410,21 +381,25 @@ class CompleteShoppingCart {
                     </div>
                     
                     <div class="cart-item-details">
-                        ${item.size ? `<span class="cart-item-size">Talla: ${item.size}</span>` : ''}
-                        <div class="price-breakdown">
-                            <div class="price-line">
-                                <span class="price-label">Precio Mayorista:</span>
-                                <span class="wholesale-price">${this.formatPrice(item.wholesalePrice)}</span>
-                            </div>
-                            <div class="price-line">
-                                <span class="price-label">Margen de Ganancia:</span>
-                                <span class="profit-amount">${this.formatPrice(profitAmount)}</span>
-                            </div>
-                            <div class="price-line total-line">
-                                <span class="price-label">Precio Final:</span>
-                                <span class="final-price">${this.formatPrice(item.finalPrice)}</span>
-                            </div>
+                        ${item.size ? `<span class="cart-item-size"><i class="fas fa-ruler"></i> Talla: ${item.size}</span>` : ''}
+                        <span class="cart-item-category"><i class="fas fa-tag"></i> ${item.category}</span>
+                    </div>
+                    
+                    <div class="cart-item-pricing">
+                        <div class="price-row">
+                            <span class="price-label">Precio unitario:</span>
+                            <span class="price-amount unit-price">${this.formatPrice(item.finalPrice)}</span>
                         </div>
+                        <div class="price-row">
+                            <span class="price-label">Cantidad:</span>
+                            <span class="price-amount quantity">${item.quantity}</span>
+                        </div>
+                        ${this.items.length > 2 ? `
+                        <div class="price-row subtotal">
+                            <span class="price-label">Subtotal:</span>
+                            <span class="price-amount item-subtotal">${this.formatPrice(itemSubtotal)}</span>
+                        </div>
+                        ` : ''}
                     </div>
                     
                     <div class="cart-item-controls">
@@ -437,9 +412,6 @@ class CompleteShoppingCart {
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
-                        <div class="item-subtotal">
-                            ${this.formatPrice(itemSubtotal)}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -447,18 +419,20 @@ class CompleteShoppingCart {
     }
 
     /**
-     * Actualizar resumen del carrito simplificado
+     * Actualizar resumen del carrito con totales
      */
     updateCartSummary() {
+        const wholesaleTotalEl = document.getElementById('wholesaleTotal');
+        const resellerProfitEl = document.getElementById('resellerProfit');
         const finalPriceEl = document.getElementById('finalPrice');
-        const totalItemsEl = document.getElementById('totalItems');
-        
+        const itemCountEl = document.getElementById('itemCount');
+
+        if (wholesaleTotalEl) wholesaleTotalEl.textContent = this.formatPrice(this.subtotal);
+        if (resellerProfitEl) resellerProfitEl.textContent = this.formatPrice(this.profit);
         if (finalPriceEl) finalPriceEl.textContent = this.formatPrice(this.total);
         
-        if (totalItemsEl) {
-            const totalItems = this.items.reduce((total, item) => total + item.quantity, 0);
-            totalItemsEl.textContent = totalItems;
-        }
+        const totalItems = this.items.reduce((total, item) => total + item.quantity, 0);
+        if (itemCountEl) itemCountEl.textContent = `${totalItems} ${totalItems === 1 ? 'producto' : 'productos'}`;
     }
 
     /**
@@ -470,10 +444,10 @@ class CompleteShoppingCart {
         }
         
         if (imageSrc.includes('.svg') || imageSrc.includes('.jpg') || imageSrc.includes('.png')) {
-                return `<img src="${imageSrc}" alt="${productName}" loading="lazy">`;
+            return `<img src="${imageSrc}" alt="${productName}" loading="lazy">`;
         } else if (imageSrc.startsWith('fas')) {
-                return `<i class="${imageSrc}"></i>`;
-            } else {
+            return `<i class="${imageSrc}"></i>`;
+        } else {
             return '<i class="fas fa-shoe-prints"></i>';
         }
     }
@@ -482,17 +456,17 @@ class CompleteShoppingCart {
      * Formatear precio con separadores de miles y decimales argentinos
      */
     formatPrice(price) {
-            if (typeof price !== 'number' || isNaN(price)) {
-                return '$0';
-            }
+        if (typeof price !== 'number' || isNaN(price)) {
+            return '$0';
+        }
         
         // Formato argentino: $1.234.567 (sin decimales)
-            return new Intl.NumberFormat('es-AR', {
-                style: 'currency',
-                currency: 'ARS',
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0
-            }).format(price);
+        return new Intl.NumberFormat('es-AR', {
+            style: 'currency',
+            currency: 'ARS',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(price);
     }
 
     /**
@@ -577,7 +551,7 @@ class CompleteShoppingCart {
      */
     closeCart() {
         const cartModal = document.getElementById('cartModal');
-            if (cartModal) {
+        if (cartModal) {
             cartModal.classList.remove('active');
             setTimeout(() => {
                 cartModal.style.display = 'none';
@@ -638,8 +612,8 @@ class CompleteShoppingCart {
                 
                 // Esperar a que termine la animación antes de ocultar
                 setTimeout(() => {
-                cartModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                    cartModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
                     document.body.classList.remove('modal-open');
                 }, 300);
             }
@@ -665,20 +639,20 @@ class CompleteShoppingCart {
      * Proceder al checkout
      */
     proceedToCheckout() {
-            if (this.items.length === 0) {
+        if (this.items.length === 0) {
             this.showNotification('❌ El carrito está vacío', 'error');
-                return;
+            return;
         }
 
         // Cerrar carrito
         this.closeCart();
         
         // Renderizar resumen del checkout
-                this.renderCheckoutSummary();
+        this.renderCheckoutSummary();
         
         // Abrir modal de checkout
-            const checkoutModal = document.getElementById('checkoutModal');
-            if (checkoutModal) {
+        const checkoutModal = document.getElementById('checkoutModal');
+        if (checkoutModal) {
             checkoutModal.style.display = 'flex';
             setTimeout(() => {
                 checkoutModal.classList.add('active');
@@ -690,8 +664,8 @@ class CompleteShoppingCart {
      * Renderizar resumen del checkout
      */
     renderCheckoutSummary() {
-            const checkoutSummary = document.getElementById('checkoutSummary');
-            if (!checkoutSummary) return;
+        const checkoutSummary = document.getElementById('checkoutSummary');
+        if (!checkoutSummary) return;
 
         const productsList = this.items.map(item => `
             <div class="checkout-item">
@@ -702,45 +676,35 @@ class CompleteShoppingCart {
                 <div class="checkout-item-price">
                     ${this.formatPrice(item.finalPrice * item.quantity)}
                 </div>
-                </div>
+            </div>
         `).join('');
 
         checkoutSummary.innerHTML = `
             <div class="checkout-items">
                 ${productsList}
-                        </div>
+            </div>
             <div class="checkout-total">
                 <h4>Total a Pagar: ${this.formatPrice(this.total)}</h4>
-                </div>
-            `;
+            </div>
+        `;
     }
 
     /**
-     * Manejar envío del formulario de checkout inteligente
+     * Manejar envío del formulario de checkout
      */
     handleCheckoutSubmit(e) {
         e.preventDefault();
         
         const formData = new FormData(e.target);
-        const deliveryMethod = formData.get('deliveryMethod');
         const orderData = {
             customerName: formData.get('customerName')?.trim(),
             customerPhone: formData.get('customerPhone')?.trim(),
-            customerAddress: deliveryMethod === 'shipping' ? formData.get('customerAddress')?.trim() : 'Retiro en Showroom - Zona Jara y Berutti, Mar del Plata',
-            deliveryMethod: deliveryMethod,
-            deliveryTime: formData.get('deliveryTime') || 'Horario flexible',
-            paymentMethod: formData.get('paymentMethod')?.trim()
+            customerAddress: formData.get('customerAddress')?.trim()
         };
 
-        // Validar datos básicos
-        if (!orderData.customerName || !orderData.customerPhone || !orderData.paymentMethod) {
+        // Validar datos
+        if (!orderData.customerName || !orderData.customerPhone || !orderData.customerAddress) {
             this.showNotification('❌ Por favor completa todos los campos obligatorios', 'error');
-            return;
-        }
-
-        // Validar dirección solo si es envío a domicilio
-        if (deliveryMethod === 'shipping' && !formData.get('customerAddress')?.trim()) {
-            this.showNotification('❌ Por favor ingresa la dirección de entrega', 'error');
             return;
         }
 
@@ -750,7 +714,6 @@ class CompleteShoppingCart {
                 this.showNotification('✅ Pedido enviado exitosamente por WhatsApp', 'success');
                 this.closeCheckout();
                 e.target.reset();
-                this.resetCheckoutSteps();
             })
             .catch(error => {
                 this.showNotification(`❌ Error: ${error.message}`, 'error');
@@ -798,50 +761,41 @@ class CompleteShoppingCart {
                 const productName = item.name;
                 const size = item.size || 'Única';
                 const quantity = item.quantity;
-                const wholesalePrice = item.wholesalePrice.toLocaleString('es-AR');
-                const finalPrice = item.finalPrice.toLocaleString('es-AR');
-                const profitAmount = (item.finalPrice - item.wholesalePrice).toLocaleString('es-AR');
+                const unitPrice = this.formatPrice(item.finalPrice);
                 
-                return `• ${productName}  (Talla ${size}) x ${quantity}\n  ↳ Precio Mayorista: *$ ${wholesalePrice}*\n  ↳ Margen de Ganancia: *$ ${profitAmount}*\n  ↳ Precio Final: *$ ${finalPrice}*`;
+                // Formato exacto: • ${producto_1} (${talla_1}) x ${cantidad_1}
+                //                   ↳ *$ ${precio_unitario_1}*
+                return `• ${productName} (${size}) x ${quantity}\n  ↳ *$ ${unitPrice}*`;
             }).join('\n');
 
-            // Calcular total del pedido
-            const totalPedido = this.total.toLocaleString('es-AR');
+            // Calcular total del pedido con formato exacto
+            const totalPedido = this.formatPrice(this.total);
 
-            // Determinar método de entrega
-            const deliveryMethodText = orderData.deliveryMethod === 'shipping' ? 'Envío a domicilio' : 'Retiro en showroom';
-            
-            // Crear el mensaje sin emojis para evitar problemas de codificación
-            const message = [
-                '*¡Nuevo Pedido Recibido!*',
-                '-----------------------------------',
-                '',
-                '*DATOS DEL CLIENTE*',
-                `• *Nombre:* ${orderData.customerName || 'No especificado'}`,
-                `• *Teléfono:* ${orderData.customerPhone || 'No especificado'}`,
-                `• *Dirección:* ${orderData.customerAddress || 'No especificado'}`,
-                '',
-                '*DETALLES DE ENTREGA*',
-                `• *Método:* ${deliveryMethodText}`,
-                `• *Horario:* ${orderData.deliveryTime || 'Horario flexible'}`,
-                `• *Forma de pago:* ${orderData.paymentMethod || 'No especificado'}`,
-                '',
-                '*PRODUCTOS*',
-                productsList,
-                '',
-                `*TOTAL A PAGAR:* *$ ${totalPedido}*`,
-                '-----------------------------------',
-                '',
-                `*ID del pedido:* \`${orderId}\``,
-                `*Fecha:* ${formattedDate} hs`,
-                '',
-                '*Éter Store*',
-                'Mar del Plata',
-                '',
-                '¡Gracias por elegir *Éter Store*! Nos comunicaremos pronto para confirmar.'
-            ].join('\n');
+            // Formato exacto según especificación
+            return `✨ *¡Nuevo Pedido Recibido!* ✨
+-----------------------------------
+👤 *DATOS DEL CLIENTE*
+• *Nombre:* ${orderData.customerName || 'No especificado'}
+• *Teléfono:* ${orderData.customerPhone || 'No especificado'}
+• *Dirección:* ${orderData.customerAddress || 'No especificado'}
 
-            return message;
+🚚 *DETALLES DE ENTREGA*
+• *Método:* Envío a domicilio
+• *Horario:* Tarde (15:00)
+• *Forma de pago:* Efectivo
+
+🛍️ *PRODUCTOS*
+${productsList}
+
+💳 *TOTAL A PAGAR:* *$ ${totalPedido}*
+-----------------------------------
+
+📄 *ID del pedido:* \`${orderId}\`
+🗓️ *Fecha:* ${formattedDate}
+📍 *Éter Store*
+Mar del Plata
+
+¡Gracias por elegir *Éter Store*! Nos comunicaremos pronto para confirmar.`;
 
         } catch (error) {
             console.error('Error generando mensaje de WhatsApp:', error);
@@ -860,20 +814,8 @@ class CompleteShoppingCart {
                 throw new Error('Error generando el mensaje de WhatsApp');
             }
 
-            // Crear un elemento temporal para copiar al portapapeles
-            const textArea = document.createElement('textarea');
-            textArea.value = message;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-
-            // Mostrar notificación de que el mensaje se copió
-            this.showNotification('✅ Mensaje copiado al portapapeles. Abriendo WhatsApp...', 'success');
-
-            // Abrir WhatsApp Web con el mensaje del pedido
             const encodedMessage = encodeURIComponent(message);
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${this.config.whatsappNumber}&text=${encodedMessage}`;
+            const whatsappUrl = `https://wa.me/${this.config.whatsappNumber}?text=${encodedMessage}`;
             
             const whatsappWindow = window.open(whatsappUrl, '_blank');
             
@@ -882,7 +824,7 @@ class CompleteShoppingCart {
             }
 
             localStorage.setItem('lastWhatsAppMessage', message);
-            console.log('Pedido copiado al portapapeles y WhatsApp abierto');
+            console.log('Pedido enviado por WhatsApp');
             
             return true;
 
@@ -906,7 +848,7 @@ class CompleteShoppingCart {
                 }
 
                 // Validar datos del cliente
-                if (!orderData.customerName || !orderData.customerPhone) {
+                if (!orderData.customerName || !orderData.customerPhone || !orderData.customerAddress) {
                     reject(new Error('Faltan datos obligatorios del cliente'));
                     return;
                 }
@@ -922,10 +864,8 @@ class CompleteShoppingCart {
                     customer: {
                         name: orderData.customerName,
                         phone: orderData.customerPhone,
-                        address: orderData.customerAddress,
-                        deliveryMethod: orderData.deliveryMethod,
-                        deliveryTime: orderData.deliveryTime,
-                        paymentMethod: orderData.paymentMethod
+                        email: orderData.customerEmail || '',
+                        address: orderData.customerAddress
                     },
                     date: new Date().toISOString(),
                     status: 'pending',
@@ -939,11 +879,8 @@ class CompleteShoppingCart {
                 const whatsappSent = this.sendToWhatsApp(orderData);
 
                 if (whatsappSent) {
-                    // Limpiar carrito automáticamente después del envío exitoso
-                    this.items = [];
-                    this.saveToStorage();
-                    this.updateDisplay();
-                    this.showNotification('✅ Pedido enviado exitosamente. Carrito vaciado.', 'success');
+                    // Limpiar carrito
+                    this.clearCart();
                     resolve(order);
                 } else {
                     reject(new Error('Error enviando pedido por WhatsApp'));
@@ -964,7 +901,7 @@ class CompleteShoppingCart {
             orders.push(order);
             localStorage.setItem('eterStore_orders', JSON.stringify(orders));
             console.log('Orden guardada:', order.id);
-    } catch (error) {
+        } catch (error) {
             console.error('Error guardando orden:', error);
         }
     }
@@ -1018,93 +955,12 @@ class CompleteShoppingCart {
         }
         return false;
     }
-
-    /**
-     * Funciones para manejo de pasos del checkout
-     */
-    nextStep() {
-        const deliveryStep = document.getElementById('deliveryStep');
-        const customerStep = document.getElementById('customerStep');
-        const addressGroup = document.getElementById('addressGroup');
-        
-        // Validar selección de método de entrega
-        const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked');
-        if (!deliveryMethod) {
-            this.showNotification('❌ Por favor selecciona un método de entrega', 'error');
-            return;
-        }
-
-        // Mostrar/ocultar campo de dirección según el método
-        if (deliveryMethod.value === 'pickup') {
-            addressGroup.style.display = 'none';
-            document.getElementById('customerAddress').required = false;
-        } else {
-            addressGroup.style.display = 'block';
-            document.getElementById('customerAddress').required = true;
-        }
-
-        // Cambiar al siguiente paso
-        deliveryStep.classList.remove('active');
-        customerStep.classList.add('active');
-    }
-
-    prevStep() {
-        const deliveryStep = document.getElementById('deliveryStep');
-        const customerStep = document.getElementById('customerStep');
-        
-        deliveryStep.classList.add('active');
-        customerStep.classList.remove('active');
-    }
-
-    resetCheckoutSteps() {
-        const deliveryStep = document.getElementById('deliveryStep');
-        const customerStep = document.getElementById('customerStep');
-        const addressGroup = document.getElementById('addressGroup');
-        
-        deliveryStep.classList.add('active');
-        customerStep.classList.remove('active');
-        addressGroup.style.display = 'block';
-        document.getElementById('customerAddress').required = true;
-    }
-}
-
-// Funciones globales para los botones del checkout
-function nextStep() {
-    if (window.cart) {
-        window.cart.nextStep();
-    }
-}
-
-function prevStep() {
-    if (window.cart) {
-        window.cart.prevStep();
-    }
 }
 
 // Inicializar carrito cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
     window.cart = new CompleteShoppingCart();
-    
-    // Verificar que el contador se inicialice correctamente
-    setTimeout(() => {
-        if (window.cart) {
-            window.cart.updateCartCount();
-            console.log('🛒 Carrito inicializado y contador actualizado');
-            
-            // Forzar visibilidad del contador para testing
-            const cartCount = document.getElementById('cartCount');
-            if (cartCount) {
-                console.log('🔍 Elemento cartCount encontrado:', cartCount);
-                console.log('🔍 Estilos actuales:', {
-                    display: cartCount.style.display,
-                    visibility: cartCount.style.visibility,
-                    opacity: cartCount.style.opacity,
-                    textContent: cartCount.textContent
-                });
-            }
-        }
-    }, 1000);
 });
 
 // Exportar para uso global
-window.CompleteShoppingCart = CompleteShoppingCart;
+window.CompleteShoppingCart = CompleteShoppingCart; 

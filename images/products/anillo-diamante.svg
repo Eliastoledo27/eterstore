@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8E8E8;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#C0C0C0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A8A8A8;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="diamondGradient" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#F0F8FF;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#E6F3FF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B0E0E6;stop-opacity:1" />
+    </radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="rgba(0,0,0,0.3)"/>
+    </filter>
+    <filter id="sparkle" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="400" fill="#fafafa"/>
+  
+  <!-- Ring band -->
+  <g transform="translate(200, 200)">
+    <!-- Outer ring -->
+    <ellipse cx="0" cy="0" rx="80" ry="25" 
+             fill="url(#silverGradient)" 
+             filter="url(#shadow)"/>
+    
+    <!-- Inner ring (hole) -->
+    <ellipse cx="0" cy="0" rx="60" ry="18" 
+             fill="#fafafa"/>
+    
+    <!-- Ring details -->
+    <ellipse cx="0" cy="0" rx="80" ry="25" 
+             fill="none" 
+             stroke="#999" 
+             stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="60" ry="18" 
+             fill="none" 
+             stroke="#999" 
+             stroke-width="1"/>
+  </g>
+  
+  <!-- Diamond setting -->
+  <g transform="translate(200, 180)">
+    <!-- Setting base -->
+    <ellipse cx="0" cy="0" rx="20" ry="8" 
+             fill="url(#silverGradient)" 
+             filter="url(#shadow)"/>
+    
+    <!-- Prongs -->
+    <g fill="url(#silverGradient)">
+      <rect x="-2" y="-15" width="4" height="15" rx="2"/>
+      <rect x="-15" y="-8" width="4" height="15" rx="2" transform="rotate(-30)"/>
+      <rect x="11" y="-8" width="4" height="15" rx="2" transform="rotate(30)"/>
+      <rect x="-2" y="5" width="4" height="10" rx="2"/>
+    </g>
+  </g>
+  
+  <!-- Main diamond -->
+  <g transform="translate(200, 160)">
+    <!-- Diamond facets -->
+    <polygon points="0,-20 -12,-8 -8,0 0,8 8,0 12,-8" 
+             fill="url(#diamondGradient)" 
+             filter="url(#sparkle)"/>
+    
+    <!-- Diamond highlights -->
+    <polygon points="0,-20 -6,-12 0,-8 6,-12" 
+             fill="#FFFFFF" 
+             opacity="0.8"/>
+    <polygon points="-8,0 0,-8 8,0 0,8" 
+             fill="#F0F8FF" 
+             opacity="0.6"/>
+    
+    <!-- Diamond outline -->
+    <polygon points="0,-20 -12,-8 -8,0 0,8 8,0 12,-8" 
+             fill="none" 
+             stroke="#B0E0E6" 
+             stroke-width="1"/>
+  </g>
+  
+  <!-- Sparkle effects around diamond -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <polygon points="180,140 181,144 185,144 182,147 183,151 180,148 177,151 178,147 175,144 179,144" filter="url(#sparkle)"/>
+    <polygon points="220,145 221,149 225,149 222,152 223,156 220,153 217,156 218,152 215,149 219,149" filter="url(#sparkle)"/>
+    <polygon points="190,180 191,184 195,184 192,187 193,191 190,188 187,191 188,187 185,184 189,184" filter="url(#sparkle)"/>
+    <polygon points="210,175 211,179 215,179 212,182 213,186 210,183 207,186 208,182 205,179 209,179" filter="url(#sparkle)"/>
+  </g>
+  
+  <!-- Additional sparkles -->
+  <g fill="#E6F3FF" opacity="0.7">
+    <circle cx="160" cy="150" r="2" filter="url(#sparkle)"/>
+    <circle cx="240" cy="160" r="2" filter="url(#sparkle)"/>
+    <circle cx="170" cy="190" r="1.5" filter="url(#sparkle)"/>
+    <circle cx="230" cy="185" r="1.5" filter="url(#sparkle)"/>
+  </g>
+  
+  <!-- Ring reflection -->
+  <ellipse cx="200" cy="200" rx="70" ry="20" 
+           fill="none" 
+           stroke="#FFFFFF" 
+           stroke-width="2" 
+           opacity="0.3"/>
+  
+  <!-- Luxury brand text -->
+  <text x="200" y="350" 
+        font-family="serif" 
+        font-size="16" 
+        font-weight="bold" 
+        text-anchor="middle" 
+        fill="#8B4513" 
+        opacity="0.7">ÉTER DIAMONDS</text>
+</svg>
